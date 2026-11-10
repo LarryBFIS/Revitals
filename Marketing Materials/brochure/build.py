@@ -19,6 +19,9 @@ def inline(m):
     return cache[path]
 
 out = re.sub(r"(assets/[\w.\-]+)", inline, html)
+# The single file travels on its own (email, upload), so links to sibling pages go to the live site.
+SITE = "https://marketing.buildfromideas.ai"
+out = out.replace('href="revvitals-sample.html"', f'href="{SITE}/revvitals-sample" target="_blank" rel="noopener"')
 dist = here / "dist"
 dist.mkdir(exist_ok=True)
 target = dist / "BFIS_Revenue_Operations.html"
