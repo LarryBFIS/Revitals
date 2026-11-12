@@ -2,6 +2,9 @@ BYLD LOGO PACK  ·  Buildd From Ideas  ·  v1.0, November 2026
 ==============================================================
 
 Start with BYLD-Brand-Guide.pdf.
+Why BYLD: we are always innovating and building. BYLD means constantly innovating
+with cutting-edge technology to deliver value to our clients. The rising arrow is that motion.
+
 The logo is white with a sky-blue arrow and ALWAYS sits on a dark background.
 
 QUICK PICKS
