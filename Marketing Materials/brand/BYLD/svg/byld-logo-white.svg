@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -24 394 124" role="img" aria-label="BYLD">
+<title>BYLD</title>
+<g fill="#FFFFFF" fill-rule="evenodd">
+  <path transform="translate(0 0)" d="M0 0H48A30 30 0 0 1 72.16 47.78A30 30 0 0 1 52 100H0Z M20 20V40H48A10 10 0 0 0 48 20Z M20 60V80H52A10 10 0 0 0 52 60Z"/>
+  <path transform="translate(98 0)" d="M6.68 0H29.94L58 47.26V100H38V52.74Z"/>
+  <path transform="translate(210 0)" d="M0 0H20V80H72V100H0Z"/>
+  <path transform="translate(298 0)" d="M0 0H45A50 50 0 0 1 45 100H0Z M20 20V80H45A30 30 0 0 0 45 20Z"/>
+</g>
+<path fill="#FFFFFF" transform="translate(98 0)" d="M42 41.33L76 -4L66.4 -11.2L103.2 -23.6L101.6 15.2L92 8L58 53.33Z"/>
+</svg>

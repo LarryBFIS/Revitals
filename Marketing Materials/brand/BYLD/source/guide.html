@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BYLD Brand Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  :root { --night:#12163A; --deep:#0C0F29; --panel:#181D47; --line:rgba(255,255,255,.10); --sky:#5CC0FF; --text:#E9ECF7; --muted:#9AA3C7; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--night); }
+  body { font-family: 'Sora', sans-serif; color: var(--text); font-weight: 300; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { width: 210mm; height: 297mm; padding: 18mm 18mm 12mm; display: flex; flex-direction: column; gap: 10mm; page-break-after: always; background: var(--night); }
+  .page:last-child { page-break-after: auto; }
+  .label { font-family: 'IBM Plex Mono', monospace; font-size: 7.5pt; letter-spacing: .16em; text-transform: uppercase; color: var(--sky); margin-bottom: 4mm; }
+  h1 { font-size: 24pt; font-weight: 600; letter-spacing: -.025em; line-height: 1.12; color: #fff; }
+  p { font-size: 9.5pt; line-height: 1.6; color: var(--muted); }
+  b { color: var(--text); font-weight: 600; }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  .hero { height: 92mm; background: var(--deep); border-radius: 5mm; display: flex; align-items: center; justify-content: center; }
+  .hero img { width: 112mm; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; align-items: start; }
+  .iconrow { display: flex; align-items: center; gap: 7mm; }
+  .iconrow img { width: 30mm; border-radius: 7mm; box-shadow: 0 0 0 1px var(--line); }
+
+  table { width: 100%; border-collapse: collapse; }
+  td { font-size: 9pt; line-height: 1.45; padding: 2.6mm 0; border-top: 1px solid var(--line); vertical-align: top; }
+  td:first-child { color: var(--text); padding-right: 6mm; }
+  td.file { font-family: 'IBM Plex Mono', monospace; font-size: 8pt; color: var(--sky); white-space: nowrap; text-align: right; }
+
+  .sw { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 5mm; }
+  .chip { height: 22mm; border-radius: 3mm; box-shadow: 0 0 0 1px var(--line); }
+  .sw p { margin-top: 3mm; font-size: 8pt; line-height: 1.7; }
+  .sw p b { display: block; font-size: 9.5pt; }
+
+  .space { background: var(--deep); border-radius: 4mm; height: 46mm; display: flex; align-items: center; justify-content: center; }
+  .space .box { outline: 1px dashed rgba(92,192,255,.6); padding: 7mm; }
+  .space .box img { width: 46mm; display: block; }
+
+  .rules { display: grid; grid-template-columns: 1fr 1fr; gap: 2mm 10mm; }
+  .rules p { font-size: 8.8pt; padding: 2.4mm 0; border-top: 1px solid var(--line); }
+  .rules p::before { content: "—  "; color: var(--sky); }
+
+  .tech { border-top: 1px solid var(--line); padding-top: 6mm; display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; }
+  .tech p { font-size: 8pt; }
+  pre { font-family: 'IBM Plex Mono', monospace; font-size: 7pt; line-height: 1.7; color: #C9D4FF; white-space: pre-wrap; }
+  .foot { margin-top: auto; display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 7pt; letter-spacing: .08em; color: #6E77A0; }
+</style>
+</head>
+<body>
+
+<section class="page">
+  <div style="display:flex;justify-content:space-between;align-items:baseline">
+    <div class="label" style="margin:0">Brand guide · v1.0</div>
+    <div class="label" style="margin:0;color:#6E77A0">Buildd From Ideas</div>
+  </div>
+
+  <div class="hero"><img src="../svg/byld-logo.svg" alt="BYLD logo"></div>
+
+  <div class="row">
+    <div>
+      <h1>BYLD is the mark of Buildd From Ideas.</h1>
+    </div>
+    <div>
+      <p>The company name stays <b>Buildd From Ideas</b> in writing, contracts and email. <b>BYLD</b> is the short mark for swag, signage, social and the app icon. The arrow in the Y rises: we build revenue upward.</p>
+      <p style="margin-top:3mm">The logo always sits on a <b>dark background</b>.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <div class="label">Which file</div>
+      <table>
+        <tr><td>Slides, docs, email signature</td><td class="file">byld-logo-on-dark-1200.png</td></tr>
+        <tr><td>On a dark slide or web page</td><td class="file">byld-logo-1200.png</td></tr>
+        <tr><td>Tees, banners, signs</td><td class="file">svg/ or pdf/</td></tr>
+        <tr><td>Embroidery, one colour</td><td class="file">byld-logo-white.svg</td></tr>
+        <tr><td>Profile picture, app</td><td class="file">byld-icon-1024.png</td></tr>
+        <tr><td>Website tab</td><td class="file">favicon/</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="label">Icon</div>
+      <div class="iconrow">
+        <img src="../svg/byld-icon.svg" alt="BYLD app icon">
+        <p>For profile pictures, the app and the browser tab. It spells BYLD in a square.</p>
+      </div>
+      <div class="label" style="margin-top:8mm">Tagline</div>
+      <h1 style="font-size:20pt">Ideas, <span style="color:var(--sky)">buildd.</span></h1>
+    </div>
+  </div>
+
+  <div class="foot"><span>BYLD</span><span>1 / 2</span></div>
+</section>
+
+<section class="page">
+  <div>
+    <div class="label">Colour</div>
+    <div class="sw">
+      <div><div class="chip" style="background:#12163A"></div><p><b>Night</b>#12163A · RGB 18 22 58<br>CMYK 90 80 30 70*<br>Background</p></div>
+      <div><div class="chip" style="background:#FFFFFF"></div><p><b>White</b>#FFFFFF · RGB 255 255 255<br>CMYK 0 0 0 0<br>Letters</p></div>
+      <div><div class="chip" style="background:#5CC0FF"></div><p><b>Sky</b>#5CC0FF · RGB 92 192 255<br>CMYK 55 10 0 0*<br>Arrow</p></div>
+    </div>
+    <p style="margin-top:3mm;font-size:7.5pt">* Print starting values. Ask the printer for a proof and match it to the HEX colour.</p>
+  </div>
+
+  <div class="row">
+    <div>
+      <div class="label">Space</div>
+      <div class="space"><div class="box"><img src="../svg/byld-logo.svg" alt="BYLD logo with clear space"></div></div>
+      <p style="margin-top:3mm">Leave empty space of <b>half the letter height</b> on every side. The on-dark files already include it.</p>
+    </div>
+    <div>
+      <div class="label">Smallest size</div>
+      <table>
+        <tr><td>Logo</td><td class="file">100 px · 25 mm</td></tr>
+        <tr><td>Icon</td><td class="file">32 px · 8 mm</td></tr>
+        <tr><td>Embroidered logo</td><td class="file">40 mm wide</td></tr>
+      </table>
+      <p style="margin-top:3mm">At 16 px (browser tabs) the letters blur into a shape. That is expected.</p>
+    </div>
+  </div>
+
+  <div>
+    <div class="label">Keep it clean</div>
+    <div class="rules">
+      <p>Only on dark backgrounds: Night, black or a dark photo area.</p>
+      <p>Never on white or light colours.</p>
+      <p>Don't stretch, rotate or recolour it.</p>
+      <p>No shadows, glows or outlines.</p>
+      <p>Don't retype BYLD in a font. Use the files.</p>
+      <p>Don't move or recolour the arrow.</p>
+    </div>
+  </div>
+
+  <div class="tech">
+    <div>
+      <div class="label">For developers &amp; printers</div>
+      <p>SVGs are outlined paths: no fonts, no strokes, no images. Logo viewBox <span class="mono">0 -24 394 124</span>, cropped tight. On-dark viewBox <span class="mono">-50 -74 494 224</span> includes clear space. Icon viewBox <span class="mono">0 0 200 200</span>, radius 56. PNGs are transparent except the on-dark set. PDFs are vector. <span class="mono">source/</span> rebuilds everything.</p>
+    </div>
+<pre>--byld-night: #12163A;
+--byld-white: #FFFFFF;
+--byld-sky:   #5CC0FF;
+
+&lt;link rel="icon" href="/favicon.ico" sizes="32x32"&gt;
+&lt;link rel="icon" href="/favicon.svg" type="image/svg+xml"&gt;
+&lt;link rel="apple-touch-icon" href="/apple-touch-icon.png"&gt;</pre>
+  </div>
+
+  <div class="foot"><span>BYLD · Buildd From Ideas</span><span>2 / 2</span></div>
+</section>
+
+</body>
+</html>
