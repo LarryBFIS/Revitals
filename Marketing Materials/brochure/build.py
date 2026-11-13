@@ -2,7 +2,7 @@
 """Inline assets/ into a single self-contained HTML file for sharing.
 
 Usage:  python3 build.py
-Output: dist/BFIS_Revenue_Operations.html
+Output: dist/BYLD_Revenue_Operations.html
 """
 import base64, mimetypes, pathlib, re
 
@@ -24,6 +24,6 @@ SITE = "https://marketing.buildfromideas.ai"
 out = out.replace('href="revvitals-sample.html"', f'href="{SITE}/revvitals-sample" target="_blank" rel="noopener"')
 dist = here / "dist"
 dist.mkdir(exist_ok=True)
-target = dist / "BFIS_Revenue_Operations.html"
+target = dist / "BYLD_Revenue_Operations.html"
 target.write_text(out, encoding="utf-8")
 print(f"Wrote {target.relative_to(here)} ({target.stat().st_size // 1024} KB, {len(cache)} assets inlined)")

@@ -1,6 +1,6 @@
-# BFIS Revenue Operations brochure
+# BYLD Revenue Operations page
 
-Interactive marketing page for BFIS Labs: BFIS PMS, PriceCortex™, CompMatrix™, FolioLens™,
+Interactive marketing page for Buildd From Ideas (BYLD): BFIS PMS, PriceCortex™, CompMatrix™, FolioLens™,
 RevVitals, OTARecon365™, GoldKey Rewards, SalesLock™ Concierge, AskRank, PulsePilot™,
 Web & Photo, the WhatsApp revenue desk and partners.
 
@@ -9,7 +9,7 @@ Web & Photo, the WhatsApp revenue desk and partners.
 | `index.html` | Source page. Edit this. |
 | `assets/` | Logo and real product screenshots referenced by the page. |
 | `build.py` | Inlines `assets/` into one self-contained file. |
-| `dist/BFIS_Revenue_Operations.html` | Single-file build to email, upload or share. |
+| `dist/BYLD_Revenue_Operations.html` | Single-file build to email, upload or share. |
 
 ## Edit and preview
 
