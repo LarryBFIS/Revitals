@@ -7,7 +7,7 @@ Rules for copy (keep the site credible):
 """
 
 SITE = {
-    "url": "https://buildfromideas.com",
+    "url": "https://buildfromideas.ai",
     "name": "Buildd From Ideas",
     "short": "BYLD",
     "tagline": "Ideas, buildd.",

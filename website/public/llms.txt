@@ -11,21 +11,21 @@ BYLD is a hotel revenue operations partner. AI and machine-learning models recom
 - Nights priced ahead: 57 (for every room category, every day)
 
 ## Products
-- [BFIS PMS](https://buildfromideas.com/products/bfis-pms): Cloud property management system with a live tape chart, room status and folios. Status: Live.
-- [PriceCortex™](https://buildfromideas.com/products/pricecortex): AI rate recommendations for every room category, 57 nights ahead, approved by your revenue manager. Status: Live.
-- [CompMatrix™](https://buildfromideas.com/products/compmatrix): Your rate against your whole comp set for the next 30 days, refreshed daily. Status: Live.
-- [FolioLens™](https://buildfromideas.com/products/foliolens): Owner reporting: actual vs plan, last year and your market, with a weekly brief. Status: Live.
-- [RevVitals](https://buildfromideas.com/products/revvitals): A full revenue and OTA marketing health check, turned into a tracked action plan. Status: Live.
-- [OTARecon365™](https://buildfromideas.com/products/otarecon365): Every OTA payout audited booking by booking, and missing money recovered. Status: Live.
-- [GoldKey Rewards](https://buildfromideas.com/products/goldkey-rewards): A loyalty program with your hotel's name on it that drives direct bookings. Status: Launching.
-- [SalesLock™ Concierge](https://buildfromideas.com/products/saleslock): Group and RFP leads captured, approved by phone and answered before the deadline. Status: Pilot · Jan 2027.
-- [AskRank](https://buildfromideas.com/products/askrank): Search, listing and AI-assistant visibility, run for you and reported in your portal. Status: Pilot starting.
-- [PulsePilot™](https://buildfromideas.com/products/pulsepilot): In-stay guest feedback by QR, GM alerts in real time, and more Google reviews. Status: Early access.
-- [Website, Booking Engine & Photography](https://buildfromideas.com/products/direct-booking): A fast hotel website, a booking engine connected to any PMS in about a week, and pro photos. Status: Service.
+- [BFIS PMS](https://buildfromideas.ai/products/bfis-pms): Cloud property management system with a live tape chart, room status and folios. Status: Live.
+- [PriceCortex™](https://buildfromideas.ai/products/pricecortex): AI rate recommendations for every room category, 57 nights ahead, approved by your revenue manager. Status: Live.
+- [CompMatrix™](https://buildfromideas.ai/products/compmatrix): Your rate against your whole comp set for the next 30 days, refreshed daily. Status: Live.
+- [FolioLens™](https://buildfromideas.ai/products/foliolens): Owner reporting: actual vs plan, last year and your market, with a weekly brief. Status: Live.
+- [RevVitals](https://buildfromideas.ai/products/revvitals): A full revenue and OTA marketing health check, turned into a tracked action plan. Status: Live.
+- [OTARecon365™](https://buildfromideas.ai/products/otarecon365): Every OTA payout audited booking by booking, and missing money recovered. Status: Live.
+- [GoldKey Rewards](https://buildfromideas.ai/products/goldkey-rewards): A loyalty program with your hotel's name on it that drives direct bookings. Status: Launching.
+- [SalesLock™ Concierge](https://buildfromideas.ai/products/saleslock): Group and RFP leads captured, approved by phone and answered before the deadline. Status: Pilot · Jan 2027.
+- [AskRank](https://buildfromideas.ai/products/askrank): Search, listing and AI-assistant visibility, run for you and reported in your portal. Status: Pilot starting.
+- [PulsePilot™](https://buildfromideas.ai/products/pulsepilot): In-stay guest feedback by QR, GM alerts in real time, and more Google reviews. Status: Early access.
+- [Website, Booking Engine & Photography](https://buildfromideas.ai/products/direct-booking): A fast hotel website, a booking engine connected to any PMS in about a week, and pro photos. Status: Service.
 
 ## Pages
-- [Why BYLD vs a franchise](https://buildfromideas.com/why-byld)
-- [How it works](https://buildfromideas.com/how-it-works)
-- [Partners](https://buildfromideas.com/partners)
-- [RevVitals sample report](https://buildfromideas.com/revvitals-sample)
-- [Contact](https://buildfromideas.com/contact)
+- [Why BYLD vs a franchise](https://buildfromideas.ai/why-byld)
+- [How it works](https://buildfromideas.ai/how-it-works)
+- [Partners](https://buildfromideas.ai/partners)
+- [RevVitals sample report](https://buildfromideas.ai/revvitals-sample)
+- [Contact](https://buildfromideas.ai/contact)

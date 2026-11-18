@@ -6,7 +6,7 @@ AskRank, PulsePilot™, websites/booking engine/photography, a WhatsApp revenue 
 
 ## The website (`website/`)
 
-The owner has asked Claude to own and continuously improve buildfromideas.com. Read `website/README.md`.
+The owner has asked Claude to own and continuously improve buildfromideas.ai. Read `website/README.md`.
 
 - All copy lives in `website/content.py`. Templates and SEO in `website/build.py`.
 - After any change: `cd website && python3 build.py` (and `node og.js` if titles changed). Commit `public/` too.

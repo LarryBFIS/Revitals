@@ -19,7 +19,7 @@ body::after{content:"";position:absolute;inset:0;background-image:linear-gradien
 h1{position:relative;z-index:1;font-size:${title.length > 40 ? 62 : 74}px;line-height:1.04;letter-spacing:-.035em;font-weight:600;margin-top:auto;max-width:1000px}
 p{position:relative;z-index:1;font-size:27px;line-height:1.4;color:#C9D1E6;margin-top:22px;max-width:960px}
 .u{position:relative;z-index:1;font:500 20px 'Geist Mono',monospace;color:#5CC0FF;margin-top:34px}
-</style></head><body><div class="l">${logo}</div><h1>${esc(title)}</h1><p>${esc(sub)}</p><div class="u">buildfromideas.com</div></body></html>`;
+</style></head><body><div class="l">${logo}</div><h1>${esc(title)}</h1><p>${esc(sub)}</p><div class="u">buildfromideas.ai</div></body></html>`;
 
 (async () => {
   const out = path.join(root, 'public/og');
