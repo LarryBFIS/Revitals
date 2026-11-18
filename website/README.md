@@ -11,7 +11,7 @@ No framework, no npm install, nothing to break.
 | `assets/` | Source screenshots (JPEG). The build makes optimised `.jpg` and `.webp` copies. |
 | `og.js` | Renders the 1200×630 social share images into `public/og/`. |
 | `interactive.py` | Hero product demo, franchise fee calculator, pricing simulator, scroll story, video blocks. |
-| `video/` | `tour.html` (the product tour, built from real screenshots) and `render.js`, which renders it to `public/video/`. |
+| `video/` | The product tour: `tour.html` (scenes; each product's name, status and animation), `soundtrack.py` (original music, synthesized with numpy) and `render.js` (renders 1080p MP4 and WebM with audio into `public/video/`). |
 | `public/` | **Generated output. Deployed as-is. Don't edit by hand.** |
 | `vercel.json` | Clean URLs, redirects, caching and security headers. |
 
@@ -27,7 +27,7 @@ node og.js
 
 `build.py` needs Python 3 and Pillow. `og.js` needs Playwright with Chromium; run it when a page title changes.
 
-To re-render the product tour after changing `video/tour.html` (needs Playwright and ffmpeg, a few minutes):
+To re-render the product tour after changing `video/tour.html` (needs Playwright, ffmpeg and numpy; about 10 minutes). Preview it live first by opening `video/tour.html?play` in a browser:
 
 ```bash
 node video/render.js

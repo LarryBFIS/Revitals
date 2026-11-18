@@ -1,13 +1,16 @@
-// Render video/tour.html frame by frame into public/video/tour.mp4, tour.webm, a 12s hero loop and posters.
-// Usage: node video/render.js   (needs Playwright + ffmpeg). Takes a few minutes.
+// Render video/tour.html frame by frame, add the synthesized soundtrack, and write public/video/:
+//   tour.mp4 (H.264 + AAC), tour.webm (VP9 + Opus), tour-poster.jpg
+// Usage: node video/render.js   (needs Playwright, ffmpeg, python3 with numpy). Takes several minutes.
 const { chromium } = require('playwright');
 const { execFileSync } = require('child_process');
 const fs = require('fs'), path = require('path'), os = require('os');
 
-const FPS = 30, DURATION = 36, W = 1280, H = 720;
+const FPS = 30, W = 1920, H = 1080;
 const root = path.resolve(__dirname, '..');
 const out = path.join(root, 'public/video');
-const frames = fs.mkdtempSync(path.join(os.tmpdir(), 'byld-tour-'));
+const work = fs.mkdtempSync(path.join(os.tmpdir(), 'byld-tour-'));
+const frames = path.join(work, 'f'); fs.mkdirSync(frames);
+const ff = args => execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', ...args], { stdio: 'inherit' });
 
 (async () => {
   fs.mkdirSync(out, { recursive: true });
@@ -15,21 +18,30 @@ const frames = fs.mkdtempSync(path.join(os.tmpdir(), 'byld-tour-'));
   const p = await b.newPage({ viewport: { width: W, height: H } });
   await p.goto('file://' + path.join(__dirname, 'tour.html'), { waitUntil: 'networkidle' });
   await p.evaluate(() => document.fonts.ready);
-  await p.evaluate(() => document.getAnimations().forEach(a => a.pause()));
-  const total = FPS * DURATION;
+  const { duration, scenes } = await p.evaluate(() => ({ duration: window.__DURATION, scenes: window.__TIMELINE }));
+  fs.writeFileSync(path.join(work, 'timeline.json'), JSON.stringify({ duration, scenes }));
+  const total = Math.round(FPS * duration);
   for (let i = 0; i < total; i++) {
-    const ms = (i / FPS) * 1000;
-    await p.evaluate(t => document.getAnimations().forEach(a => { a.currentTime = t; }), ms);
-    await p.screenshot({ path: path.join(frames, String(i).padStart(5, '0') + '.jpg'), type: 'jpeg', quality: 92 });
-    if (i % 150 === 0) process.stdout.write(`frame ${i}/${total}\n`);
+    await p.evaluate(t => window.__seek(t), i / FPS);
+    await p.screenshot({ path: path.join(frames, String(i).padStart(5, '0') + '.jpg'), type: 'jpeg', quality: 90 });
+    if (i % 300 === 0) console.log(`frame ${i}/${total}`);
   }
+  // Poster: the platform map, fully drawn.
+  const map = scenes.find(s => s.id === 'map');
+  await p.evaluate(t => window.__seek(t), map.start + 3.2);
+  await p.screenshot({ path: path.join(out, 'tour-poster.jpg'), type: 'jpeg', quality: 86 });
   await b.close();
-  const src = ['-y', '-framerate', String(FPS), '-i', path.join(frames, '%05d.jpg')];
-  const ff = args => execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', ...args], { stdio: 'inherit' });
-  ff([...src, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '24', '-preset', 'slow', '-movflags', '+faststart', path.join(out, 'tour.mp4')]);
-  ff([...src, '-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', '38', '-row-mt', '1', path.join(out, 'tour.webm')]);
-  // Poster frames: title card and the end card.
-  fs.copyFileSync(path.join(frames, String(FPS * 3).padStart(5, '0') + '.jpg'), path.join(out, 'tour-poster.jpg'));
-  fs.rmSync(frames, { recursive: true, force: true });
+
+  const wav = path.join(work, 'music.wav');
+  execFileSync('python3', [path.join(__dirname, 'soundtrack.py'), path.join(work, 'timeline.json'), wav], { stdio: 'inherit' });
+
+  const src = ['-framerate', String(FPS), '-i', path.join(frames, '%05d.jpg'), '-i', wav];
+  const audio = ['-af', 'loudnorm=I=-16:TP=-1.5:LRA=11', '-shortest'];
+  ff([...src, '-map', '0:v', '-map', '1:a', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '22', '-preset', 'slow', '-tune', 'animation',
+      ...audio, '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', path.join(out, 'tour.mp4')]);
+  ff([...src, '-map', '0:v', '-map', '1:a', '-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', '36', '-row-mt', '1', '-deadline', 'good', '-cpu-used', '2',
+      ...audio, '-c:a', 'libopus', '-b:a', '128k', path.join(out, 'tour.webm')]);
+  fs.rmSync(work, { recursive: true, force: true });
   for (const f of fs.readdirSync(out)) console.log(f, Math.round(fs.statSync(path.join(out, f)).size / 1024) + ' KB');
+  console.log('duration', duration);
 })();
