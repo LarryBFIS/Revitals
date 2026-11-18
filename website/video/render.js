@@ -1,15 +1,19 @@
-// Render video/tour.html frame by frame, add the synthesized soundtrack, and write public/video/:
-//   tour.mp4 (H.264 + AAC), tour.webm (VP9 + Opus), tour-poster.jpg
-// Usage: node video/render.js   (needs Playwright, ffmpeg, python3 with numpy). Takes several minutes.
+// Render the BYLD product film into public/video/: tour.mp4 (H.264 + AAC), tour.webm (VP9 + Opus), tour-poster.jpg.
+//
+//   node video/render.js            full quality (60 fps capture blended to 30 fps for motion blur)
+//   node video/render.js --draft    quick check (30 fps, no blur)
+//
+// Music: uses video/music.mp3 or video/music.wav if present (e.g. a licensed track), otherwise
+// synthesizes the original score with video/soundtrack.py. Needs Playwright, ffmpeg and python3 + numpy.
 const { chromium } = require('playwright');
-const { execFileSync } = require('child_process');
+const { spawn, execFileSync } = require('child_process');
 const fs = require('fs'), path = require('path'), os = require('os');
 
-const FPS = 30, W = 1920, H = 1080;
+const DRAFT = process.argv.includes('--draft');
+const CAP = DRAFT ? 30 : 60, OUT_FPS = 30, W = 1920, H = 1080;
 const root = path.resolve(__dirname, '..');
 const out = path.join(root, 'public/video');
-const work = fs.mkdtempSync(path.join(os.tmpdir(), 'byld-tour-'));
-const frames = path.join(work, 'f'); fs.mkdirSync(frames);
+const work = fs.mkdtempSync(path.join(os.tmpdir(), 'byld-film-'));
 const ff = args => execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', ...args], { stdio: 'inherit' });
 
 (async () => {
@@ -20,28 +24,41 @@ const ff = args => execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error',
   await p.evaluate(() => document.fonts.ready);
   const { duration, scenes } = await p.evaluate(() => ({ duration: window.__DURATION, scenes: window.__TIMELINE }));
   fs.writeFileSync(path.join(work, 'timeline.json'), JSON.stringify({ duration, scenes }));
-  const total = Math.round(FPS * duration);
+
+  // Stream frames straight into ffmpeg: no frames on disk. Motion blur = average of each pair of 60 fps frames.
+  const master = path.join(work, 'master.mp4');
+  const vf = [DRAFT ? null : 'tmix=frames=2:weights=1 1', `fps=${OUT_FPS}`, 'eq=contrast=1.03:saturation=1.06', 'noise=alls=5:allf=t', 'format=yuv420p'].filter(Boolean).join(',');
+  const enc = spawn('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'image2pipe', '-framerate', String(CAP), '-c:v', 'mjpeg', '-i', '-',
+    '-vf', vf, '-c:v', 'libx264', '-crf', DRAFT ? '20' : '12', '-preset', DRAFT ? 'veryfast' : 'medium', master], { stdio: ['pipe', 'inherit', 'inherit'] });
+  const done = new Promise((res, rej) => enc.on('close', c => c === 0 ? res() : rej(new Error('ffmpeg exited ' + c))));
+  const total = Math.round(CAP * duration);
   for (let i = 0; i < total; i++) {
-    await p.evaluate(t => window.__seek(t), i / FPS);
-    await p.screenshot({ path: path.join(frames, String(i).padStart(5, '0') + '.jpg'), type: 'jpeg', quality: 90 });
-    if (i % 300 === 0) console.log(`frame ${i}/${total}`);
+    await p.evaluate(t => window.__seek(t), i / CAP);
+    const buf = await p.screenshot({ type: 'jpeg', quality: 93 });
+    if (!enc.stdin.write(buf)) await new Promise(r => enc.stdin.once('drain', r));
+    if (i % (CAP * 10) === 0) console.log(`frame ${i}/${total}`);
   }
-  // Poster: the platform map, fully drawn.
-  const map = scenes.find(s => s.id === 'map');
-  await p.evaluate(t => window.__seek(t), map.start + 3.2);
-  await p.screenshot({ path: path.join(out, 'tour-poster.jpg'), type: 'jpeg', quality: 86 });
+  enc.stdin.end();
+  // Poster: the platform grid, fully assembled.
+  const plat = scenes.find(s => s.id === 'platform');
+  await p.evaluate(t => window.__seek(t), plat.start + plat.dur - 0.5);
+  await p.screenshot({ path: path.join(out, 'tour-poster.jpg'), type: 'jpeg', quality: 88 });
   await b.close();
+  await done;
 
-  const wav = path.join(work, 'music.wav');
-  execFileSync('python3', [path.join(__dirname, 'soundtrack.py'), path.join(work, 'timeline.json'), wav], { stdio: 'inherit' });
+  let music = ['music.mp3', 'music.wav'].map(f => path.join(__dirname, f)).find(f => fs.existsSync(f));
+  if (!music) {
+    music = path.join(work, 'music.wav');
+    execFileSync('python3', [path.join(__dirname, 'soundtrack.py'), path.join(work, 'timeline.json'), music], { stdio: 'inherit' });
+  } else console.log('using music file', path.basename(music));
 
-  const src = ['-framerate', String(FPS), '-i', path.join(frames, '%05d.jpg'), '-i', wav];
-  const audio = ['-af', 'loudnorm=I=-16:TP=-1.5:LRA=11', '-shortest'];
-  ff([...src, '-map', '0:v', '-map', '1:a', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '22', '-preset', 'slow', '-tune', 'animation',
-      ...audio, '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', path.join(out, 'tour.mp4')]);
-  ff([...src, '-map', '0:v', '-map', '1:a', '-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', '36', '-row-mt', '1', '-deadline', 'good', '-cpu-used', '2',
-      ...audio, '-c:a', 'libopus', '-b:a', '128k', path.join(out, 'tour.webm')]);
+  const inputs = ['-i', master, '-i', music];
+  const audio = ['-af', `loudnorm=I=-16:TP=-1.5:LRA=11,afade=t=out:st=${(duration - 2).toFixed(2)}:d=2`, '-shortest'];
+  ff([...inputs, '-map', '0:v', '-map', '1:a', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '20', '-preset', 'slow', '-profile:v', 'high',
+      ...audio, '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', path.join(out, 'tour.mp4')]);
+  ff([...inputs, '-map', '0:v', '-map', '1:a', '-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', '33', '-row-mt', '1', '-deadline', 'good', '-cpu-used', '2',
+      ...audio, '-c:a', 'libopus', '-b:a', '160k', path.join(out, 'tour.webm')]);
   fs.rmSync(work, { recursive: true, force: true });
   for (const f of fs.readdirSync(out)) console.log(f, Math.round(fs.statSync(path.join(out, f)).size / 1024) + ' KB');
-  console.log('duration', duration);
+  console.log('duration', duration.toFixed(1), 's');
 })();

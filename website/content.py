@@ -48,7 +48,7 @@ PRODUCTS = [
     {
         "slug": "bfis-pms",
         "name": "BFIS PMS",
-        "tm": False,
+        "tm": True,
         "group": "Foundation",
         "verb": "Run",
         "status": "Live",
@@ -160,7 +160,7 @@ PRODUCTS = [
     {
         "slug": "revvitals",
         "name": "RevVitals",
-        "tm": False,
+        "tm": True,
         "group": "Report & improve",
         "verb": "Improve",
         "status": "Live",
@@ -213,7 +213,7 @@ PRODUCTS = [
     {
         "slug": "goldkey-rewards",
         "name": "GoldKey Rewards",
-        "tm": False,
+        "tm": True,
         "group": "Recover & retain",
         "verb": "Retain",
         "status": "Launching",
@@ -268,7 +268,7 @@ PRODUCTS = [
     {
         "slug": "askrank",
         "name": "AskRank",
-        "tm": False,
+        "tm": True,
         "group": "Sell & be seen",
         "verb": "Be found",
         "status": "Pilot starting",

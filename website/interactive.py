@@ -10,7 +10,7 @@ ARROW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width
 PLAY = '<svg viewBox="0 0 20 20" fill="currentColor"><path d="M6.5 4.6v10.8a.8.8 0 001.2.7l8.6-5.4a.8.8 0 000-1.4L7.7 3.9a.8.8 0 00-1.2.7z"/></svg>'
 LOCK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 015 0v2"/></svg>'
 
-VIDEO = {"mp4": "/video/tour.mp4", "webm": "/video/tour.webm", "poster": "/video/tour-poster.jpg", "seconds": 76}
+VIDEO = {"mp4": "/video/tour.mp4", "webm": "/video/tour.webm", "poster": "/video/tour-poster.jpg", "seconds": 74}
 
 
 def hero_words(text, cls=""):
@@ -93,8 +93,8 @@ def command_center():
 def video_section():
     v = VIDEO
     return f'''<section class="sec vsec" id="tour"><div class="wrap">
-<div class="head center"><div class="kicker">Product tour</div><h2 class="h2">Eleven products. <span class="muted">One platform, in 76 seconds.</span></h2>
-<p class="sub">BFIS PMS, PriceCortex™, CompMatrix™, FolioLens™, RevVitals, OTARecon365™, GoldKey Rewards, SalesLock™ Concierge, AskRank, PulsePilot™ and direct booking, then the WhatsApp desk and what's next. Screens marked "Real screen" are live product; the rest are illustrative.</p></div>
+<div class="head center"><div class="kicker">Product tour</div><h2 class="h2">Eleven products. <span class="muted">One platform, in 74 seconds.</span></h2>
+<p class="sub">BFIS™ PMS, PriceCortex™, CompMatrix™, FolioLens™, RevVitals™, OTARecon365™, GoldKey™ Rewards, SalesLock™ Concierge, AskRank™, PulsePilot™ and direct booking, then the WhatsApp desk and what's next. Screens marked "Real screen" are live product; the rest are illustrative.</p></div>
 <div class="vframe rv">
   <video class="vinline" muted loop playsinline preload="none" poster="{v["poster"]}" data-autoplay aria-label="BYLD product tour">
     <source src="{v["webm"]}" type="video/webm"><source src="{v["mp4"]}" type="video/mp4"></video>
@@ -111,7 +111,7 @@ def video_dialog():
 
 
 def video_ld(site_url):
-    return {"@type": "VideoObject", "name": "BYLD product tour", "description": "A 76-second tour of every BYLD product: BFIS PMS, PriceCortex, CompMatrix, FolioLens, RevVitals, OTARecon365, GoldKey Rewards, SalesLock Concierge, AskRank, PulsePilot, websites and booking engine, and the WhatsApp revenue desk.",
+    return {"@type": "VideoObject", "name": "BYLD product tour", "description": "A 74-second film of every BYLD product: BFIS PMS, PriceCortex, CompMatrix, FolioLens, RevVitals, OTARecon365, GoldKey Rewards, SalesLock Concierge, AskRank, PulsePilot, websites and booking engine, and the WhatsApp revenue desk.",
             "thumbnailUrl": site_url + VIDEO["poster"], "contentUrl": site_url + VIDEO["mp4"], "uploadDate": "2026-11-18", "duration": f"PT{VIDEO['seconds']}S"}
 
 

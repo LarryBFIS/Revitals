@@ -209,7 +209,7 @@ def footer():
   <div><h5>Company</h5><ul><li><a href="/why-byld">Why BYLD</a></li><li><a href="/how-it-works">How it works</a></li><li><a href="/partners">Partners</a></li><li><a href="/revvitals-sample">Sample report</a></li><li><a href="/contact">Contact</a></li></ul></div>
   <div><h5>Log in</h5><ul><li><a href="{SITE["portal"]}" target="_blank" rel="noopener">Owner portal</a></li><li><a href="{SITE["pms_login"]}" target="_blank" rel="noopener">BFIS PMS</a></li><li><a href="{SITE["pricing_explainer"]}" target="_blank" rel="noopener">How PriceCortex prices</a></li></ul></div>
 </div>
-<div class="ftr-bot"><span>© {date.today().year} Buildd From Ideas · BYLD · {e(SITE["tagline"])}</span><span>PriceCortex, CompMatrix, FolioLens, OTARecon365, SalesLock and PulsePilot are trademarks of Buildd From Ideas.</span></div>
+<div class="ftr-bot"><span>© {date.today().year} Buildd From Ideas · BYLD · {e(SITE["tagline"])}</span><span>BFIS, PriceCortex, CompMatrix, FolioLens, RevVitals, OTARecon365, GoldKey, SalesLock, AskRank, PulsePilot, Halo and Signal are trademarks of Buildd From Ideas.</span></div>
 </div></footer>'''
 
 ORG_LD = {
