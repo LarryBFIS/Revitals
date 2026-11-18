@@ -85,8 +85,8 @@ def picture(name, alt, sizes="(max-width: 980px) 100vw, 640px", eager=False):
     return (f'<picture><source type="image/webp" srcset="/img/{name}.webp"><img src="/img/{name}.jpg" '
             f'width="{w}" height="{h}" alt="{e(alt)}" {load} sizes="{sizes}"></picture>')
 
-def window(inner, bar, live=True):
-    em = '<em>Live product</em>' if live else '<em style="color:#8A92A6">Illustrative</em>'
+def window(inner, bar, live=True, label="Live product"):
+    em = f'<em>{label}</em>' if live else '<em style="color:#8A92A6">Illustrative</em>'
     return f'<div class="window"><div class="window-bar"><i></i><i></i><i></i><span>{e(bar)}</span>{em}</div>{inner}</div>'
 
 # ----------------------------------------------------------------------------- mocks
@@ -153,7 +153,7 @@ MOCKS = {
 def product_visual(p, eager=False):
     v = p["visual"]
     if v["type"] == "shot":
-        return window(picture(v["src"], v["alt"], eager=eager), v["bar"])
+        return window(picture(v["src"], v["alt"], eager=eager), v["bar"], label=v.get("label", "Live product"))
     bar, inner = MOCKS[v["name"]]
     return window(inner, bar, live=False)
 
@@ -494,6 +494,13 @@ def build_product(p):
             ("goldkey-welcome", "GoldKey Rewards instant welcome with member card"),
             ("goldkey-email", "GoldKey Rewards personal welcome email")])
         extra = f'''<section class="sec soft"><div class="wrap"><div class="head"><div class="kicker">Live screens</div><h2 class="h2">Sign-up, welcome card and email.</h2><p class="sub">Real GoldKey screens. Hotel and guest names hidden.</p></div><div class="gk-shots">{shots}</div></div></section>'''
+    if p["slug"] == "revvitals":
+        shots = "".join(f'<figure>{window(picture(n, a, sizes="(max-width:900px) 100vw, 560px"), bar, label="Real report")}<figcaption>{e(cap_)}</figcaption></figure>' for n, a, bar, cap_ in [
+            ("revvitals-ota-audit", "RevVitals OTA audit comparing Booking.com, Expedia and Agoda metric by metric", "Chapter IV · The OTA audit",
+             "Every OTA checked line by line: reviews, content scores, volume, rate, cancellations and promotions."),
+            ("revvitals-progress", "RevVitals action tracker showing channel scores before and after and progress on 23 actions", "Chapter V · Action plan",
+             "Then the follow-through: actions done and under way, and channel scores before and after.")])
+        extra = f'''<section class="sec"><div class="wrap"><div class="head"><div class="kicker">From the real report</div><h2 class="h2">The audit, then the follow-through.</h2><p class="sub">Snapshots from an actual RevVitals report. The hotel name, location and account identifiers have been changed.</p></div><div class="rv-shots">{shots}</div><div class="cta-row" style="margin-top:28px"><a class="btn btn-primary" href="/revvitals-sample">Read the full sample report{ICON["arrow"]}</a></div></div></section>'''
     if p["slug"] == "pricecortex":
         extra = f'''<section class="sec dark glow"><div class="wrap"><div class="head"><div class="kicker">AI + human oversight</div><h2 class="h2">The model recommends. <span class="muted">A person decides.</span></h2></div>{flow_html()}<div style="margin-top:20px">{ix.pricing_sim()}</div></div></section>'''
     body = f'''<section class="dark glow gridlines phero"><div class="wrap prod-hero">
@@ -623,6 +630,12 @@ def build_sample():
     extra = (f'<link rel="canonical" href="{SITE["url"]}/revvitals-sample">\n'
              f'<meta property="og:title" content="RevVitals Sample Report | BYLD"><meta property="og:image" content="{SITE["url"]}/og/revvitals-sample.png">\n')
     t = t.replace("<title>RevVitals Sample Report</title>", "<title>RevVitals Sample Report | BYLD</title>\n" + extra, 1)
+    # Dark by default like the rest of the site; honours a visitor's saved light choice.
+    theme = ("<script>try{var t=localStorage.getItem('byld-theme');"
+             "if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>\n"
+             '<meta name="theme-color" content="#080B1F">\n')
+    t = t.replace("<head>", "<head>\n" + theme, 1)
+    t = t.replace("</head>", f'<link rel="stylesheet" href="/css/report-dark.css?v={ASSET_V}">\n</head>', 1)
     (OUT / "revvitals-sample.html").write_text(t, encoding="utf-8")
     PAGES.append(("/revvitals-sample", "0.6"))
 

@@ -175,7 +175,9 @@ PRODUCTS = [
             ("Action tracker", "Every recommendation followed through: done, in progress, awaiting the property, awaiting your approval or not started."),
             ("Proof it worked", "Before-and-after channel scores, the OTA team's live working sheets and quarterly OTA reviews in your owner portal."),
         ],
-        "visual": {"type": "mock", "name": "revvitals"},
+        "visual": {"type": "shot", "src": "revvitals-cover", "bar": "RevVitals · Revenue health report", "label": "Real report",
+                   "alt": "RevVitals report cover: composite health score of 56 out of 100, hotel profile and four headline vitals",
+                   "caption": "Real RevVitals report from a client engagement, anonymised."},
         "cta": ("See a sample report", "/revvitals-sample"),
         "faq": [
             ("What does a RevVitals review cover?", "Pricing, distribution, content, market position and OTA marketing on Expedia, Booking.com and Agoda, each graded and turned into actions."),

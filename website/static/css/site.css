@@ -764,3 +764,9 @@ html:not([data-theme="light"]) .ftr{background:#05071A}
 .mnav .theme-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--d-line);color:#fff}
 .burger-wrap{display:none;margin-left:auto;gap:8px;align-items:center}
 @media (max-width:1060px){.burger-wrap{display:flex}.burger-wrap .burger{margin-left:0}}
+
+/* RevVitals product page: real report snapshots */
+.rv-shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.rv-shots figure{margin:0}
+.rv-shots figcaption{margin-top:12px;font-size:14.5px;color:var(--muted);max-width:52ch}
+@media (max-width:900px){.rv-shots{grid-template-columns:minmax(0,1fr)}}
