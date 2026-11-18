@@ -11,8 +11,7 @@ SITE = {
     "name": "Buildd From Ideas",
     "short": "BYLD",
     "tagline": "Ideas, buildd.",
-    # TODO(owner): confirm the public inbox. Used for the contact form and footer.
-    "email": "hello@buildfromideas.com",
+    "email": "marketing@buildfromideas.ai",
     "address": {
         "street": "1207 Delaware Avenue, #1292",
         "city": "Wilmington",

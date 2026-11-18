@@ -11,6 +11,8 @@ from datetime import date
 from content import (SITE, STATS, BRANDS, PRODUCTS, GROUPS, COMING, FRANCHISE_ROWS, AI_HUMAN, STEPS,
                      DATA_FLOW, PARTNERS, HOME_FAQ, FRANCHISE_FAQ)
 
+import interactive as ix
+
 ROOT = pathlib.Path(__file__).resolve().parent
 OUT = ROOT / "public"
 STATIC = ROOT / "static"
@@ -261,10 +263,12 @@ def page(path, title, desc, body, *, active="", ld=None, og=None, priority="0.7"
 </head>
 <body>
 {header(active)}
+<div class="sprog" aria-hidden="true"></div>
 <main id="main">
 {body}
 </main>
 {footer()}
+{ix.video_dialog()}
 <script src="/js/site.js?v={ASSET_V}" defer></script>
 </body>
 </html>
@@ -284,10 +288,10 @@ OG_JOBS = []
 # ----------------------------------------------------------------------------- sections
 def stats_html():
     return '<div class="stats">' + "".join(
-        f'<div class="stat"><b>{e(s["value"])}</b><span>{e(s["label"])}</span><em>{e(s["note"])}</em></div>' for s in STATS) + '</div>'
+        f'<div class="stat"><b data-count>{e(s["value"])}</b><span>{e(s["label"])}</span><em>{e(s["note"])}</em></div>' for s in STATS) + '</div>'
 
 def brands_html():
-    return f'<div class="brands"><p>Hotels we run revenue for</p><ul>{"".join(f"<li>{e(b)}</li>" for b in BRANDS)}</ul></div>'
+    return f'<div class="brands"><p>Hotels we run revenue for</p>{ix.marquee(BRANDS)}</div>'
 
 def vs_table(rows=FRANCHISE_ROWS):
     hd = f'<div class="vs-row vs-hd"><div></div><div>Typical franchise</div><div class="us">BYLD</div></div>'
@@ -365,7 +369,7 @@ def whatsapp_html():
 <li style="color:#fff">{ICON["check"]}<span>Full detail and history in the owner portal.</span></li></ul></div>
 <div class="phone rv" aria-label="Example WhatsApp conversation with a BYLD revenue manager"><div class="phone-in">
 <div class="wa-top"><img src="/img/byld-icon.svg" alt="" width="36" height="36"><div><b>BYLD Revenue Desk</b><span>Your revenue manager · online</span></div></div>
-<div class="wa-body">
+<div class="wa-body" data-chat>
 <div class="msg">Good morning! Daily pricing for <b>Your Hotel</b> 🌅<table><tr><td>Fri King</td><td>$129 → $144</td></tr><tr><td>Sat Suite</td><td>$189 hold</td></tr><tr><td>Sun King</td><td>$119 → $109</td></tr></table><small>8:02</small></div>
 <div class="msg">Comps moved up $12 for Friday and pace is ahead of last year. Sunday is soft, so a small drop to pick up weekend stays.<small>8:03</small></div>
 <div class="msg me">Looks good. Can we keep Sunday at $115?<small>8:15</small></div>
@@ -389,21 +393,16 @@ def coming_html():
 
 # ----------------------------------------------------------------------------- pages
 def build_home():
-    pms = BY_SLUG["bfis-pms"]
-    hero = f'''<section class="dark glow gridlines hero"><div class="wrap">
+    hero = f'''<section class="dark hero hero-x" data-hero><canvas class="aurora" aria-hidden="true"></canvas><div class="hero-grid-fx" aria-hidden="true"></div><div class="wrap">
 <div class="hero-grid">
-<div class="rv">
+<div class="hero-copy">
   <span class="eyebrow"><i></i>AI-powered, human-guarded hotel revenue</span>
-  <h1>More than a franchise. <span class="grad">Without the franchise fees.</span></h1>
+  <h1>{ix.hero_words("More than a franchise.")} <span class="nowrap-m">{ix.hero_words("Without the franchise fees.", "grad")}</span></h1>
   <p class="lede">BYLD runs your hotel's entire revenue engine on one platform: <strong>PMS, AI pricing, comp-set intelligence, owner reporting, OTA payout recovery, your own loyalty program, group sales, reputation and direct booking.</strong> A named revenue manager approves every rate.</p>
-  <div class="cta-row"><a class="btn btn-primary" href="/contact">Book a revenue review{ICON["arrow"]}</a><a class="btn btn-ghost" href="/why-byld">Compare with a franchise</a></div>
+  <div class="cta-row"><a class="btn btn-primary" data-magnetic href="/contact">Book a revenue review{ICON["arrow"]}</a>{ix.play_button()}</div>
   <div class="trust"><div class="av">RM</div><div><b>Every rate has a human owner.</b> AI recommends, your revenue manager approves.</div></div>
 </div>
-<div class="stage rv">
-  {window(picture("pms-tape-chart", pms["visual"]["alt"], eager=True), "pms.buildfromideas.com · Tape chart")}
-  <div class="float f-kpi"><small>Portfolio revenue</small><b>+62%</b><div class="up">year over year</div></div>
-  <div class="float f-wa"><small>WhatsApp · Revenue desk</small><div class="bub">Comps up $12 Friday, pace ahead of last year. King $129 → $144?</div><div class="bub me">Looks good, go ahead 👍</div></div>
-</div>
+<div class="hero-demo" data-tilt>{ix.command_center()}</div>
 </div>
 {stats_html()}
 {brands_html()}
@@ -412,33 +411,36 @@ def build_home():
     franchise = f'''<section class="sec"><div class="wrap">
 <div class="head-row"><div class="head"><div class="kicker">The franchise math</div>
 <h2 class="h2">Franchises charge for the flag. <span class="muted">We deliver the revenue engine.</span></h2>
-<p class="sub">Royalties, marketing levies, reservation and loyalty fees come off your top line every month. BYLD gives you the tools and the team that actually move RevPAR, and you keep your name, your guests and your data.</p></div>
+<p class="sub">Royalties, marketing levies, reservation and loyalty fees come off your top line every month. Run your own numbers, then see what BYLD gives you instead.</p></div>
 <a class="link" href="/why-byld">Full comparison {ICON["arrow"]}</a></div>
-{vs_table(FRANCHISE_ROWS[:6])}
+{ix.fee_calculator()}
+<div style="margin-top:20px">{vs_table(FRANCHISE_ROWS[:6])}</div>
 <p class="vs-note">Franchise column describes common franchise arrangements in general terms; individual agreements vary.</p>
 </div></section>'''
 
+    tour = [BY_SLUG[s] for s in ["bfis-pms", "pricecortex", "compmatrix", "foliolens", "otarecon365", "goldkey-rewards"]]
     platform = f'''<section class="sec soft"><div class="wrap">
 <div class="head-row"><div class="head"><div class="kicker">The platform</div>
 <h2 class="h2">Every revenue task. <span class="muted">One partner, one portal.</span></h2>
 <p class="sub">Most hotels piece revenue together from a PMS, a pricing tool, a rate shopper, a BI dashboard, an OTA agency, a reputation tool and spreadsheets. We run the whole cycle on one data foundation, so every decision uses the same numbers.</p></div>
-<a class="btn btn-line" href="/platform">Explore the platform{ICON["arrow"]}</a></div>
-{bento()}
+<a class="btn btn-line" href="/platform">All 11 products{ICON["arrow"]}</a></div>
+{ix.story(tour, product_visual, pname)}
 </div></section>'''
 
     ai = f'''<section class="sec dark glow"><div class="wrap">
 <div class="head"><div class="kicker">AI + human oversight</div>
 <h2 class="h2">Machine-learning speed. <span class="muted">Human judgement on every rate.</span></h2>
-<p class="sub">Our models read thousands of signals and recommend. Guardrails keep every number inside your limits. A dedicated revenue manager reviews the reasoning and approves before anything reaches your guests. Never a black box.</p></div>
-{flow_html()}{pillars_html()}
+<p class="sub">Our models read thousands of signals and recommend. Guardrails keep every number inside your limits. A dedicated revenue manager reviews the reasoning and approves before anything reaches your guests.</p></div>
+{flow_html()}
+<div style="margin-top:20px">{ix.pricing_sim()}</div>
 </div></section>'''
 
-    spots = f'''<section class="sec"><div class="wrap">
-<div class="head"><div class="kicker">Real product, running real hotels</div><h2 class="h2">Built in-house. <span class="muted">Running real hotels today.</span></h2></div>
-{spotlight(BY_SLUG["pricecortex"], extra=f'<a class="link" href="{SITE["pricing_explainer"]}" target="_blank" rel="noopener">How PriceCortex prices {ICON["arrow"]}</a>')}
-{spotlight(BY_SLUG["compmatrix"], flip=True)}
-{spotlight(BY_SLUG["otarecon365"])}
-</div></section>'''
+    more = f'''<section class="sec"><div class="wrap">
+<div class="head-row"><div class="head"><div class="kicker">And more</div><h2 class="h2">Built in-house. <span class="muted">Growing every quarter.</span></h2></div>
+<a class="link" href="/platform">See the whole platform {ICON["arrow"]}</a></div>
+<div class="bento">{"".join(card(BY_SLUG[k], "span2") for k in ["revvitals", "saleslock", "askrank", "pulsepilot", "direct-booking"])}
+<a class="card span2 feature rv" href="/platform#next"><div class="top"><div class="ico">{picon("revvitals")}</div><span class="badge pilot">Coming</span></div><span class="verb">Next</span><h3>Halo™ and Signal™</h3><p>An AI revenue assistant in your owner portal, and market demand signals layered onto pricing.</p><span class="more">What's next {ICON["arrow"]}</span></a>
+</div></div></section>'''
 
     start = f'''<section class="sec soft"><div class="wrap">
 <div class="head-row"><div class="head"><div class="kicker">Getting started</div><h2 class="h2">Live in weeks, <span class="muted">not a brand conversion.</span></h2>
@@ -450,10 +452,10 @@ def build_home():
 <div class="head-row"><div class="head"><div class="kicker">Beyond revenue</div><h2 class="h2">Partners for every part of ownership.</h2></div><a class="link" href="/partners">Our partners {ICON["arrow"]}</a></div>
 {partners_html()}</div></section>'''
 
-    body = hero + franchise + platform + ai + spots + whatsapp_html() + start + partners + faq_html(HOME_FAQ) + cta_band()
+    body = hero + ix.video_section() + franchise + platform + ai + whatsapp_html() + more + start + partners + faq_html(HOME_FAQ) + cta_band()
     page("/", "BYLD: Hotel Revenue Management Without Franchise Fees",
          "More than a franchise, without the fees: PMS, AI pricing approved by a human revenue manager, owner reporting, OTA recovery, loyalty and direct booking.",
-         body, ld=[faq_ld(HOME_FAQ)], priority="1.0")
+         body, ld=[faq_ld(HOME_FAQ), ix.video_ld(SITE["url"])], priority="1.0")
 
 def build_platform():
     groups = ""
@@ -491,14 +493,14 @@ def build_product(p):
             ("goldkey-email", "GoldKey Rewards personal welcome email")])
         extra = f'''<section class="sec soft"><div class="wrap"><div class="head"><div class="kicker">Live screens</div><h2 class="h2">Sign-up, welcome card and email.</h2><p class="sub">Real GoldKey screens. Hotel and guest names hidden.</p></div><div class="gk-shots">{shots}</div></div></section>'''
     if p["slug"] == "pricecortex":
-        extra = f'''<section class="sec dark glow"><div class="wrap"><div class="head"><div class="kicker">AI + human oversight</div><h2 class="h2">The model recommends. <span class="muted">A person decides.</span></h2></div>{flow_html()}{pillars_html()}</div></section>'''
+        extra = f'''<section class="sec dark glow"><div class="wrap"><div class="head"><div class="kicker">AI + human oversight</div><h2 class="h2">The model recommends. <span class="muted">A person decides.</span></h2></div>{flow_html()}<div style="margin-top:20px">{ix.pricing_sim()}</div></div></section>'''
     body = f'''<section class="dark glow gridlines phero"><div class="wrap prod-hero">
 <div class="rv"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/platform">Platform</a><span>/</span><span aria-current="page">{pname(p)}</span></nav>
 <div class="meta"><span class="nm">{e(p["group"])}</span>{badge(p["status"])}{f'<span class="badge svc">{e(p["badge"])}</span>' if p.get("badge") else ""}</div>
 <h1><span class="pn">{pname(p)}</span><span class="grad">{e(p["tagline"])}</span></h1>
 <p class="lede">{e(p["intro"])}</p>
 <div class="cta-row">{a_btn(label, target)}<a class="btn btn-ghost" href="/contact">Book a revenue review</a></div></div>
-<div class="rv">{product_visual(p, eager=True)}{cap}</div>
+<div class="rv" data-tilt>{product_visual(p, eager=True)}{cap}</div>
 </div></section>
 <section class="sec"><div class="wrap"><div class="head"><div class="kicker">What it does</div><h2 class="h2">{pname(p)}, <span class="muted">feature by feature.</span></h2></div>
 <div class="feat-grid{" three" if len(p["features"]) > 4 else ""}">{feats}</div></div></section>
@@ -523,7 +525,8 @@ def build_why():
 </div></section>
 <section class="sec"><div class="wrap">
 <div class="head"><div class="kicker">Side by side</div><h2 class="h2">What you get, <span class="muted">and what you stop paying for.</span></h2></div>
-{vs_table()}
+{ix.fee_calculator()}
+<div style="margin-top:20px">{vs_table()}</div>
 <p class="vs-note">The franchise column describes common franchise arrangements in general terms; individual agreements vary.</p>
 <div class="save">
 <div class="rv"><b>Keep your top line</b><p>No royalty and no brand-marketing levy taken as a share of your room revenue.</p></div>
@@ -548,7 +551,7 @@ def build_how():
 <h1>AI does the heavy lifting. <span class="grad">A person you can call owns every decision.</span></h1>
 <p class="lede">Here's how BYLD connects to your hotel, how the models and your revenue manager work together, and how you stay in the loop without learning a new tool.</p>
 </div></section>
-<section class="sec dark" style="padding-top:0"><div class="wrap">{flow_html()}{pillars_html()}</div></section>
+<section class="sec dark" style="padding-top:0"><div class="wrap">{flow_html()}{pillars_html()}<div style="margin-top:20px">{ix.pricing_sim()}</div></div></section>
 <section class="sec"><div class="wrap"><div class="head"><div class="kicker">Under the hood</div><h2 class="h2">Connected to your data. <span class="muted">Running while you sleep.</span></h2>
 <p class="sub">Every morning the platform pulls your PMS, the comp set and the market, checks the data is fresh, and has recommendations waiting for your revenue manager.</p></div>{dataflow_html()}</div></section>
 {whatsapp_html()}
@@ -626,7 +629,7 @@ def copy_static():
     global ASSET_V
     if OUT.exists():
         for child in OUT.iterdir():
-            if child.name == "og":  # generated separately by og.mjs; keep between builds
+            if child.name in ("og", "video"):  # generated separately by og.mjs; keep between builds
                 continue
             shutil.rmtree(child) if child.is_dir() else child.unlink()
     OUT.mkdir(exist_ok=True)

@@ -1,0 +1,138 @@
+<!doctype html>
+<!-- BYLD product tour. Rendered frame by frame by video/render.js into public/video/. 36 seconds, 1280x720.
+     Every product screen here is a real screenshot from assets/. Edit scenes, then: node video/render.js -->
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;box-sizing:border-box}
+html,body{width:1280px;height:720px;overflow:hidden;background:#080B1F;font-family:Geist,sans-serif;color:#fff}
+.bg{position:absolute;inset:0;background:radial-gradient(700px 460px at 80% 10%,rgba(92,192,255,.25),transparent 70%),radial-gradient(600px 420px at 10% 90%,rgba(124,140,255,.22),transparent 70%);animation:drift 36s linear both}
+@keyframes drift{from{transform:scale(1) translateX(0)}to{transform:scale(1.15) translateX(-40px)}}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 30%,transparent 80%);animation:gridmove 36s linear both}
+@keyframes gridmove{to{background-position:0 256px}}
+.scene{position:absolute;inset:0;opacity:0}
+.k{font:500 15px 'Geist Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#5CC0FF}
+.cap{position:absolute;left:80px;bottom:72px;max-width:560px}
+.cap h2{font-size:46px;line-height:1.05;letter-spacing:-.03em;font-weight:600;margin-top:14px}
+.cap p{font-size:20px;color:#C9D1E6;margin-top:14px;line-height:1.45}
+.win{position:absolute;border-radius:16px;overflow:hidden;background:#0F1430;border:1px solid rgba(255,255,255,.14);box-shadow:0 50px 100px -30px rgba(0,0,0,.9)}
+.win .bar{height:34px;display:flex;align-items:center;gap:7px;padding:0 14px;background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.08);font:13px 'Geist Mono',monospace;color:#8790AE}
+.win .bar i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.18)}
+.win .bar span{margin-left:10px}.win .bar em{margin-left:auto;font-style:normal;color:#3DDC97}
+.win img{display:block;width:100%}
+.grad{background:linear-gradient(92deg,#fff 0%,#BFE6FF 35%,#5CC0FF 65%,#7C8CFF 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* generic keyframes */
+@keyframes show{0%{opacity:0}100%{opacity:1}}
+@keyframes hide{0%{opacity:1}100%{opacity:0}}
+@keyframes up{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes left{from{opacity:0;transform:translateX(120px) rotateY(-14deg)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}70%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
+@keyframes zoompan{from{transform:scale(1) translate(0,0)}to{transform:scale(1.35) translate(-14%,-8%)}}
+@keyframes slowzoom{from{transform:scale(1)}to{transform:scale(1.12)}}
+@keyframes scan{from{left:4%}to{left:94%}}
+@keyframes count{from{--n:0}to{--n:62}}
+
+/* S1 title 0-4.5 */
+#s1{animation:show .6s 0s both,hide .5s 4s both}
+#s1 .logo{position:absolute;left:50%;top:150px;transform:translateX(-50%);width:170px;animation:pop .9s .2s both}
+#s1 h1{position:absolute;top:270px;width:100%;text-align:center;font-size:72px;letter-spacing:-.04em;line-height:1.02;font-weight:600}
+#s1 h1 span{display:inline-block;animation:up .7s both}
+#s1 p{position:absolute;top:470px;width:100%;text-align:center;font-size:22px;color:#C9D1E6;animation:up .7s 2.2s both}
+/* S2 PMS 4.5-10.5 */
+#s2{animation:show .5s 4.5s both,hide .5s 10s both}
+#s2 .win{left:600px;top:90px;width:620px;animation:left 1s 4.6s both}
+#s2 .win .clip{overflow:hidden}
+#s2 .win img{transform-origin:20% 20%;animation:zoompan 5.5s 5s ease-in-out both}
+#s2 .cap>*{animation:up .7s both}
+/* S3 PriceCortex 10.5-17 */
+#s3{animation:show .5s 10.5s both,hide .5s 16.5s both}
+#s3 .win{left:680px;top:40px;width:540px;animation:left 1s 10.6s both}
+#s3 .win img{animation:slowzoom 6s 11s both;transform-origin:50% 80%}
+#s3 .stamp{position:absolute;left:820px;top:560px;background:#fff;color:#0B1020;border-radius:16px;padding:16px 20px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7);font-size:17px;display:flex;gap:14px;align-items:center;animation:pop .7s 13.6s both}
+#s3 .stamp b{display:block;font-size:20px}
+#s3 .stamp .av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#5CC0FF,#7C8CFF);display:grid;place-items:center;font:600 15px 'Geist Mono';color:#04122B}
+#s3 .stamp .ok{color:#0E9F6E;font-weight:600}
+#s3 .cap>*{animation:up .7s both}
+/* S4 CompMatrix 17-22.5 */
+#s4{animation:show .5s 17s both,hide .5s 22s both}
+#s4 .win{left:160px;top:50px;width:960px;animation:up 1s 17.1s both}
+#s4 .scanline{position:absolute;top:34px;bottom:0;width:2px;background:linear-gradient(#5CC0FF,transparent);box-shadow:0 0 24px #5CC0FF;animation:scan 4.5s 17.6s linear both}
+#s4 .cap{bottom:44px;max-width:900px}
+#s4 .cap h2{font-size:40px}
+#s4 .cap>*{animation:up .7s both}
+/* S5 GoldKey 22.5-28 */
+#s5{animation:show .5s 22.5s both,hide .5s 27.5s both}
+#s5 .phone{position:absolute;top:70px;width:250px;border-radius:30px;overflow:hidden;border:8px solid #1B2040;box-shadow:0 40px 80px -30px rgba(0,0,0,.9)}
+#s5 .phone img{display:block;width:100%}
+#s5 .p1{left:600px;animation:up .8s 22.7s both}
+#s5 .p2{left:790px;top:40px;z-index:2;animation:up .8s 23.1s both}
+#s5 .p3{left:980px;animation:up .8s 23.5s both}
+#s5 .cap>*{animation:up .7s both}
+/* S6 WhatsApp 28-32 */
+#s6{animation:show .5s 28s both,hide .5s 31.6s both}
+#s6 .chat{position:absolute;left:690px;top:90px;width:470px;display:flex;flex-direction:column;gap:12px}
+#s6 .m{background:#fff;color:#111;border-radius:14px 14px 14px 3px;padding:14px 16px;font-size:18px;line-height:1.4;max-width:85%;box-shadow:0 10px 30px -10px rgba(0,0,0,.6)}
+#s6 .m.me{align-self:flex-end;background:#DCF8C6;border-radius:14px 14px 3px 14px}
+#s6 .m:nth-child(1){animation:up .5s 28.4s both}#s6 .m:nth-child(2){animation:up .5s 29.3s both}#s6 .m:nth-child(3){animation:up .5s 30.2s both}#s6 .m:nth-child(4){animation:up .5s 30.9s both}
+#s6 .cap>*{animation:up .7s both}
+/* S7 end 32-36 */
+#s7{animation:show .6s 32s both}
+#s7 .logo{position:absolute;left:50%;top:120px;transform:translateX(-50%);width:140px;animation:pop .8s 32.2s both}
+#s7 .stats{position:absolute;top:250px;left:0;right:0;display:flex;justify-content:center;gap:80px}
+#s7 .stats div{text-align:center;animation:up .6s both}
+#s7 .stats b{display:block;font-size:64px;letter-spacing:-.03em;font-weight:600}
+#s7 .stats span{font-size:18px;color:#C9D1E6}
+#s7 h3{position:absolute;top:470px;width:100%;text-align:center;font-size:34px;font-weight:600;letter-spacing:-.02em;animation:up .7s 33.8s both}
+#s7 .url{position:absolute;top:540px;width:100%;text-align:center;font:500 20px 'Geist Mono';color:#5CC0FF;animation:up .7s 34.2s both}
+.prog{position:absolute;left:0;bottom:0;height:3px;background:linear-gradient(90deg,#5CC0FF,#7C8CFF);animation:prog 36s linear both}
+@keyframes prog{from{width:0}to{width:100%}}
+</style></head><body>
+<div class="bg"></div><div class="grid"></div>
+
+<section class="scene" id="s1">
+  <img class="logo" src="../static/img/byld-logo.svg" alt="">
+  <h1><span style="animation-delay:.5s">More</span> <span style="animation-delay:.65s">than</span> <span style="animation-delay:.8s">a</span> <span style="animation-delay:.95s">franchise.</span><br><span class="grad" style="animation-delay:1.4s">Without</span> <span class="grad" style="animation-delay:1.55s">the</span> <span class="grad" style="animation-delay:1.7s">franchise</span> <span class="grad" style="animation-delay:1.85s">fees.</span></h1>
+  <p>Hotel revenue operations · AI-powered, human-guarded</p>
+</section>
+
+<section class="scene" id="s2">
+  <div class="win"><div class="bar"><i></i><i></i><i></i><span>pms.buildfromideas.com · Tape chart</span><em>● Live product</em></div><div class="clip"><img src="../assets/pms-tape-chart.jpg" alt=""></div></div>
+  <div class="cap"><div class="k" style="animation-delay:4.9s">01 · Run</div><h2 style="animation-delay:5.1s">BFIS PMS. Every room, every night.</h2><p style="animation-delay:5.4s">Our cloud PMS feeds pricing, reporting and loyalty from one source of truth.</p></div>
+</section>
+
+<section class="scene" id="s3">
+  <div class="win"><div class="bar"><i></i><i></i><i></i><span>PriceCortex · Today</span><em>● Live product</em></div><img src="../assets/pricecortex-today-card.jpg" alt=""></div>
+  <div class="stamp"><div class="av">RM</div><div><b>Rate approved</b><span class="ok">✓ Your revenue manager · 8:15</span></div></div>
+  <div class="cap"><div class="k" style="animation-delay:10.9s">02 · Price</div><h2 style="animation-delay:11.1s">AI recommends. A person approves.</h2><p style="animation-delay:11.4s">PriceCortex™ prices every room category 57 nights ahead, inside your floors and ceilings.</p></div>
+</section>
+
+<section class="scene" id="s4">
+  <div class="win"><div class="bar"><i></i><i></i><i></i><span>CompMatrix · Best Available Rate</span><em>● Live product</em></div><img src="../assets/compmatrix-bar.jpg" alt=""><div class="scanline"></div></div>
+  <div class="cap"><div class="k" style="animation-delay:17.4s">03 · Compete</div><h2 style="animation-delay:17.6s">CompMatrix™. Know where you stand, every night.</h2></div>
+</section>
+
+<section class="scene" id="s5">
+  <div class="phone p1"><img src="../assets/goldkey-signup.jpg" alt=""></div>
+  <div class="phone p2"><img src="../assets/goldkey-welcome.jpg" alt=""></div>
+  <div class="phone p3"><img src="../assets/goldkey-email.jpg" alt=""></div>
+  <div class="cap"><div class="k" style="animation-delay:22.9s">04 · Retain</div><h2 style="animation-delay:23.1s">Your own loyalty program.</h2><p style="animation-delay:23.4s">GoldKey Rewards brings guests back to book direct. No per-stay brand loyalty fees.</p></div>
+</section>
+
+<section class="scene" id="s6">
+  <div class="chat">
+    <div class="m">Good morning! Fri King $129 → $144. Comps moved up $12 and pace is ahead of last year.</div>
+    <div class="m me">Looks good. Keep Sunday at $115?</div>
+    <div class="m">Done ✅ Sunday set to $115, everything else live.</div>
+    <div class="m me">👍</div>
+  </div>
+  <div class="cap"><div class="k" style="animation-delay:28.3s">05 · Approve</div><h2 style="animation-delay:28.5s">Your revenue team, on WhatsApp.</h2><p style="animation-delay:28.8s">Daily pricing and comp moves, approved with a reply.</p></div>
+</section>
+
+<section class="scene" id="s7">
+  <img class="logo" src="../static/img/byld-logo.svg" alt="">
+  <div class="stats"><div style="animation-delay:32.6s"><b>32</b><span>hotels live</span></div><div style="animation-delay:32.85s"><b>$40.6M</b><span>revenue managed</span></div><div style="animation-delay:33.1s"><b class="grad">+62%</b><span>year-over-year growth</span></div></div>
+  <h3>Book a revenue review.</h3>
+  <div class="url">buildfromideas.ai</div>
+</section>
+<div class="prog"></div>
+</body></html>

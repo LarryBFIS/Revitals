@@ -10,6 +10,8 @@ No framework, no npm install, nothing to break.
 | `static/` | CSS, JS, logos, favicons. `static/root/` files are copied to the site root. |
 | `assets/` | Source screenshots (JPEG). The build makes optimised `.jpg` and `.webp` copies. |
 | `og.js` | Renders the 1200×630 social share images into `public/og/`. |
+| `interactive.py` | Hero product demo, franchise fee calculator, pricing simulator, scroll story, video blocks. |
+| `video/` | `tour.html` (the product tour, built from real screenshots) and `render.js`, which renders it to `public/video/`. |
 | `public/` | **Generated output. Deployed as-is. Don't edit by hand.** |
 | `vercel.json` | Clean URLs, redirects, caching and security headers. |
 
@@ -24,6 +26,12 @@ node og.js
 ```
 
 `build.py` needs Python 3 and Pillow. `og.js` needs Playwright with Chromium; run it when a page title changes.
+
+To re-render the product tour after changing `video/tour.html` (needs Playwright and ffmpeg, a few minutes):
+
+```bash
+node video/render.js
+```
 
 ## Common changes
 
