@@ -1,0 +1,29 @@
+/* RevVitals sample report: dark by default, matching the site. The report's own light design stays
+   available when the visitor picked light on the site (localStorage byld-theme = light). */
+html:not([data-theme="light"]){
+  color-scheme:dark;
+  --bg:#080B1F; --bg-soft:#0B0F29; --bg-card:#11163A;
+  --ink:#FFFFFF; --ink-2:#DCE2F2; --ink-soft:#C9D1E6; --ink-muted:#939CB8; --ink-faint:#6E7799;
+  --accent:#F0638A; --accent-2:#FF7FA0; --accent-soft:rgba(240,99,138,.14);
+  --gold:#E5B53A; --gold-soft:rgba(229,181,58,.16);
+  --border:rgba(255,255,255,.10); --border-strong:rgba(255,255,255,.22);
+  --critical:#F87171; --critical-soft:rgba(248,113,113,.14);
+  --warning:#FBBF24; --warning-soft:rgba(251,191,36,.12);
+  --healthy:#4ADE80; --healthy-soft:rgba(74,222,128,.13);
+  --pending:#A5B1C8; --pending-soft:rgba(148,163,184,.16);
+  --neutral:#A5B1C8;
+}
+html:not([data-theme="light"]) body{background-color:var(--bg);
+  background-image:radial-gradient(at 20% 0%,rgba(92,192,255,.08) 0%,transparent 45%),radial-gradient(at 80% 100%,rgba(240,99,138,.06) 0%,transparent 45%)}
+/* Panels that used the ink colour as a background become raised dark surfaces. */
+html:not([data-theme="light"]) .money,
+html:not([data-theme="light"]) .sample-bar{background:#11163A;border:1px solid rgba(255,255,255,.10)}
+html:not([data-theme="light"]) .sample-bar{border-width:0 0 1px}
+html:not([data-theme="light"]) .lens button.active{background:#5CC0FF;color:#04122B}
+html:not([data-theme="light"]) .composite-ring circle:first-child{stroke:rgba(255,255,255,.10)}
+html:not([data-theme="light"]) .composite-ring circle:last-child{stroke:var(--critical)}
+html:not([data-theme="light"]) ::selection{background:rgba(92,192,255,.35)}
+html:not([data-theme="light"]) .money::before{color:#0B1020}
+html:not([data-theme="light"]) .money-num,
+html:not([data-theme="light"]) .sample-bar a{color:#F5D98B}
+html:not([data-theme="light"]) .money-num small{color:#B9B09C}

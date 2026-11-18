@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{var t=localStorage.getItem('byld-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<meta name="theme-color" content="#080B1F">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RevVitals Sample Report | BYLD</title>
+<link rel="canonical" href="https://buildfromideas.ai/revvitals-sample">
+<meta property="og:title" content="RevVitals Sample Report | BYLD"><meta property="og:image" content="https://buildfromideas.ai/og/revvitals-sample.png">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="description" content="An anonymised RevVitals revenue health report from a real Buildd From Ideas engagement: vitals, diagnosis, competitor set, OTA audit and a tracked action plan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#F7F3EC; --bg-soft:#FAF7F2; --bg-card:#FFFFFF;
+    --ink:#0A1628; --ink-2:#1F2937; --ink-soft:#2D3748; --ink-muted:#6B7280; --ink-faint:#9CA3AF;
+    --accent:#8B1538; --accent-2:#A91D47; --accent-soft:#FBE8EC;
+    --gold:#B8860B; --gold-soft:#F5E6C4;
+    --border:#E5E1D8; --border-strong:#C9C2B3;
+    --critical:#B91C1C; --critical-soft:#FEE2E2;
+    --warning:#B45309; --warning-soft:#FEF3C7;
+    --healthy:#15803D; --healthy-soft:#DCFCE7;
+    --pending:#475569; --pending-soft:#E2E8F0;
+    --neutral:#475569;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Geist',sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;font-size:14px;font-feature-settings:"ss01","cv11";
+    background-image:radial-gradient(at 20% 0%,rgba(139,21,56,.03) 0%,transparent 40%),radial-gradient(at 80% 100%,rgba(10,22,40,.03) 0%,transparent 40%);}
+  .page{max-width:1180px;margin:0 auto;padding:0 56px}
+  @media(max-width:760px){.page{padding:0 20px}}
+
+  /* ===== COVER ===== */
+  .cover{padding:48px 0 40px}
+  .top-bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-bottom:2px solid var(--ink);padding-bottom:20px}
+  .brand{display:flex;align-items:baseline;gap:14px}
+  .brand-mark{width:28px;height:28px;background:var(--accent);position:relative;transform:rotate(45deg);align-self:center}
+  .brand-mark::before,.brand-mark::after{content:'';position:absolute;background:var(--bg)}
+  .brand-mark::before{left:12px;top:5px;width:4px;height:18px}
+  .brand-mark::after{left:5px;top:12px;width:18px;height:4px}
+  .wordmark{font-family:'Fraunces',serif;font-size:28px;font-weight:600;letter-spacing:-.02em}
+  .wordmark em{font-style:italic;font-weight:400;color:var(--accent)}
+  .top-bar .tagline{text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-muted)}
+  .top-bar .report-id{text-align:right;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--ink-muted);text-transform:uppercase}
+  .top-bar .report-id strong{display:block;color:var(--ink);font-weight:500;letter-spacing:.08em;margin-bottom:3px}
+  .confidential{display:inline-block;margin-top:6px;border:1px solid var(--accent);color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;padding:3px 8px;text-transform:uppercase}
+
+  .cover-body{display:grid;grid-template-columns:1.25fr 1fr;gap:64px;align-items:center;padding:52px 0 36px}
+  @media(max-width:900px){.cover-body{grid-template-columns:1fr;gap:36px}}
+  .cover-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+  .cover-eyebrow::before{content:'';width:32px;height:1.5px;background:var(--accent)}
+  .cover-title h1{font-family:'Fraunces',serif;font-size:60px;font-weight:300;line-height:1.02;letter-spacing:-.03em;margin-bottom:26px;font-variation-settings:"SOFT" 50,"opsz" 144}
+  .cover-title h1 em{font-style:italic;font-weight:400;color:var(--accent)}
+  .cover-subtitle{font-family:'Fraunces',serif;font-size:19px;line-height:1.4;color:var(--ink-soft);font-weight:300;max-width:520px;margin-bottom:32px;font-style:italic}
+  .cover-meta{display:grid;grid-template-columns:auto 1fr;gap:11px 24px;font-size:12.5px;border-top:1px solid var(--border-strong);padding-top:22px;max-width:520px}
+  .cover-meta dt{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-muted);letter-spacing:.1em;text-transform:uppercase}
+  .cover-meta dd{color:var(--ink);font-weight:500}
+
+  .composite{display:flex;flex-direction:column;align-items:center;text-align:center}
+  .composite-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:12px}
+  .composite-ring{position:relative;width:290px;height:290px;margin-bottom:18px}
+  .composite-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+  .composite-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .composite-num{font-family:'Fraunces',serif;font-size:88px;font-weight:300;line-height:1;letter-spacing:-.04em}
+  .composite-out-of{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-muted);margin-top:4px;letter-spacing:.1em}
+  .composite-status{font-family:'Fraunces',serif;font-size:28px;font-style:italic;font-weight:400;color:var(--critical)}
+  .composite-desc{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-muted);margin-top:8px}
+
+  /* cover stat strip — leads negative */
+  .cover-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--ink);border-bottom:1px solid var(--border-strong);margin-bottom:0}
+  @media(max-width:900px){.cover-stats{grid-template-columns:repeat(2,1fr)}}
+  .cover-stat{padding:22px 18px;border-right:1px solid var(--border)}
+  .cover-stat:last-child{border-right:none}
+  .cover-stat-num{font-family:'Fraunces',serif;font-size:34px;font-weight:300;letter-spacing:-.02em;color:var(--critical)}
+  .cover-stat-label{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);margin-top:6px;line-height:1.5}
+
+  /* Money on the table */
+  .money{background:var(--ink);color:#EDE7DA;margin:44px 0;padding:44px 48px;position:relative;display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:center}
+  @media(max-width:900px){.money{grid-template-columns:1fr;gap:20px;padding:32px 24px}}
+  .money::before{content:'★ REVENUE OPPORTUNITY · INDICATIVE';position:absolute;top:-11px;left:48px;background:var(--gold);color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.18em;padding:5px 14px;font-weight:500}
+  .money-num{font-family:'Fraunces',serif;font-size:64px;font-weight:300;letter-spacing:-.03em;color:var(--gold-soft);line-height:1}
+  .money-num small{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;color:#B9B09C;margin-top:10px;text-transform:uppercase}
+  .money p{font-size:14.5px;line-height:1.7;color:#D6CFC0;max-width:640px}
+  .money p strong{color:#F3EDDE;font-weight:600}
+
+  /* ===== TAB NAV ===== */
+  .tabnav{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:2px solid var(--ink);display:flex;gap:0;overflow-x:auto}
+  .tabnav button{appearance:none;border:none;background:transparent;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);padding:18px 22px;border-right:1px solid var(--border);white-space:nowrap;transition:all .15s}
+  .tabnav button .n{color:var(--accent);margin-right:8px}
+  .tabnav button:hover{color:var(--ink);background:var(--bg-soft)}
+  .tabnav button.active{color:var(--ink);background:var(--bg-card);box-shadow:inset 0 -3px 0 var(--accent);font-weight:500}
+  .tab{display:none;padding:52px 0 72px}
+  .tab.active{display:block}
+
+  .chapter-head{margin-bottom:34px}
+  .chapter-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;margin-bottom:10px}
+  .chapter-title{font-family:'Fraunces',serif;font-size:40px;font-weight:300;letter-spacing:-.02em;margin-bottom:14px}
+  .chapter-title em{font-style:italic;color:var(--accent)}
+  .chapter-intro{font-size:15px;color:var(--ink-soft);max-width:760px;line-height:1.7}
+
+  /* signals to preserve */
+  .signals{background:var(--bg-card);border:1px solid var(--border);border-top:3px solid var(--healthy);padding:30px 34px;margin:0 0 44px}
+  .signals h3{font-family:'Fraunces',serif;font-size:21px;font-weight:400;margin-bottom:6px}
+  .signals .sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:18px}
+  .signal-row{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:12px 0;border-top:1px solid var(--border);font-size:13.5px}
+  .signal-row .s{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--healthy);white-space:nowrap;font-weight:500}
+  .signal-row .caveat{color:var(--ink-muted);font-style:italic}
+
+  /* axis section */
+  .axis{margin-bottom:44px}
+  .axis-head{display:flex;align-items:baseline;gap:18px;border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:0;flex-wrap:wrap}
+  .axis-name{font-family:'Fraunces',serif;font-size:24px;font-weight:400}
+  .axis-weight{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted)}
+  .axis-score{font-family:'Fraunces',serif;font-size:24px;font-weight:300;margin-left:auto}
+  .axis-score small{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-muted);letter-spacing:.08em}
+  .axis-pending{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-muted);letter-spacing:.08em}
+
+  table.params{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--bg-card)}
+  table.params th{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);text-align:left;padding:12px 14px;border-bottom:1px solid var(--border-strong);background:var(--bg-soft)}
+  table.params td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+  td.pid{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-muted);white-space:nowrap}
+  td.pname{font-weight:600;color:var(--ink-2);min-width:150px}
+  td.pname .pcat{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;color:var(--ink-faint);text-transform:uppercase;font-weight:400;margin-top:3px}
+  td.pval{color:var(--ink-soft);line-height:1.55}
+  td.pbench{color:var(--ink-muted);white-space:nowrap}
+  .st{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;font-weight:500;white-space:nowrap}
+  .st-strong{background:var(--healthy-soft);color:var(--healthy)}
+  .st-watch{background:var(--warning-soft);color:var(--warning)}
+  .st-critical{background:var(--critical-soft);color:var(--critical)}
+  .st-context{background:var(--pending-soft);color:var(--neutral)}
+  .st-pending{background:var(--pending-soft);color:var(--pending);border:1px dashed var(--border-strong)}
+
+  /* diagnosis */
+  .lens{display:flex;gap:0;margin-bottom:34px;border:1px solid var(--border-strong);width:max-content}
+  .lens button{appearance:none;border:none;background:var(--bg-card);cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);padding:12px 24px}
+  .lens button.active{background:var(--ink);color:#EDE7DA}
+  .diag-card{background:var(--bg-card);border:1px solid var(--border);margin-bottom:28px}
+  .diag-head{padding:24px 28px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+  .diag-channel{font-family:'Fraunces',serif;font-size:24px;font-weight:400}
+  .diag-headline{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted)}
+  .diag-flag{margin-left:auto}
+  .diag-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  @media(max-width:900px){.diag-body{grid-template-columns:1fr}}
+  .diag-see,.diag-means{padding:24px 28px}
+  .diag-see{border-right:1px solid var(--border)}
+  @media(max-width:900px){.diag-see{border-right:none;border-bottom:1px solid var(--border)}}
+  .diag-see h4,.diag-means h4{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:16px}
+  .chips{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:600px){.chips{grid-template-columns:repeat(2,1fr)}}
+  .chip .cn{font-family:'Fraunces',serif;font-size:26px;font-weight:300;letter-spacing:-.02em}
+  .chip .cl{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-top:4px;line-height:1.5}
+  .cn.bad{color:var(--critical)}.cn.warn{color:var(--warning)}.cn.good{color:var(--healthy)}
+  .diag-means p{font-size:13.5px;line-height:1.7;color:var(--ink-soft);margin-bottom:12px}
+  .diag-means p:last-child{margin-bottom:0}
+
+  /* comp set */
+  .why-wrong{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:0 0 40px}
+  @media(max-width:900px){.why-wrong{grid-template-columns:1fr}}
+  .why-card{background:var(--bg-card);border:1px solid var(--border);padding:22px}
+  .why-card h4{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .why-card p{font-size:12.5px;color:var(--ink-soft);line-height:1.65}
+  .rank{display:grid;grid-template-columns:64px 1fr auto;gap:24px;background:var(--bg-card);border:1px solid var(--border);padding:24px 28px;margin-bottom:14px;align-items:start}
+  @media(max-width:700px){.rank{grid-template-columns:48px 1fr}}
+  .rank-num{font-family:'Fraunces',serif;font-size:44px;font-weight:300;color:var(--accent);line-height:1}
+  .rank-props{font-family:'Fraunces',serif;font-size:19px;font-weight:500;margin-bottom:6px}
+  .rank-why{font-size:13px;color:var(--ink-soft);line-height:1.65}
+  .rank-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:4px 10px;white-space:nowrap;height:max-content}
+  .priceday{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);padding:26px 30px;margin-top:34px}
+  .priceday h3{font-family:'Fraunces',serif;font-size:20px;font-weight:400;margin-bottom:14px}
+  .priceday .row{display:grid;grid-template-columns:220px 1fr;gap:20px;padding:10px 0;border-top:1px solid var(--border);font-size:13.5px}
+  @media(max-width:700px){.priceday .row{grid-template-columns:1fr}}
+  .priceday .row b{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+
+  /* OTA audit */
+  .snapshot,.audit{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--bg-card);margin-bottom:36px}
+  .snapshot th,.audit th{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);text-align:left;padding:12px 14px;border-bottom:1px solid var(--border-strong);background:var(--bg-soft)}
+  .snapshot td,.audit td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.55}
+  .audit-title{font-family:'Fraunces',serif;font-size:22px;font-weight:400;margin:34px 0 6px}
+  .audit-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:16px}
+  .fl{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;font-weight:500}
+  .fl-ok{background:var(--healthy-soft);color:var(--healthy)}
+  .fl-watch{background:var(--warning-soft);color:var(--warning)}
+  .fl-action{background:var(--critical-soft);color:var(--critical)}
+
+  /* action plan */
+  .plan-note{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--gold);padding:18px 24px;font-size:13px;color:var(--ink-soft);margin-bottom:36px;line-height:1.65}
+  .pgroup{margin-bottom:42px}
+  .pgroup-head{font-family:'Fraunces',serif;font-size:23px;font-weight:400;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:0}
+  .pgroup-head span{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);margin-left:14px}
+  table.plan{width:100%;border-collapse:collapse;font-size:13px;background:var(--bg-card)}
+  table.plan th{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);text-align:left;padding:12px 14px;border-bottom:1px solid var(--border-strong);background:var(--bg-soft)}
+  table.plan td{padding:14px;border-bottom:1px solid var(--border);vertical-align:top}
+  td.pri{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:var(--accent);white-space:nowrap}
+  td.act b{display:block;font-weight:600;color:var(--ink-2);margin-bottom:4px}
+  td.act span{color:var(--ink-soft);font-size:12.5px;line-height:1.6}
+  td.owner{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;white-space:nowrap;color:var(--ink-2)}
+  td.eff{font-family:'JetBrains Mono',monospace;font-size:10.5px;white-space:nowrap;color:var(--healthy);font-weight:500}
+  .task-status{display:inline-block;margin-left:8px;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;background:var(--pending-soft);color:var(--pending)}
+  .task-status.done{background:var(--healthy-soft);color:var(--healthy)}
+
+  @media(max-width:760px){table.params,table.plan,table.snapshot,table.audit{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+  .sample-bar{background:var(--ink);color:#EDE7DA;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;padding:10px 20px;text-align:center;line-height:1.6}
+  .sample-bar a{color:var(--gold-soft);margin-left:10px;white-space:nowrap}
+  footer{border-top:2px solid var(--ink);padding:28px 0 48px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted)}
+</style>
+<link rel="stylesheet" href="/css/report-dark.css?v=0245c6cb">
+</head>
+<body>
+
+<div class="sample-bar">Sample report · names, location, brand systems and account identifiers have been changed; figures are from a real Buildd From Ideas engagement. <a href="/">← Back to BYLD Revenue Operations</a></div>
+<div class="page">
+  <!-- ============ COVER ============ -->
+  <section class="cover">
+    <div class="top-bar">
+      <div class="brand"><div class="brand-mark"></div><div class="wordmark">Rev<em>Vitals</em></div></div>
+      <div class="tagline">Diagnose · Prescribe · Prognose</div>
+      <div class="report-id"><strong>RV-2026-SAMPLE</strong>Day-0 Baseline · 29 Jul 2026<span class="confidential">Sample · Anonymised</span></div>
+    </div>
+
+    <div class="cover-body">
+      <div class="cover-title">
+        <div class="cover-eyebrow">Revenue Health Report · Sample Owner Group</div>
+        <h1>Sample Hotel &amp; Suites <em>Suburban Tech Corridor</em></h1>
+        <p class="cover-subtitle">One distribution organ is failing while the rest of the body recovers — in a market that shrank 18% and will not refill the gap on its own.</p>
+        <dl class="cover-meta">
+          <dt>Keys</dt><dd>109 · Upper-midscale select-service</dd>
+          <dt>Flag</dt><dd>Major-chain franchise · upper-midscale brand</dd>
+          <dt>Location</dt><dd>Suburban tech and office corridor, major US metro</dd>
+          <dt>Systems</dt><dd>Brand PMS · Booking.com · Expedia · Agoda</dd>
+          <dt>Owner</dt><dd>Sample Owner Group</dd>
+        </dl>
+      </div>
+      <div class="composite">
+        <div class="composite-label">Composite Health</div>
+        <div class="composite-ring">
+          <svg viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="52" fill="none" stroke="#E5E1D8" stroke-width="7"/>
+            <circle cx="60" cy="60" r="52" fill="none" stroke="#B91C1C" stroke-width="7" stroke-linecap="butt" stroke-dasharray="182.9 326.7"/>
+          </svg>
+          <div class="composite-center">
+            <div class="composite-num">56</div>
+            <div class="composite-out-of">/ 100</div>
+          </div>
+        </div>
+        <div class="composite-status">Acute</div>
+        <div class="composite-desc">One channel failing · The rest recovering</div>
+      </div>
+    </div>
+
+    <div class="cover-stats">
+      <div class="cover-stat"><div class="cover-stat-num">−50%</div><div class="cover-stat-label">Expedia revenue vs fair share · $201K captured of $406K (trailing 365)</div></div>
+      <div class="cover-stat"><div class="cover-stat-num">$68,751</div><div class="cover-stat-label">Expedia's own quantified 90-day gap · 6.3% capture vs 16.3% fair share</div></div>
+      <div class="cover-stat"><div class="cover-stat-num">24.8%</div><div class="cover-stat-label">Booking.com cancellation rate, last 90 days · area average 17.2%</div></div>
+      <div class="cover-stat"><div class="cover-stat-num">−18%</div><div class="cover-stat-label">Destination demand, trailing 365 vs prior · the market won't refill this gap</div></div>
+    </div>
+
+    <div class="money">
+      <div class="money-num">$60–120K<small>Annually · Indicative Range</small></div>
+      <p>Expedia's own reporting quantifies <strong>$68,751 of missing revenue in ninety days</strong> — the gap between the 6.3% of competitive-set revenue this property captures and the share its 109 keys entitle it to. That single-channel restoration, plus normalizing a promotion share running at roughly half the market's (34% vs 59%) and containing a cancellation rate eight points above area norm, frames a conservative, indicative recovery range. This is not a forecast; it is what the property's own platforms say is being left on the table while its other channels prove the demand is winnable.</p>
+    </div>
+  </section>
+
+  <!-- ============ TAB NAV ============ -->
+  <nav class="tabnav" id="tabnav">
+    <button class="active" data-tab="t1"><span class="n">01</span>Vitals</button>
+    <button data-tab="t2"><span class="n">02</span>Diagnosis</button>
+    <button data-tab="t3"><span class="n">03</span>Competitor Set</button>
+    <button data-tab="t4"><span class="n">04</span>OTA Audit</button>
+    <button data-tab="t5"><span class="n">05</span>Action Plan</button>
+  </nav>
+
+  <!-- ============ TAB 01 VITALS ============ -->
+  <section class="tab active" id="t1">
+    <div class="chapter-head">
+      <div class="chapter-num">Chapter I · The Vitals</div>
+      <div class="chapter-title">Every parameter, measured at <em>Day-0</em></div>
+      <p class="chapter-intro">The RevVitals model measured for this property, grouped by the six weighted axes. Green is a strength, red a pressure point, amber a value still being captured — the STR STAR read, the brand channel-mix export, and the brand loyalty report are pending for this property, and every score below carries that caveat.</p>
+    </div>
+
+    <div class="signals">
+      <h3>Signals to Preserve</h3>
+      <div class="sub">Four assets worth protecting — each with its asterisk</div>
+      <div class="signal-row"><span class="s">BDC RANK #1 / 11</span><div>Room nights lead the entire Booking.com comp set, +102.8% year-over-year (L90). <span class="caveat">Caveat: built on discounted rate plans and a 0.92% page-view conversion — the rank is rented, not owned.</span></div></div>
+      <div class="signal-row"><span class="s">REVIEW 8.6 VS 7.9</span><div>Guest score sits 0.7 above area average across 405 Booking reviews; zero preventable cancellations and relocations on Expedia. <span class="caveat">Caveat: a damp-bedding / cleanliness complaint cluster concentrated in the last 12 months is actively eroding this.</span></div></div>
+      <div class="signal-row"><span class="s">GENIUS +$51,571</span><div>The Genius program has added an estimated 742 room nights and $51,571 net in twelve months since Nov 2025 enrollment. <span class="caveat">Caveat: volume bought with discount and commission — margin, not just revenue, needs watching.</span></div></div>
+      <div class="signal-row"><span class="s">BRAND CONTENT 779/800</span><div>Brand content health headline score is near-perfect. <span class="caveat">Caveat: underlying content completion is 60% — photos 21% loaded (27 of 127), virtual tours 0%, marketing fields 51%. The headline flatters the substance.</span></div></div>
+      <div class="signal-row"><span class="s">CORPORATE DEMAND BASE</span><div>Local corporate room-night demand is deep — Account A 15,400, Account B 10,548, Account C 5,100, Account D 3,210 annually. <span class="caveat">Caveat: no evidence in the data that this property is capturing a negotiated share of any of it.</span></div></div>
+    </div>
+
+    <!-- MARKET -->
+    <div class="axis">
+      <div class="axis-head"><span class="axis-name">Market Vitals</span><span class="axis-weight">Weight 10</span><span class="axis-pending">12 params · 3 pending</span><span class="axis-score">58<small>/100</small></span></div>
+      <table class="params">
+        <tr><th>ID</th><th>Parameter</th><th>Day-0 reading</th><th>Benchmark</th><th>Status</th></tr>
+        <tr><td class="pid">MAR-01</td><td class="pname">Destination demand trend<span class="pcat">Demand &amp; dynamics</span></td><td class="pval">Destination searches −18% trailing-365 vs prior · −4% L90 (Booking demand data)</td><td class="pbench">Flat / growing</td><td><span class="st st-critical">Critical</span></td></tr>
+        <tr><td class="pid">MAR-02</td><td class="pname">Search behavior profile<span class="pcat">Demand &amp; dynamics</span></td><td class="pval">Most searches 8–30 days out · 1-night stays · mobile · couples · non-refundable preferred</td><td class="pbench">Market</td><td><span class="st st-context">Context</span></td></tr>
+        <tr><td class="pid">MAR-03</td><td class="pname">Corporate demand pool<span class="pcat">Demand drivers</span></td><td class="pval">Account A 15,400 RN · Account B 10,548 · Account C 5,100 · Account D 3,210 · Account E 935 · Account F 596 · Account G 593 (local market, annual)</td><td class="pbench">Capturable</td><td><span class="st st-strong">Strong</span></td></tr>
+        <tr><td class="pid">MAR-04</td><td class="pname">Primary demand drivers<span class="pcat">Demand drivers</span></td><td class="pval">Global tech HQ (~1 mi) · second major tech campus · large resort &amp; convention center · minor-league ballpark · premium outlet mall · semiconductor supplier corridor</td><td class="pbench">—</td><td><span class="st st-context">Context</span></td></tr>
+        <tr><td class="pid">MAR-05</td><td class="pname">Seasonality shape<span class="pcat">Demand dynamics</span></td><td class="pval">Summer / event-driven peaks (ballpark, convention center); Nov–Jan trough visible in monthly revenue</td><td class="pbench">100 index</td><td><span class="st st-context">Context</span></td></tr>
+        <tr><td class="pid">MAR-06</td><td class="pname">Market supply change<span class="pcat">Supply</span></td><td class="pval">A value-brand conversion entered the value tier (2024); no new upper-midscale supply identified in immediate corridor</td><td class="pbench">—</td><td><span class="st st-context">Context</span></td></tr>
+        <tr><td class="pid">MAR-07</td><td class="pname">STR RevPAR index (RGI)<span class="pcat">Benchmarks</span></td><td class="pval">— capture · STR subscription absent for this property</td><td class="pbench">≥100</td><td><span class="st st-pending">Pending</span></td></tr>
+        <tr><td class="pid">MAR-08</td><td class="pname">STR occupancy index (MPI)<span class="pcat">Benchmarks</span></td><td class="pval">— capture</td><td class="pbench">≥100</td><td><span class="st st-pending">Pending</span></td></tr>
+        <tr><td class="pid">MAR-09</td><td class="pname">STR ADR index (ARI)<span class="pcat">Benchmarks</span></td><td class="pval">— capture</td><td class="pbench">≥100</td><td><span class="st st-pending">Pending</span></td></tr>
+      </table>
+    </div>
+
+    <!-- ASSET -->
+    <div class="axis">
+      <div class="axis-head"><span class="axis-name">Asset Health</span><span class="axis-weight">Weight 15</span><span class="axis-pending">11 params · 2 pending</span><span class="axis-score">62<small>/100</small></span></div>
+      <table class="params">
+        <tr><th>ID</th><th>Parameter</th><th>Day-0 reading</th><th>Benchmark</th><th>Status</th></tr>
+        <tr><td class="pid">ASS-01</td><td class="pname">Asset age &amp; condition<span class="pcat">Physical plant</span></td><td class="pval">~10 years old · "older but clean" recurring in reviews · no PIP file provided</td><td class="pbench">Brand cycle</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">ASS-02</td><td class="pname">Humidity / damp-room cluster<span class="pcat">Physical plant</span></td><td class="pval">Repeated 2025–26 complaints: damp bed sheets (guest used hair dryer), musty carpet, sheets "still wet from the washer" — points to HVAC / laundry process, not one-off housekeeping</td><td class="pbench">Zero</td><td><span class="st st-critical">Critical</span></td></tr>
+        <tr><td class="pid">ASS-03</td><td class="pname">Maintenance backlog signals<span class="pcat">Physical plant</span></td><td class="pval">Elevator button, room lights, TV remotes, mini-fridge, shower drain, door-lock batteries — small-item drumbeat in reviews</td><td class="pbench">Isolated</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">ASS-04</td><td class="pname">Brand Content Health<span class="pcat">Content &amp; config</span></td><td class="pval">779 / 800 headline</td><td class="pbench">≥760</td><td><span class="st st-strong">Strong</span></td></tr>
+        <tr><td class="pid">ASS-05</td><td class="pname">Brand content completion<span class="pcat">Content &amp; config</span></td><td class="pval">60% overall · Photos 21% (27 of 127) · Virtual tours 0% (0 of 97) · Marketing 51% · General info 68% — the score's soft underbelly</td><td class="pbench">≥85%</td><td><span class="st st-critical">Critical</span></td></tr>
+        <tr><td class="pid">ASS-06</td><td class="pname">Sellable room-type map<span class="pcat">Inventory &amp; config</span></td><td class="pval">8+ types on Booking incl. accessible variants · "Room Selected at Check In" type is unnamed-style with zero photos · sofa-bed attribute appears on multiple types unverified</td><td class="pbench">Reconciled</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">ASS-07</td><td class="pname">Room-type duplication<span class="pcat">Inventory &amp; config</span></td><td class="pval">Expedia: Standard King accessible &amp; Standard 2-Queen accessible duplicated; Standard Room twin shows single-bed photos</td><td class="pbench">None</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">ASS-08</td><td class="pname">Property Page Score (BDC)<span class="pcat">Content &amp; config</span></td><td class="pval">87% vs area 90% · compset leaders at 100% · 1 room &lt;4 photos, 1 room no size, 1 room no bathroom photos</td><td class="pbench">≥95%</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">ASS-09</td><td class="pname">Agoda content score<span class="pcat">Content &amp; config</span></td><td class="pval">96 · "Great" — strongest content read of the three OTAs</td><td class="pbench">Perfect band</td><td><span class="st st-strong">Strong</span></td></tr>
+        <tr><td class="pid">ASS-10</td><td class="pname">Brand quality inspection<span class="pcat">Brand inspection</span></td><td class="pval">— capture · file not provided</td><td class="pbench">Pass</td><td><span class="st st-pending">Pending</span></td></tr>
+      </table>
+    </div>
+
+    <!-- CHANNEL -->
+    <div class="axis">
+      <div class="axis-head"><span class="axis-name">Channel Exposure</span><span class="axis-weight">Weight 20</span><span class="axis-pending">14 params · 2 pending</span><span class="axis-score">44<small>/100</small></span></div>
+      <table class="params">
+        <tr><th>ID</th><th>Parameter</th><th>Day-0 reading</th><th>Benchmark</th><th>Status</th></tr>
+        <tr><td class="pid">CHA-01</td><td class="pname">Expedia fair-share capture<span class="pcat">Visibility &amp; funnel</span></td><td class="pval">6.3% of compset revenue vs 16.3% fair share (L90) · platform-quantified gap $68,751 · trailing revenue $201,429 vs $406,356 fair share (−50%)</td><td class="pbench">≥16.3%</td><td><span class="st st-critical">Critical</span></td></tr>
+        <tr><td class="pid">CHA-02</td><td class="pname">Expedia room nights<span class="pcat">Visibility &amp; funnel</span></td><td class="pval">2,202 vs 4,827 fair share (−54%) · 2026 tracking $109K vs $295K full-year 2025 (−46.2%)</td><td class="pbench">Fair share</td><td><span class="st st-critical">Critical</span></td></tr>
+        <tr><td class="pid">CHA-03</td><td class="pname">Expedia offer strength<span class="pcat">Visibility &amp; funnel</span></td><td class="pval">67 / 100 — below the 80 Milestone threshold · milestone / VIP Access benefits revoked · rates &amp; availability observations #7 of 7</td><td class="pbench">≥80</td><td><span class="st st-critical">Critical</span></td></tr>
+        <tr><td class="pid">CHA-04</td><td class="pname">Expedia page views<span class="pcat">Visibility &amp; funnel</span></td><td class="pval">11,129 trailing (−31% vs compset 16,096 · −49% YoY vs 21,649) · L90 2,695 (−42% vs compset)</td><td class="pbench">Compset</td><td><span class="st st-critical">Critical</span></td></tr>
+        <tr><td class="pid">CHA-05</td><td class="pname">Expedia conversion<span class="pcat">Visibility &amp; funnel</span></td><td class="pval">8.5% L90 (compset 13%) · 10% trailing-365 — leading with the weaker of two correct reads</td><td class="pbench">13%</td><td><span class="st st-critical">Critical</span></td></tr>
+        <tr><td class="pid">CHA-06</td><td class="pname">Duplicate / variant listing<span class="pcat">Listing &amp; presence</span></td><td class="pval">21 "lost" bookings attributed to the property's own name variant · two TripAdvisor listings live (#20 and #28 of 35)</td><td class="pbench">One canonical</td><td><span class="st st-critical">Critical</span></td></tr>
+        <tr><td class="pid">CHA-07</td><td class="pname">BDC comp-set rank<span class="pcat">Visibility &amp; funnel</span></td><td class="pval">#1 of 11 room nights (146 L90, +102.8% YoY) · search-results score 2 of 106 in city (better than 99%)</td><td class="pbench">Top 3</td><td><span class="st st-strong">Strong</span></td></tr>
+        <tr><td class="pid">CHA-08</td><td class="pname">BDC funnel conversion<span class="pcat">Visibility &amp; funnel</span></td><td class="pval">1,009,721 search views → 52,953 page views (5.24%) → 488 bookings (0.92%)</td><td class="pbench">≥1.5%</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">CHA-09</td><td class="pname">Promotion share (Expedia)<span class="pcat">Program state</span></td><td class="pval">34% vs compset 59% (−25pp) · BDC last-minute-deal gap 13% L90 / 23% L30 vs recommendation · no mobile deal live on Expedia</td><td class="pbench">Compset</td><td><span class="st st-critical">Critical</span></td></tr>
+        <tr><td class="pid">CHA-10</td><td class="pname">Genius / member programs<span class="pcat">Program state</span></td><td class="pval">Genius since Nov 2025: +742 RN / +$51,571 net (12 mo) · One Key member share 73% vs compset 67%</td><td class="pbench">Enrolled</td><td><span class="st st-strong">Strong</span></td></tr>
+        <tr><td class="pid">CHA-11</td><td class="pname">B2B distribution<span class="pcat">Program state</span></td><td class="pval">Opted in · +46 room-night potential flagged · B2B ADR $108 vs $131 overall, 92% weekday share</td><td class="pbench">Optimized</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">CHA-12</td><td class="pname">Agoda comp set<span class="pcat">Program state</span></td><td class="pval">Not defined — YCS benchmark analytics dark</td><td class="pbench">Defined</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">CHA-13</td><td class="pname">Brand channel mix (direct/GDS/app)<span class="pcat">Channel mix</span></td><td class="pval">— capture · booking-source export not in folder</td><td class="pbench">—</td><td><span class="st st-pending">Pending</span></td></tr>
+      </table>
+    </div>
+
+    <!-- PRICING -->
+    <div class="axis">
+      <div class="axis-head"><span class="axis-name">Pricing &amp; Yield</span><span class="axis-weight">Weight 20</span><span class="axis-pending">13 params · 3 pending</span><span class="axis-score">52<small>/100</small></span></div>
+      <table class="params">
+        <tr><th>ID</th><th>Parameter</th><th>Day-0 reading</th><th>Benchmark</th><th>Status</th></tr>
+        <tr><td class="pid">PRI-01</td><td class="pname">ADR position (Expedia)<span class="pcat">Rate position</span></td><td class="pval">$82 vs compset $88 (−6.8%, trailing) · $92 vs $89 (L90) — below the set on the failing channel</td><td class="pbench">Compset</td><td><span class="st st-critical">Critical</span></td></tr>
+        <tr><td class="pid">PRI-02</td><td class="pname">ADR position (BDC)<span class="pcat">Rate position</span></td><td class="pval">$103.72 L90 (rank 6 of 11) · $105.17 trailing (−4.1% YoY) · Agoda $112 — the channel spread itself is a flag</td><td class="pbench">Top 5</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">PRI-03</td><td class="pname">Rate-plan mix (BDC)<span class="pcat">Yield mechanics</span></td><td class="pval">Best Flexible Rate dominant (939 of 1,425 RN on lead room type) · Long Term Stay ADR $88.66 diluting · Advance Saver healthy at $96.97</td><td class="pbench">Balanced</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">PRI-04</td><td class="pname">Cancellation rate (BDC)<span class="pcat">Yield mechanics</span></td><td class="pval">24.8% L90 vs area 17.2% · 31–60d window cancels &gt;50% · Expedia 17% (= compset)</td><td class="pbench">≤ area</td><td><span class="st st-critical">Critical</span></td></tr>
+        <tr><td class="pid">PRI-05</td><td class="pname">Forward pace / OTB<span class="pcat">Yield mechanics</span></td><td class="pval">BDC next-365 on books: 199 RN / $21,661 · ADR on books $108.85 (−0.9%) · Oct 2026 spike ($11.3K) event-driven; Nov–Jan near-empty</td><td class="pbench">vs LY</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">PRI-06</td><td class="pname">Rate parity posture<span class="pcat">Parity &amp; policy</span></td><td class="pval">Expedia flags "your Expedia Group rates are higher than your parent chain's site" — brand.com undercut live on the channel already starved for visibility</td><td class="pbench">Parity</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">PRI-07</td><td class="pname">Policy consistency<span class="pcat">Parity &amp; policy</span></td><td class="pval">Damage deposit $25 BDC-only · pet fee $75/stay Expedia-only · extra-bed $20 missing on Agoda · breakfast typed "American Buffet" (BDC) vs "Continental" (Agoda)</td><td class="pbench">Uniform</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">PRI-08</td><td class="pname">Booking window<span class="pcat">Booker behavior</span></td><td class="pval">Expedia 10.3d (+1.5 vs compset 8.8) · BDC 16.0d (LY 11.1) — lengthening, useful for advance-purchase laddering</td><td class="pbench">Market</td><td><span class="st st-context">Context</span></td></tr>
+        <tr><td class="pid">PRI-09</td><td class="pname">Length of stay<span class="pcat">Booker behavior</span></td><td class="pval">1.9 nights (= compset) · 1-night bookings 53.6% of volume</td><td class="pbench">Market</td><td><span class="st st-context">Context</span></td></tr>
+        <tr><td class="pid">PRI-10</td><td class="pname">RMS comp weighting<span class="pcat">RMS state</span></td><td class="pval">— capture · current RMS comp weights not exported; reweight to Chapter III waterfall on receipt</td><td class="pbench">Aligned</td><td><span class="st st-pending">Pending</span></td></tr>
+      </table>
+    </div>
+
+    <!-- GUEST -->
+    <div class="axis">
+      <div class="axis-head"><span class="axis-name">Guest Experience</span><span class="axis-weight">Weight 20</span><span class="axis-pending">12 params · 4 pending</span><span class="axis-score">66<small>/100</small></span></div>
+      <table class="params">
+        <tr><th>ID</th><th>Parameter</th><th>Day-0 reading</th><th>Benchmark</th><th>Status</th></tr>
+        <tr><td class="pid">GUE-01</td><td class="pname">Booking review score<span class="pcat">Public reviews</span></td><td class="pval">8.6 / 10 (405 reviews) vs area 7.9 · 66.2% of reviews improved the score</td><td class="pbench">≥ area</td><td><span class="st st-strong">Strong</span></td></tr>
+        <tr><td class="pid">GUE-02</td><td class="pname">Cross-platform scores<span class="pcat">Public reviews</span></td><td class="pval">Brand.com 4.6/5 (786) · Expedia "Very Good" (886) · Priceline 8.7 (437) · TripAdvisor split across two listings (#20 / #28 of 35)</td><td class="pbench">Consistent</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">GUE-03</td><td class="pname">Negative-review anatomy<span class="pcat">Sentiment</span></td><td class="pval">Of 19 low-performing category mentions: Cleanliness 7 · Location 4 · Facilities 3 · Value / Staff / Comfort 1 each — cleanliness is the single largest bucket</td><td class="pbench">Dispersed</td><td><span class="st st-critical">Critical</span></td></tr>
+        <tr><td class="pid">GUE-04</td><td class="pname">Sentiment trend (recency)<span class="pcat">Sentiment</span></td><td class="pval">2023–24 reviews skew strongly positive (staff, breakfast, location); damp/cleanliness cluster concentrates mid-2025 → mid-2026 — the trend is the wrong direction</td><td class="pbench">Stable+</td><td><span class="st st-critical">Critical</span></td></tr>
+        <tr><td class="pid">GUE-05</td><td class="pname">Expedia GX sub-scores<span class="pcat">Platform GX</span></td><td class="pval">Preventable cancellations 0% (#1) · relocations 0% (#1) · staff &amp; service 4.6 (#3) · cleanliness 4.5 (#5) · preventable refunds 0.21% (#7, flagged)</td><td class="pbench">Top 3</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">GUE-06</td><td class="pname">Service recovery signals<span class="pcat">Ops</span></td><td class="pval">Billing disputes on BDC reservations (quoted $78.24, charged $103.24) · complaints of unresolved issues after front-desk reports</td><td class="pbench">Zero</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">GUE-07</td><td class="pname">Positive anchors<span class="pcat">Sentiment</span></td><td class="pval">Friendly staff (front desk repeatedly named), fresh-pancake breakfast, coffee, location, spacious rooms — protect these in any ops push</td><td class="pbench">—</td><td><span class="st st-strong">Strong</span></td></tr>
+        <tr><td class="pid">GUE-08</td><td class="pname">Brand guest survey (overall / ITR)<span class="pcat">Brand guest metrics</span></td><td class="pval">— capture · file not provided</td><td class="pbench">7.8 / 84%</td><td><span class="st st-pending">Pending</span></td></tr>
+      </table>
+    </div>
+
+    <!-- BRAND -->
+    <div class="axis">
+      <div class="axis-head"><span class="axis-name">Brand Contribution</span><span class="axis-weight">Weight 15</span><span class="axis-pending">9 params · 4 pending</span><span class="axis-score">60<small>/100</small></span></div>
+      <table class="params">
+        <tr><th>ID</th><th>Parameter</th><th>Day-0 reading</th><th>Benchmark</th><th>Status</th></tr>
+        <tr><td class="pid">BRA-01</td><td class="pname">Loyalty program share<span class="pcat">Loyalty</span></td><td class="pval">— capture · Brand loyalty progress report not provided; owner confirms unavailable at Day-0</td><td class="pbench">Brand norm</td><td><span class="st st-pending">Pending</span></td></tr>
+        <tr><td class="pid">BRA-02</td><td class="pname">OTA member-program leverage<span class="pcat">Loyalty proxy</span></td><td class="pval">One Key share 73% vs compset 67% · Genius contribution +742 RN / +$51,571 net — member demand demonstrably responds to this property</td><td class="pbench">≥ compset</td><td><span class="st st-strong">Strong</span></td></tr>
+        <tr><td class="pid">BRA-03</td><td class="pname">Brand.com rate presence<span class="pcat">Direct</span></td><td class="pval">Brand.com listing live (from $99) · Expedia flags brand.com undercutting OTA rate — direct is being fed while the OTA shopfront starves</td><td class="pbench">Coherent</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">BRA-04</td><td class="pname">Name/listing coherence<span class="pcat">Public brand</span></td><td class="pval">Three public name variants in circulation — splitting reviews, rankings and bookings</td><td class="pbench">One name</td><td><span class="st st-critical">Critical</span></td></tr>
+        <tr><td class="pid">BRA-05</td><td class="pname">Brand content system<span class="pcat">Brand systems</span></td><td class="pval">779/800 headline · but 60% completion, photos 21%, VT 0%, marketing 51% — brand engine under-fueled</td><td class="pbench">≥85% complete</td><td><span class="st st-watch">Watch</span></td></tr>
+        <tr><td class="pid">BRA-06</td><td class="pname">Brand guest survey / problem metrics<span class="pcat">Brand systems</span></td><td class="pval">— capture · file not provided</td><td class="pbench">Brand norm</td><td><span class="st st-pending">Pending</span></td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ TAB 02 DIAGNOSIS ============ -->
+  <section class="tab" id="t2">
+    <div class="chapter-head">
+      <div class="chapter-num">Chapter II · The Diagnosis</div>
+      <div class="chapter-title">The same evidence, <em>interpreted</em></div>
+      <p class="chapter-intro">Toggle the lens: how each channel performs, and how each category scores. Left column is what we observe; right is what it means. The through-line is unambiguous — this is a channel-management failure, not a demand or product failure, and it is concentrated in exactly one place.</p>
+    </div>
+
+    <div class="lens"><button class="active" data-lens="channel">By Channel</button><button data-lens="category">By Category</button></div>
+
+    <div id="lens-channel">
+      <div class="diag-card">
+        <div class="diag-head"><span class="diag-channel">Expedia</span><span class="diag-headline">6.3% of fair-share revenue · Benefits revoked · Visibility −49%</span><span class="diag-flag st st-critical">Critical · Restore &amp; Promote</span></div>
+        <div class="diag-body">
+          <div class="diag-see"><h4>What we see</h4>
+            <div class="chips">
+              <div class="chip"><div class="cn bad">6.3%</div><div class="cl">Revenue capture vs 16.3% fair share (L90)</div></div>
+              <div class="chip"><div class="cn bad">$68,751</div><div class="cl">Platform-quantified 90-day gap</div></div>
+              <div class="chip"><div class="cn bad">67/100</div><div class="cl">Offer strength · below 80 threshold</div></div>
+              <div class="chip"><div class="cn bad">34%</div><div class="cl">Promotion share vs compset 59%</div></div>
+              <div class="chip"><div class="cn bad">−49%</div><div class="cl">Page views YoY (11,129 vs 21,649)</div></div>
+              <div class="chip"><div class="cn bad">#7/7</div><div class="cl">Rates &amp; availability observations rank</div></div>
+            </div>
+          </div>
+          <div class="diag-means"><h4>What it means</h4>
+            <p>Offer strength fell below Expedia's 80-point Milestone threshold and the platform responded exactly as designed: it revoked milestone and VIP-Access benefits, demoted sort placement, and stopped showing the property. Fewer eyeballs → fewer bookings → weaker signals → fewer eyeballs. The spiral is algorithmic, which is the good news — it reverses on the same mechanics it decayed on.</p>
+            <p>Promotion share at 34% vs a compset running 59% means shoppers see this property undiscounted next to nine discounted rivals. Combined with an ADR $6 under the set, the property is somehow both cheaper <em>and</em> less visible — the worst available trade.</p>
+            <p>2025 closed at $295K on this channel; 2026 is tracking $109K. Nothing in the product explains that — Booking.com proves the hotel converts when it's seen.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="diag-card">
+        <div class="diag-head"><span class="diag-channel">Booking.com</span><span class="diag-headline">#1 of 11 · But 0.92% conversion and 24.8% cancellations</span><span class="diag-flag st st-strong">Strong · Protect &amp; Convert</span></div>
+        <div class="diag-body">
+          <div class="diag-see"><h4>What we see</h4>
+            <div class="chips">
+              <div class="chip"><div class="cn good">#1/11</div><div class="cl">Comp-set room-night rank</div></div>
+              <div class="chip"><div class="cn good">+102.8%</div><div class="cl">Room nights YoY (L90)</div></div>
+              <div class="chip"><div class="cn warn">0.92%</div><div class="cl">Page-view → booking conversion</div></div>
+              <div class="chip"><div class="cn bad">24.8%</div><div class="cl">Cancellation rate vs area 17.2%</div></div>
+              <div class="chip"><div class="cn warn">87%</div><div class="cl">Page score vs area 90 · leaders 100</div></div>
+              <div class="chip"><div class="cn warn">6/11</div><div class="cl">ADR rank ($103.72)</div></div>
+            </div>
+          </div>
+          <div class="diag-means"><h4>What it means</h4>
+            <p>This is the proof-of-demand channel: same hotel, same market, +102.8% volume. But the rank is rented — driven by Genius discounts and flexible-rate volume — and two leaks tax it. A 0.92% conversion against a 5.24% search-to-page rate says people find the page and leave; the 87% page score and thin photo set are the first suspects.</p>
+            <p>The 24.8% cancellation rate (with 31–60-day bookings cancelling more than half the time) means roughly one in four booked nights evaporates, planned around and staffed for. Rate-plan mix — more advance-purchase and non-refundable structure in far-out windows — is the standard containment.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="diag-card">
+        <div class="diag-head"><span class="diag-channel">Agoda</span><span class="diag-headline">Content 96 · Revenue +56.9% · No comp set defined</span><span class="diag-flag st st-watch">Watch · Benchmark &amp; Harmonize</span></div>
+        <div class="diag-body">
+          <div class="diag-see"><h4>What we see</h4>
+            <div class="chips">
+              <div class="chip"><div class="cn good">+56.9%</div><div class="cl">Net revenue YoY ($132,745)</div></div>
+              <div class="chip"><div class="cn good">$112</div><div class="cl">ADR · highest of the three OTAs</div></div>
+              <div class="chip"><div class="cn good">96</div><div class="cl">Content score · "Great"</div></div>
+              <div class="chip"><div class="cn warn">—</div><div class="cl">No competitor set defined in YCS</div></div>
+              <div class="chip"><div class="cn warn">$20</div><div class="cl">Extra-bed fee missing here only</div></div>
+              <div class="chip"><div class="cn warn">2</div><div class="cl">Photos on "Standard Room" type</div></div>
+            </div>
+          </div>
+          <div class="diag-means"><h4>What it means</h4>
+            <p>Quietly the best-run channel: highest ADR, strong growth, near-perfect content. Two gaps: with no YCS comp set defined the property benchmarks against nothing, and cross-listing inconsistencies (breakfast typed differently, extra-bed fee absent) create guest-facing contradictions that surface as complaints and disputes.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="diag-card">
+        <div class="diag-head"><span class="diag-channel">Direct / Brand</span><span class="diag-headline">Channel-mix and loyalty exports not yet provided</span><span class="diag-flag st st-pending">Pending</span></div>
+        <div class="diag-body">
+          <div class="diag-see"><h4>What we see</h4>
+            <div class="chips">
+              <div class="chip"><div class="cn good">779/800</div><div class="cl">Brand content health headline</div></div>
+              <div class="chip"><div class="cn bad">60%</div><div class="cl">Actual content completion</div></div>
+              <div class="chip"><div class="cn bad">21%</div><div class="cl">Photos loaded (27 of 127) · VT 0%</div></div>
+              <div class="chip"><div class="cn warn">$99+</div><div class="cl">Brand.com undercutting OTA rate</div></div>
+            </div>
+          </div>
+          <div class="diag-means"><h4>What it means</h4>
+            <p>The direct/loyalty story is pending data, flagged not assumed — the brand booking-source export and loyalty progress report fill this next pass. What we can see: the brand content engine reports a flattering 779/800 while running on 60% fuel, with the photo and virtual-tour bays nearly empty. That gap suppresses brand.com merchandising exactly as it does OTA conversion.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="lens-category" style="display:none">
+      <div class="diag-card">
+        <div class="diag-head"><span class="diag-channel">Visibility</span><span class="diag-flag st st-critical">Critical</span></div>
+        <div class="diag-body"><div class="diag-see"><h4>What we see</h4><p style="font-size:13.5px;line-height:1.7;color:var(--ink-soft)">Expedia sort decayed (avg 132), page views −49% YoY, benefits revoked; BDC search-results score 2 of 106; three public name variants splitting equity; duplicate listing absorbing 21 bookings.</p></div>
+        <div class="diag-means"><h4>What it means</h4><p>Visibility is bifurcated by platform, not by market. Where the algorithm is fed (BDC), the property ranks near the top of the city; where it's starved (Expedia), it has effectively vanished. The duplicate-listing and naming fragmentation tax every platform at once.</p></div></div>
+      </div>
+      <div class="diag-card">
+        <div class="diag-head"><span class="diag-channel">Conversion &amp; Content</span><span class="diag-flag st st-watch">Watch</span></div>
+        <div class="diag-body"><div class="diag-see"><h4>What we see</h4><p style="font-size:13.5px;line-height:1.7;color:var(--ink-soft)">BDC 0.92% conversion · page score 87% vs leaders' 100 · brand-system photos 21%, VT 0% · unnamed room type with zero photos · bed-config photo mismatches on Expedia · Agoda room with 2 photos.</p></div>
+        <div class="diag-means"><h4>What it means</h4><p>The same photo-and-content deficit repeats on every platform — one photography and content session fixes four scores simultaneously. This is the highest-leverage, lowest-cost lever in the plan.</p></div></div>
+      </div>
+      <div class="diag-card">
+        <div class="diag-head"><span class="diag-channel">Yield &amp; Stability</span><span class="diag-flag st st-critical">Critical</span></div>
+        <div class="diag-body"><div class="diag-see"><h4>What we see</h4><p style="font-size:13.5px;line-height:1.7;color:var(--ink-soft)">Promotion share half the compset's · ADR below set on Expedia, mid-pack on BDC · 24.8% cancellations · flexible-rate-heavy mix · Nov–Jan forward book near-empty · policy fees inconsistent across OTAs.</p></div>
+        <div class="diag-means"><h4>What it means</h4><p>The property competes on neither rate nor visibility, and a quarter of what it books dissolves. A promotion ladder, advance-purchase structure in far windows, and policy harmonization convert rented volume into kept revenue.</p></div></div>
+      </div>
+      <div class="diag-card">
+        <div class="diag-head"><span class="diag-channel">Product &amp; Reputation</span><span class="diag-flag st st-watch">Watch</span></div>
+        <div class="diag-body"><div class="diag-see"><h4>What we see</h4><p style="font-size:13.5px;line-height:1.7;color:var(--ink-soft)">8.6 vs area 7.9, staff and breakfast beloved — but cleanliness is 7 of 19 negative mentions, the damp-bedding cluster concentrates in the last 12 months, and small-maintenance complaints drumbeat.</p></div>
+        <div class="diag-means"><h4>What it means</h4><p>Reputation is the asset funding the recovery; the humidity/laundry issue is the one operational item that could sink it. Root-cause the moisture (HVAC, laundry drying cycle), tighten housekeeping QA, and the review moat holds.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TAB 03 COMPETITOR SET ============ -->
+  <section class="tab" id="t3">
+    <div class="chapter-head">
+      <div class="chapter-num">Chapter III · The Competitor Set</div>
+      <div class="chapter-title">A pricing instrument, <em>not a mirror</em></div>
+      <p class="chapter-intro">The comp set is a 5-rank relevancy waterfall — rank 1 holds the rivals whose online rates this property must track most closely — weighted first on rate co-movement, then product class, micro-market proximity, and revealed cross-shopping. Governing rule for this market: anchor to the breakfast-included select-service peers around the tech HQ on strong days; on soft winter weekdays reference the value floor so occupancy isn't surrendered in a market already down 18%.</p>
+    </div>
+
+    <div class="why-wrong">
+      <div class="why-card"><h4>Booking set · overbuilt</h4><p>Ten hand-picked properties, unchanged since Jun 2024. It includes a lifestyle-brand hotel — a product with <em>no free breakfast</em>, a different guest and a different rate logic. Useful census, wrong pricing instrument.</p></div>
+      <div class="why-card"><h4>Expedia set · polluted</h4><p>The revealed win/loss list is the best evidence we have — but its #1 "competitor" is the property's own name variant (21 bookings lost to itself). Until the duplicate listing is resolved, Expedia's set measurement is contaminated.</p></div>
+      <div class="why-card"><h4>Agoda set · absent</h4><p>No competitor set is defined in YCS at all. The highest-ADR channel benchmarks against nothing. Mirror the waterfall below into YCS as a day-one action.</p></div>
+    </div>
+
+    <div class="rank"><div class="rank-num">1</div><div><div class="rank-props">Comp A · Comp B</div><div class="rank-why">The true rate anchors. Comp A (~0.9 km, hot breakfast, 8.6–9.0) is the identical upper-midscale breakfast-included product beside the tech HQ and took 11 revealed bookings; Comp B (~0.3 km, upscale select-service, 8.9) is the closest rival of all and the single largest revealed loss (20 bookings L90). Track daily.</div></div><div class="rank-tag">Anchor Tier</div></div>
+    <div class="rank"><div class="rank-num">2</div><div><div class="rank-props">Comp C · Comp D (same brand family)</div><div class="rank-why">Comp C sits on the same street (~0.6 km, 100% page score, 9 revealed losses) — the content-and-conversion standard to beat. Comp D is the brand-family sibling: strongest rate co-movement by system design and 15 revealed losses despite sitting farther south — proof guests trade down inside the flag when this property loses on price-visibility.</div></div><div class="rank-tag">Anchor / Brand Co-Mover</div></div>
+    <div class="rank"><div class="rank-num">3</div><div><div class="rank-props">Comp E · Comp F</div><div class="rank-why">Comp E (~1.3 km, 8.7) is the nearest midscale price-tier match on the north corridor — the first read on soft-day pressure. Comp F (~0.8 km) is the tech-corridor extended-stay cross-shop on longer leisure and project stays.</div></div><div class="rank-tag">Corridor Tier</div></div>
+    <div class="rank"><div class="rank-num">4</div><div><div class="rank-props">Comp G · Comp H</div><div class="rank-why">Secondary extended-stay signals: Comp G (~0.7 mi, 8.8) for the midscale read, Comp H (~1.2 km, 8.6–8.9, ~$146 sampled) as the upscale ceiling reference that shows how much rate headroom exists on compression nights.</div></div><div class="rank-tag">Reference Tier</div></div>
+    <div class="rank"><div class="rank-num">5</div><div><div class="rank-props">Comp I · Comp J</div><div class="rank-why">The value floor (~$54–93 sampled; Comp I 7.7, Comp J 7.2–7.8 post-conversion). Referenced only on the softest winter weekdays so rate-sensitive occupancy isn't lost — never an anchor. The lifestyle-brand hotel drops out of the pricing set entirely (no breakfast; product mismatch) and stays a peripheral watch.</div></div><div class="rank-tag">Slow-Day Floor</div></div>
+
+    <div class="priceday">
+      <h3>How to price against it — by demand day</h3>
+      <div class="row"><b>Compression / event days</b><div>Ballpark series, convention-center city-wides and major-event spillover from the core city: anchor to Rank 1 (Comp A, Comp B) and shade toward Comp H's ceiling. The Oct 2026 forward spike already on books shows the pattern.</div></div>
+      <div class="row"><b>Standard weekdays</b><div>Hold within $5 of the Rank 1–2 median; win on breakfast-included value vs Comp B, never on being the cheapest select-service in view.</div></div>
+      <div class="row"><b>Soft winter weekdays</b><div>Reference Rank 5 to stay in the consideration set without matching it — target the gap between Comp E and Comp A, deploying promotion depth rather than BAR cuts.</div></div>
+      <div class="row"><b>RMS</b><div>Reweight RMS comp inputs to this waterfall (R1–R2 primary weights) on receipt of the current configuration — flagged as pending in the Vitals.</div></div>
+    </div>
+  </section>
+
+  <!-- ============ TAB 04 OTA AUDIT ============ -->
+  <section class="tab" id="t4">
+    <div class="chapter-head">
+      <div class="chapter-num">Chapter IV · The OTA Audit</div>
+      <div class="chapter-title">The QC, <em>row by row</em></div>
+      <p class="chapter-intro">Our team's platform-by-platform QC (July 2026) in its native form — cross-channel snapshot, then each channel's findings with flags, then the cross-OTA consistency checks. Note for this property: the incognito public-ranking check was not run; audit findings stand on extranet data and the team's listing review. The recurring theme — strong reviews everywhere, a starved Expedia shopfront, thin and inconsistent content, and fee policies that disagree with each other across platforms.</p>
+    </div>
+
+    <table class="snapshot">
+      <tr><th>Metric</th><th>Booking.com</th><th>Expedia</th><th>Agoda</th><th>Read</th></tr>
+      <tr><td>Guest review score</td><td>8.6 / 10 (area 7.9)</td><td>"Very Good" (886 reviews)</td><td>Strong</td><td>An asset on all three — protect it</td></tr>
+      <tr><td>Content / page score</td><td>87% (area 90)</td><td>Property details 94 · offer strength 67</td><td>96 (Great)</td><td>Agoda leads; BDC photos, Expedia offers lag</td></tr>
+      <tr><td>Volume trend (YoY)</td><td>+102.8% RN (L90)</td><td>−54% RN vs fair share</td><td>+58.9% net RN</td><td>The Expedia anomaly in one row</td></tr>
+      <tr><td>ADR</td><td>$103.72 (rank 6/11)</td><td>$82 (compset $88)</td><td>$112</td><td>$30 cross-channel spread — harmonize</td></tr>
+      <tr><td>Cancellation</td><td>24.8% (area 17.2)</td><td>17% (= compset)</td><td>~20% (booker data)</td><td>BDC mix needs structure</td></tr>
+      <tr><td>Promotions live</td><td>Last-minute gap vs rec</td><td>34% share (comp 59%) · no mobile deal</td><td>Programs live</td><td>Depth well under market on the failing channel</td></tr>
+    </table>
+
+    <div class="audit-title">Booking.com — channel audit</div>
+    <div class="audit-sub">Rank #1 of 11 · Page score 87% · Cancellation 24.8%</div>
+    <table class="audit">
+      <tr><th>Area reviewed</th><th>Observation</th><th>Flag</th></tr>
+      <tr><td>Last-minute deal</td><td>10% recommendation unmet — gap 13% (L90D), 14% (L60D), 23% (~L30D); mobile-rate reactivation also flagged by Opportunity Center (24% of recent bookings, $2,125 gross, came via it before deactivation)</td><td><span class="fl fl-action">Action</span></td></tr>
+      <tr><td>Visibility booster</td><td>2% booster available to lift ranking further — cheap insurance while conversion work lands</td><td><span class="fl fl-action">Action</span></td></tr>
+      <tr><td>Room content</td><td>"Room Selected at Check In" room type has no photos and an unclear name — rename or retire; room-size confirmation outstanding; sofa-bed attribute appears on multiple types unverified</td><td><span class="fl fl-action">Action</span></td></tr>
+      <tr><td>Amenities</td><td>Amenities confirmation with property pending via mail</td><td><span class="fl fl-watch">Watch</span></td></tr>
+      <tr><td>Damage deposit</td><td>$25 deposit listed on BDC but missing from Expedia and Agoda — inconsistent guest expectation and dispute fuel</td><td><span class="fl fl-action">Action</span></td></tr>
+      <tr><td>Page score gaps</td><td>1 room &lt;4 photos · 1 room unspecified size · 1 room missing bathroom photos — the 87→100 path is enumerated by the platform itself</td><td><span class="fl fl-action">Action</span></td></tr>
+    </table>
+
+    <div class="audit-title">Expedia — channel audit</div>
+    <div class="audit-sub">Offer strength 67/100 · Benefits revoked · Fair-share capture 6.3%</div>
+    <table class="audit">
+      <tr><th>Area reviewed</th><th>Observation</th><th>Flag</th></tr>
+      <tr><td>Promotions</td><td>Last-minute deal 5% recommended; mobile deal + 2% booster proposed to rebuild visibility; promotion share 34% vs comp 59%</td><td><span class="fl fl-action">Action</span></td></tr>
+      <tr><td>Pet policy</td><td>$75/stay stated here only — BDC and Agoda say "charges applicable." Harmonize wording and amount across all three</td><td><span class="fl fl-action">Action</span></td></tr>
+      <tr><td>Room mapping</td><td>Standard Room (twin) displays single-bed photos — confirm config then fix; Standard King accessible &amp; Standard 2-Queen accessible have duplicate listings</td><td><span class="fl fl-action">Action</span></td></tr>
+      <tr><td>Photos</td><td>Front-desk photos needed; offer-strength property-details factor already ranks #7 in set</td><td><span class="fl fl-watch">Watch</span></td></tr>
+      <tr><td>Listing integrity</td><td>21 L90 bookings "lost" to the property's own name variant — merge/retire the duplicate listing before trusting any Expedia set analytics</td><td><span class="fl fl-action">Action</span></td></tr>
+      <tr><td>B2B distribution</td><td>Opted in; +46 room-night potential flagged by platform via distribution rate-plan completion</td><td><span class="fl fl-watch">Watch</span></td></tr>
+    </table>
+
+    <div class="audit-title">Agoda — channel audit</div>
+    <div class="audit-sub">Content 96 (Great) · ADR $112 · No comp set defined</div>
+    <table class="audit">
+      <tr><th>Area reviewed</th><th>Observation</th><th>Flag</th></tr>
+      <tr><td>Extra-bed fee</td><td>Roll-away fee missing here — other OTAs state $20. Add for consistency</td><td><span class="fl fl-action">Action</span></td></tr>
+      <tr><td>Breakfast type</td><td>BDC says "American Buffet," Agoda says "Continental" — one property, two breakfasts. Confirm and align</td><td><span class="fl fl-action">Action</span></td></tr>
+      <tr><td>Room photos</td><td>1 King Bed Standard had double-bed photos (fixed) · "Standard Room" type carries only 2 photos — request full set; request full-HD property/room photography across all OTAs (photos currently differ per platform)</td><td><span class="fl fl-action">Action</span></td></tr>
+      <tr><td>Comp set</td><td>No competitor set defined in YCS — benchmarking dark on the highest-ADR channel</td><td><span class="fl fl-action">Action</span></td></tr>
+      <tr><td>Content score plan</td><td>96→100 path enumerated: high-res room photos (+1), amenity photo tagging (+2), room amenities on suites (+1)</td><td><span class="fl fl-watch">Watch</span></td></tr>
+    </table>
+
+    <div class="audit-title">Cross-OTA consistency checks</div>
+    <div class="audit-sub">One property · three stories — the disagreements guests actually see</div>
+    <table class="audit">
+      <tr><th>Item</th><th>Booking.com</th><th>Expedia</th><th>Agoda</th><th>Status</th></tr>
+      <tr><td>Damage deposit</td><td>$25</td><td>—</td><td>—</td><td><span class="fl fl-action">⚠ Harmonize</span></td></tr>
+      <tr><td>Pet fee</td><td>"Charges applicable"</td><td>$75 / stay</td><td>"Charges applicable"</td><td><span class="fl fl-action">⚠ Harmonize</span></td></tr>
+      <tr><td>Extra bed / roll-away</td><td>$20</td><td>$20</td><td>—</td><td><span class="fl fl-action">⚠ Add</span></td></tr>
+      <tr><td>Breakfast type</td><td>American Buffet</td><td>Breakfast included</td><td>Continental</td><td><span class="fl fl-action">⚠ Verify &amp; align</span></td></tr>
+      <tr><td>Twin/king photo-config</td><td>—</td><td>Twin shows single-bed photos</td><td>King showed double-bed (fixed)</td><td><span class="fl fl-watch">⚠ Verify</span></td></tr>
+      <tr><td>Accessible room listings</td><td>Present</td><td>Duplicated (King &amp; 2Q)</td><td>Present</td><td><span class="fl fl-action">⚠ De-dupe</span></td></tr>
+    </table>
+  </section>
+
+  <!-- ============ TAB 05 ACTION PLAN ============ -->
+  <section class="tab" id="t5">
+<!-- ACTION-TRACKER:BEGIN -->
+<style>
+.at-sec{margin:0 0 40px;padding:26px 28px 30px;background:var(--bg-card,#fff);
+  border:1px solid var(--border,#E5E1D8);border-radius:10px;}
+.at-sec h2{margin:0 0 6px;font-size:1.45rem;color:var(--ink,#0A1628);}
+.at-sec h3{margin:26px 0 10px;font-size:1rem;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--ink-soft,#2D3748);}
+.at-lead{margin:0;color:var(--ink-soft,#2D3748);line-height:1.65;font-size:.95rem;}
+.at-corr-note{margin:10px 0 0;font-size:13px;line-height:1.55}
+.at-corr-act{margin:10px 0 0;font-size:13px;font-weight:600}
+.at-corr-tbl{width:100%;border-collapse:collapse;margin:12px 0 0;font-size:12.5px}
+.at-corr-tbl th{text-align:left;padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.22);
+  font-weight:700;white-space:nowrap}
+.at-corr-tbl td{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.10);
+  vertical-align:top;line-height:1.5}
+.at-over{font-weight:700;white-space:nowrap}
+.at-under{font-weight:700;white-space:nowrap}
+.at-correction{margin:16px 0 0;padding:12px 14px;border-radius:8px;
+  background:var(--warning-soft,#FEF3C7);border:1px solid var(--warning,#B45309);
+  color:var(--ink-2,#1F2937);font-size:.88rem;line-height:1.6;}
+.at-table{width:100%;border-collapse:collapse;margin:0 0 6px;font-size:.88rem;}
+.at-table th{text-align:left;padding:8px 10px;font-size:.72rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink-muted,#6B7280);
+  border-bottom:1px solid var(--border-strong,#C9C2B3);font-weight:600;}
+.at-table td{padding:11px 10px;vertical-align:top;
+  border-bottom:1px solid var(--border,#E5E1D8);color:var(--ink-2,#1F2937);}
+.at-num{font-variant-numeric:tabular-nums;white-space:nowrap;}
+.at-ch{font-weight:600;white-space:nowrap;}
+.at-basis,.at-period{color:var(--ink-muted,#6B7280);font-size:.82rem;}
+.at-delta{font-weight:700;font-variant-numeric:tabular-nums;}
+.at-up{color:var(--healthy,#15803D);}
+.at-down{color:var(--critical,#B91C1C);}
+.at-flat{color:var(--ink-muted,#6B7280);font-weight:600;}
+/* `.at-table td` sets a colour, and a cell's own class has to outrank it —
+   inherited colour loses to a directly-applied rule, so the delta SPANS were
+   colouring correctly while the metric CELLS were not. */
+.at-table td.at-up{color:var(--healthy,#15803D);font-weight:600;}
+.at-table td.at-down{color:var(--critical,#B91C1C);font-weight:600;}
+.at-group{margin:26px 0 0;}
+.at-group-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  padding-bottom:6px;border-bottom:2px solid var(--border-strong,#C9C2B3);}
+.at-group-head h3{margin:0;}
+.at-count{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:99px;
+  background:var(--bg,#F7F3EC);border:1px solid var(--border,#E5E1D8);
+  font-size:.78rem;color:var(--ink-soft,#2D3748);}
+.at-tagline{color:var(--ink-muted,#6B7280);font-size:.84rem;font-style:italic;}
+.at-done .at-group-head{border-bottom-color:var(--healthy,#15803D);}
+.at-awaiting-owner-approval .at-group-head{border-bottom-color:var(--accent,#8B1538);}
+.at-id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.78rem;
+  color:var(--ink-muted,#6B7280);white-space:nowrap;}
+.at-own{white-space:nowrap;font-size:.8rem;color:var(--ink-soft,#2D3748);}
+.at-act b{display:block;font-size:.95rem;color:var(--ink,#0A1628);margin-bottom:4px;}
+.at-act span{display:block;line-height:1.55;}
+.at-meta{margin-bottom:6px;}
+.at-meta span{display:inline-block;margin:0 6px 4px 0;padding:1px 7px;border-radius:4px;
+  font-size:.72rem;letter-spacing:.02em;}
+.at-src.at-rv{background:var(--accent-soft,#FBE8EC);color:var(--accent,#8B1538);}
+.at-src.at-team{background:var(--bg,#F7F3EC);color:var(--ink-muted,#6B7280);
+  border:1px solid var(--border,#E5E1D8);}
+.at-chip{background:var(--bg,#F7F3EC);color:var(--ink-soft,#2D3748);
+  border:1px solid var(--border,#E5E1D8);}
+.at-ev{color:var(--ink-soft,#2D3748);font-size:.86rem;padding-left:11px;
+  border-left:3px solid var(--healthy,#15803D);margin-bottom:5px;}
+.at-blocked{color:var(--ink-2,#1F2937);font-size:.86rem;padding-left:11px;
+  border-left:3px solid var(--accent,#8B1538);margin-bottom:5px;}
+.at-verify{color:var(--warning,#B45309);font-size:.84rem;padding-left:11px;
+  border-left:3px solid var(--warning,#B45309);margin-bottom:5px;}
+.at-metric{color:var(--ink-muted,#6B7280);font-size:.82rem;margin-bottom:4px;}
+.at-note{display:block;color:var(--ink-muted,#6B7280);font-size:.82rem;
+  font-style:italic;margin-top:4px;line-height:1.5;}
+@media(max-width:720px){.at-sec{padding:18px 14px 22px;}
+  .at-table th:last-child,.at-table td:last-child{display:none;}}
+</style>
+<div class="at-sec"><h2>Progress since this report was issued</h2>
+<p class="at-lead">The plan in this report carries <b>23 actions</b>. As of 2026-10-21, <b>2 are complete</b> and <b>9 are under way</b>. Nothing is drawn up and waiting on your approval, and <b>1</b> is waiting on something only the hotel can supply. Every line below cites the team's own words.</p>
+<h3>Channel scores — before and after</h3>
+<table class="at-table at-scores"><thead><tr><th>Channel</th><th>At the report</th><th>Today</th><th>Change</th><th>What was compared</th></tr></thead><tbody>
+<tr><td class="at-ch">Booking.com</td><td class="at-num">87</td><td class="at-num">98</td><td><span class="at-delta at-up">+11</span></td><td class="at-basis">The report's target for this item was 95+. It landed at 98.</td></tr>
+<tr><td class="at-ch">Expedia</td><td class="at-num">94</td><td class="at-num">100</td><td><span class="at-delta at-up">+6</span></td><td class="at-basis">The RevVitals report did not carry an Expedia page score for this property - it measured Expedia offer strength, which is a different number and has not been re-read. See rr-001.</td></tr>
+<tr><td class="at-ch">Agoda</td><td class="at-num">96</td><td class="at-num">97</td><td><span class="at-delta at-up">+1</span></td><td class="at-basis">team-reported previous 96 -&gt; current 97</td></tr>
+</tbody></table>
+<h3>The numbers underneath</h3>
+<table class="at-table at-metrics"><thead><tr><th>Measure</th><th>Period</th><th>This hotel</th><th>Comp set</th></tr></thead><tbody>
+<tr><td>Cancellation rate<span class="at-note">The property improved 12.7 points while the comp set improved 5.3 - so 7.4 points of the swing is ours and the rest is the market. It started 7.9 points worse than the comp set and now sits within half a point of it. The RevVitals report measured this at 24.8% on a different window; the team's 28.6% is their own prior reading, and the two are not directly comparable.</span></td><td class="at-period">previous period -&gt; August 2026</td><td class="at-num at-up">28.6% -&gt; 15.9%</td><td class="at-num">20.7% -&gt; 15.4%</td></tr>
+<tr><td>Occupancy index against the comp set (MPI)<span class="at-note">The property captured 84% of its fair share of occupancy.</span></td><td class="at-period">July 2026 (STR)</td><td class="at-num at-down">84.4</td><td class="at-num">100</td></tr>
+<tr><td>Rate index against the comp set (ARI)<span class="at-note">Rate holds an 8% premium over the comp set. The rate is not the problem.</span></td><td class="at-period">July 2026 (STR)</td><td class="at-num at-up">108.1</td><td class="at-num">100</td></tr>
+<tr><td>RevPAR index against the comp set (RGI)</td><td class="at-period">July 2026 (STR)</td><td class="at-num at-down">91.2</td><td class="at-num">100</td></tr>
+<tr><td>Occupancy year over year<span class="at-note">This is the hard one and it has to be said plainly. The market grew and the property shrank. The OTA content fixes landed in August; this is July data. The two promotions that actually drive volume - rr-002 and the rest of rr-004 - are still waiting on approval.</span></td><td class="at-period">July 2026 (STR)</td><td class="at-num at-down">-15.9%</td><td class="at-num">+16.1%</td></tr>
+</tbody></table>
+<div class="at-group at-done"><div class="at-group-head"><h3>Completed <span class="at-count">2</span></h3><span class="at-tagline">executed and verifiable on the channel</span></div><table class="at-table"><thead><tr><th>Ref</th><th>Action</th><th>Owner</th></tr></thead><tbody>
+<tr><td class="at-id">rr-008</td><td class="at-act"><b>Lift the Booking.com property page score from 87 to 95+</b><span class="at-meta"><span class="at-src at-rv">P2 · Priority 2 - Convert what already looks</span> <span class="at-chip">Booking.com</span></span><span class="at-ev">Booking.com page score 87 -&gt; 98. Room sizes updated on Booking.com; missing photos added; photo tags assigned.</span><span class="at-metric">Target was 95+. Delivered 98. The platform prices this gap at up to 18% more bookings.</span><span class="at-note">Target set in the report, target beaten.</span></td><td class="at-own">RV-managed</td></tr>
+<tr><td class="at-id">rr-t01</td><td class="at-act"><b>Update the filed forms and amenity confirmation responses on the OTAs</b><span class="at-meta"><span class="at-src at-team">found by the team — not in the report</span> <span class="at-chip">All OTAs</span></span><span class="at-ev">Booking: Filed forms updated on OTA; Amenity Confirmation Form responses updated. Expedia: Filed forms updated on OTA; Amenity Confirmation Form responses updated.</span><span class="at-metric">Content completeness - feeds the property page score</span><span class="at-note">Not called out separately in the RevVitals report. It is part of what moved Booking.com from 87 to 98.</span></td><td class="at-own">RV-managed</td></tr>
+</tbody></table></div>
+<div class="at-group at-in-progress"><div class="at-group-head"><h3>In progress <span class="at-count">9</span></h3><span class="at-tagline">started, and named in the team's report as in progress</span></div><table class="at-table"><thead><tr><th>Ref</th><th>Action</th><th>Owner</th></tr></thead><tbody>
+<tr><td class="at-id">rr-001</td><td class="at-act"><b>Rebuild Expedia offer strength above 80</b><span class="at-meta"><span class="at-src at-rv">P1 · Priority 1 - Stop the Expedia bleed</span> <span class="at-chip">Expedia</span></span><span class="at-ev">Expedia page score 94 -&gt; 100. Filed forms updated on OTA; Amenity Confirmation Form responses updated.</span><span class="at-verify">Not yet confirmed: Page score is not offer strength. Offer strength is the number that gates Milestone benefits and sort placement, and nobody has re-read it. The team still reports a 27% decrease in property views, which suggests sort has not recovered. The current offer-strength score is being re-pulled.</span><span class="at-metric">Offer strength above 80 restores Milestone benefits and sort placement - called the single largest lever in the report</span></td><td class="at-own">RV-managed</td></tr>
+<tr><td class="at-id">rr-002</td><td class="at-act"><b>Launch the Expedia promotion ladder</b><span class="at-meta"><span class="at-src at-rv">P1 · Priority 1 - Stop the Expedia bleed</span> <span class="at-chip">Expedia</span></span><span class="at-metric">Promotion share 34% against a comp set norm of 59%; property share 25% against comp set 36%</span><span class="at-note">Owner approved 2026-10-21. Now with the RV team to activate on Expedia. The report asked for a last-minute 5%, a mobile deal and a 2% booster. The team has proposed a 4% Accelerator and a 10% Last Minute Deal - deeper on both, and a different instrument. Flagged so the owner is not comparing two lists and finding them different. Counted as a heading, not as a decision: rr-002a and rr-002b are the two things actually being approved.</span></td><td class="at-own">Owner-led</td></tr>
+<tr><td class="at-id">rr-002a</td><td class="at-act"><b>Expedia 4% Accelerator</b><span class="at-meta"><span class="at-src at-team">found by the team — not in the report</span> <span class="at-chip">Expedia</span></span><span class="at-metric">Property views, down 27% over the period the team measured</span><span class="at-note">Owner approved 2026-10-21. Now with the RV team to activate on Expedia. The team proposed this instrument; the RevVitals report did not name an Accelerator. It is a commission-side lever, not a rate discount - worth saying out loud, because it reads as '4%' next to a '10%' and the two are not the same kind of number.</span></td><td class="at-own">Owner-led</td></tr>
+<tr><td class="at-id">rr-002b</td><td class="at-act"><b>Expedia 10% Last Minute Deal</b><span class="at-meta"><span class="at-src at-team">found by the team — not in the report</span> <span class="at-chip">Expedia</span></span><span class="at-metric">Promotion share 25% against comp set 36%</span><span class="at-note">Owner approved 2026-10-21. Now with the RV team to activate on Expedia. The report asked for a last-minute 5%. The team has proposed 10% - twice the depth. The owner is approving 10%, not the 5% printed in the report.</span></td><td class="at-own">Owner-led</td></tr>
+<tr><td class="at-id">rr-004</td><td class="at-act"><b>Close the Booking.com last-minute-deal gap and reactivate the mobile rate</b><span class="at-meta"><span class="at-src at-rv">P1 · Priority 1 - Stop the Expedia bleed</span> <span class="at-chip">Booking.com</span></span><span class="at-ev">10% Last Minute Deal (0-3 days) activated - approved 13 August.</span><span class="at-verify">Not yet confirmed: The last-minute deal is live. The mobile rate reactivation and the 2% booster, both named in the same item, are not reported. The deactivated mobile rate previously drove 24% of bookings, so it is the larger half of this item.</span><span class="at-metric">The 10% last-minute recommendation was unmet by 13-23% depending on window</span></td><td class="at-own">RV-managed</td></tr>
+<tr><td class="at-id">rr-007</td><td class="at-act"><b>Full-HD photography and tagging session</b><span class="at-meta"><span class="at-src at-rv">P1 · Priority 2 - Convert what already looks</span> <span class="at-chip">All OTAs</span></span><span class="at-ev">Booking: Fitness Center photos updated; missing photo tags assigned; Front Desk photo tagged; cover photo changed; missing photos added to the 'Room Selected at Check-In' gallery. Expedia: Fitness Center photos updated; Front Desk photo tagged; cover photo changed. Agoda: missing photo tags assigned; Front Desk photo tagged; cover photo changed.</span><span class="at-verify">Not yet confirmed: Every OTA-side photo gap named in the report has been worked. The brand side has not: Brand-system photos sat at 21% (27 of 127) and the virtual tour at 0%, and neither is mentioned. That is rr-011 territory and it is where the brand engine merchandises every channel including brand.com.</span><span class="at-metric">One shoot feeds four scores. Booking.com moved 87 -&gt; 98, Expedia 94 -&gt; 100, Agoda 96 -&gt; 97.</span></td><td class="at-own">Owner+RV</td></tr>
+<tr><td class="at-id">rr-009</td><td class="at-act"><b>Fix room-type mapping across the OTAs</b><span class="at-meta"><span class="at-src at-rv">P2 · Priority 2 - Convert what already looks</span> <span class="at-chip">All OTAs</span></span><span class="at-ev">Missing photos added to the 'Room Selected at Check-In' gallery; One King Bed photo mismatch corrected on Booking.com and Agoda (double-bed photos were previously shown).</span><span class="at-verify">Not yet confirmed: Two of five sub-items are done. Still open: rename or retire 'Room Selected at Check In', de-duplicate Expedia's accessible rooms, and verify the sofa-bed attribute.</span><span class="at-metric">Conversion - a room type with no photos and bed-configuration mismatches across channels</span></td><td class="at-own">RV-managed</td></tr>
+<tr><td class="at-id">rr-010</td><td class="at-act"><b>Harmonise fees and policies across platforms</b><span class="at-meta"><span class="at-src at-rv">P2 · Priority 2 - Convert what already looks</span> <span class="at-chip">All OTAs</span></span><span class="at-ev">Agoda: Damage Deposit update in progress; Rollaway / Extra Bed fee update in progress.</span><span class="at-blocked">Waiting on: Two of the four policies need the property to answer: the pet fee actually charged, and whether breakfast is American Buffet, Continental Buffet or both.</span><span class="at-metric">Damage deposit $25 on Booking.com only, pet fee $75 on Expedia only, extra bed $20 missing on Agoda, breakfast type inconsistent - one policy sheet, three consistent listings</span></td><td class="at-own">Owner+RV</td></tr>
+<tr><td class="at-id">rr-015</td><td class="at-act"><b>Restructure the Booking.com rate-plan mix against cancellations</b><span class="at-meta"><span class="at-src at-rv">P2 · Priority 3 - Operations &amp; revenue strategy</span> <span class="at-chip">Booking.com</span></span><span class="at-ev">Cancellation rate 28.6% -&gt; 15.9% while the comp set went 20.7% -&gt; 15.4%.</span><span class="at-verify">Not yet confirmed: The number moved, and moved further than the market did. But the team does not report adding the advance-purchase or partially-flexible structure in the far-out windows, which is what the item actually asks for. Confirm whether the rate-plan mix changed or the cancellation drop is compositional - it changes whether this holds next quarter.</span><span class="at-metric">24.8% cancellation against an area 17.2%, with 31-60 day bookings cancelling at over 50%</span></td><td class="at-own">RV-managed</td></tr>
+<tr><td class="at-id">rr-019</td><td class="at-act"><b>Close the data gaps for the next pass</b><span class="at-meta"><span class="at-src at-rv">P3 · Priority 3 - Operations &amp; revenue strategy</span> <span class="at-chip">Data</span></span><span class="at-ev">The STR STAR subscription is live and 13 months of STAR history is loaded, so the three axes that carried pending values in the report can now be scored.</span><span class="at-blocked">Waiting on: Still outstanding: the brand booking-source and channel-mix export, the brand loyalty progress report, and the brand guest survey.</span><span class="at-metric">Enabler - three axes in the report carry pending values until these land</span><span class="at-note">The only item on this plan that we closed on its own side rather than at the hotel.</span></td><td class="at-own">Owner-led</td></tr>
+</tbody></table></div>
+<div class="at-group at-awaiting-property"><div class="at-group-head"><h3>Awaiting the property <span class="at-count">1</span></h3><span class="at-tagline">waiting on something only the hotel can supply</span></div><table class="at-table"><thead><tr><th>Ref</th><th>Action</th><th>Owner</th></tr></thead><tbody>
+<tr><td class="at-id">rr-t02</td><td class="at-act"><b>Confirm the Two Queen Suite amenities</b><span class="at-meta"><span class="at-src at-team">found by the team — not in the report</span> <span class="at-chip">Booking.com</span></span><span class="at-blocked">Waiting on: Property must confirm air conditioning, attached bathroom, flat-screen TV, coffee machine and free Wi-Fi - currently missing on Booking.com and Agoda.</span><span class="at-metric">Content completeness on a room type that is currently under-described</span><span class="at-note">Not in the RevVitals report - the team found it.</span></td><td class="at-own">Owner-led</td></tr>
+</tbody></table></div>
+<div class="at-group at-not-started"><div class="at-group-head"><h3>Not started <span class="at-count">11</span></h3><span class="at-tagline">in the plan, no work reported against it this period</span></div><table class="at-table"><thead><tr><th>Ref</th><th>Action</th><th>Owner</th></tr></thead><tbody>
+<tr><td class="at-id">rr-003</td><td class="at-act"><b>Merge or retire the duplicate listing</b><span class="at-meta"><span class="at-src at-rv">P1 · Priority 1 - Stop the Expedia bleed</span> <span class="at-chip">Expedia</span></span><span class="at-metric">21 bookings in the last 90 days went to the property's own name variant; two TripAdvisor listings split reviews and rank</span><span class="at-note">Nothing reported against it. The property is still losing bookings to itself, and until it is merged the Expedia comp-set measurement stays contaminated - which makes several other numbers in this report less trustworthy than they look.</span></td><td class="at-own">RV-managed</td></tr>
+<tr><td class="at-id">rr-005</td><td class="at-act"><b>Resolve the brand.com and OTA rate posture</b><span class="at-meta"><span class="at-src at-rv">P1 · Priority 1 - Stop the Expedia bleed</span> <span class="at-chip">All OTAs</span></span><span class="at-metric">Conversion - Expedia flags OTA rates above the parent chain site, and parity noise on a starved channel compounds the visibility penalty</span></td><td class="at-own">Owner+RV</td></tr>
+<tr><td class="at-id">rr-006</td><td class="at-act"><b>Complete the Expedia B2B distribution rate plans</b><span class="at-meta"><span class="at-src at-rv">P1 · Priority 1 - Stop the Expedia bleed</span> <span class="at-chip">Expedia</span></span><span class="at-metric">+46 room nights flagged by the platform; B2B skews 92% weekday, which is exactly the November-January softness in the forward book</span></td><td class="at-own">RV-managed</td></tr>
+<tr><td class="at-id">rr-011</td><td class="at-act"><b>Complete brand-system content to 85% or better</b><span class="at-meta"><span class="at-src at-rv">P2 · Priority 2 - Convert what already looks</span> <span class="at-chip">Brand</span></span><span class="at-metric">Marketing fields at 51%, general info at 68%, behind a 779/800 headline</span><span class="at-note">The brand content system is not an OTA, so it fell outside the team's OTA audit and carries no status. It merchandises every channel including brand.com, so it should not stay outside scope.</span></td><td class="at-own">RV-managed</td></tr>
+<tr><td class="at-id">rr-012</td><td class="at-act"><b>Define the Agoda comp set in YCS</b><span class="at-meta"><span class="at-src at-rv">P2 · Priority 2 - Convert what already looks</span> <span class="at-chip">Agoda</span></span><span class="at-metric">Enabler - the highest-ADR channel currently benchmarks against nothing at all</span></td><td class="at-own">RV-managed</td></tr>
+<tr><td class="at-id">rr-013</td><td class="at-act"><b>Root-cause the damp-room cluster</b><span class="at-meta"><span class="at-src at-rv">P1 · Priority 3 - Operations &amp; revenue strategy</span> <span class="at-chip">Operations</span></span><span class="at-metric">Cleanliness is 7 of 19 negative mentions and the damp-bedding cluster concentrates in the last 12 months, against a review score of 8.6 vs an area 7.9</span><span class="at-note">The report calls the reputation the asset funding the recovery and this the one operational item that could sink it. It is a P1 with no reported work. It is not an OTA item, so it needs a named owner.</span></td><td class="at-own">Owner-led</td></tr>
+<tr><td class="at-id">rr-014</td><td class="at-act"><b>Housekeeping and small-maintenance QA sweep</b><span class="at-meta"><span class="at-src at-rv">P2 · Priority 3 - Operations &amp; revenue strategy</span> <span class="at-chip">Operations</span></span><span class="at-metric">Enabler - elevator button, room lights, remotes, mini-fridge, drain, lock batteries, tissue restock on multi-night stays</span></td><td class="at-own">Owner-led</td></tr>
+<tr><td class="at-id">rr-016</td><td class="at-act"><b>Corporate and LNR outreach programme</b><span class="at-meta"><span class="at-src at-rv">P2 · Priority 3 - Operations &amp; revenue strategy</span> <span class="at-chip">Revenue</span></span><span class="at-metric">Account A 15,400 room nights, Account B 10,548, Account C 5,100, Account D 3,210 - with negotiated-rate content already 96% complete</span></td><td class="at-own">Owner+RV</td></tr>
+<tr><td class="at-id">rr-017</td><td class="at-act"><b>Build the seasonal promotion calendar</b><span class="at-meta"><span class="at-src at-rv">P2 · Priority 3 - Operations &amp; revenue strategy</span> <span class="at-chip">All OTAs</span></span><span class="at-metric">RevPAR - anchored to ballpark, convention-center city-wides and outlet-mall peaks, against the November-January trough in the forward book</span></td><td class="at-own">RV-managed</td></tr>
+<tr><td class="at-id">rr-018</td><td class="at-act"><b>Reweight PriceCortex to the new comp-set waterfall</b><span class="at-meta"><span class="at-src at-rv">P3 · Priority 3 - Operations &amp; revenue strategy</span> <span class="at-chip">Revenue</span></span><span class="at-metric">Enabler - load the Chapter III ranks, R1-R2 primary, into the pricing comp configuration</span></td><td class="at-own">RV-managed</td></tr>
+<tr><td class="at-id">rr-020</td><td class="at-act"><b>Review-response and billing-dispute protocol</b><span class="at-meta"><span class="at-src at-rv">P3 · Priority 3 - Operations &amp; revenue strategy</span> <span class="at-chip">Operations</span></span><span class="at-metric">Enabler - respond to every sub-7 review and reconcile quoted-versus-charged discrepancies before they become chargebacks</span></td><td class="at-own">Owner+RV</td></tr>
+</tbody></table></div>
+</div>
+<!-- ACTION-TRACKER:END -->
+
+    <div class="chapter-head">
+      <div class="chapter-num">Chapter V · The Action Plan</div>
+      <div class="chapter-title">Sequenced for <em>recovery</em></div>
+      <p class="chapter-intro">What we start with — the Expedia restoration leads because it is the largest quantified leak and reverses on known mechanics; the conversion-and-content plan follows; operations and revenue strategy close. Owners and expected effect attach to every action. This is the living layer — each row below is a tracked task that updates live as the team completes it.</p>
+    </div>
+    <div class="plan-note">Action plan v1.0 · incorporates our OTA QC (July 2026). Data caveats carried forward: STR STAR, brand channel-mix, and brand loyalty files pending — three actions below exist to close those gaps. Effects are directional (Occupancy ↑, Conversion ↑, RevPAR ↑); no dollar attribution at task level.</div>
+
+    <div class="pgroup">
+      <div class="pgroup-head">Priority 1 — Stop the Expedia bleed <span>restore visibility · rebuild promotion depth · one canonical listing</span></div>
+      <table class="plan">
+        <tr><th>Pri</th><th>Action</th><th>Owner</th><th>Effect</th></tr>
+        <tr data-task-id="rr-001"><td class="pri">P1</td><td class="act"><b>Rebuild Expedia offer strength above 80<span class="task-status">Open</span></b><span>Clear the rates-&amp;-availability observations (#7 of 7), complete property-detail gaps, and reopen closed-out rate plans. Crossing 80 restores Milestone benefits and sort placement — the single largest lever in this report.</span></td><td class="owner">RV-MANAGED</td><td class="eff">RevPAR ↑</td></tr>
+        <tr data-task-id="rr-002"><td class="pri">P1</td><td class="act"><b>Launch the Expedia promotion ladder<span class="task-status">Open</span></b><span>Last-minute 5%, mobile deal, and 2% booster per the QC — moving promotion share from 34% toward the 59% compset norm so the property stops competing undiscounted against nine discounted rivals.</span></td><td class="owner">RV-MANAGED</td><td class="eff">Occupancy ↑</td></tr>
+        <tr data-task-id="rr-003"><td class="pri">P1</td><td class="act"><b>Merge or retire the duplicate listing<span class="task-status">Open</span></b><span>21 L90 bookings booked away to the property's own name variant; two TripAdvisor listings split reviews and rank. One canonical name and listing across Expedia and TripAdvisor.</span></td><td class="owner">RV-MANAGED</td><td class="eff">Conversion ↑</td></tr>
+        <tr data-task-id="rr-004"><td class="pri">P1</td><td class="act"><b>Close the BDC last-minute-deal gap + reactivate mobile rate<span class="task-status">Open</span></b><span>10% last-minute recommendation unmet by 13–23% depending on window; the deactivated mobile rate previously drove 24% of bookings. Add the 2% booster while conversion work lands.</span></td><td class="owner">RV-MANAGED</td><td class="eff">Occupancy ↑</td></tr>
+        <tr data-task-id="rr-005"><td class="pri">P1</td><td class="act"><b>Resolve brand.com / OTA rate posture<span class="task-status">Open</span></b><span>Expedia flags OTA rates above the parent chain site. Decide the intended posture and load it consistently — parity noise on a starved channel compounds the visibility penalty.</span></td><td class="owner">OWNER+RV</td><td class="eff">Conversion ↑</td></tr>
+        <tr data-task-id="rr-006"><td class="pri">P1</td><td class="act"><b>Complete Expedia B2B distribution rate plans<span class="task-status">Open</span></b><span>+46 room nights flagged by the platform; B2B skews weekday (92%) — exactly the Nov–Jan softness in the forward book.</span></td><td class="owner">RV-MANAGED</td><td class="eff">Occupancy ↑</td></tr>
+      </table>
+    </div>
+
+    <div class="pgroup">
+      <div class="pgroup-head">Priority 2 — Convert what already looks <span>photos · content scores · room mapping · policy harmony</span></div>
+      <table class="plan">
+        <tr><th>Pri</th><th>Action</th><th>Owner</th><th>Effect</th></tr>
+        <tr data-task-id="rr-007"><td class="pri">P1</td><td class="act"><b>Full-HD photography &amp; tagging session<span class="task-status">Open</span></b><span>One shoot feeds four scores: brand-system photos at 21% (27 of 127) and VT 0%, BDC bathroom/room gaps, Expedia front-desk photos, Agoda's 2-photo room. Photos currently differ per platform — one canonical set everywhere.</span></td><td class="owner">OWNER+RV</td><td class="eff">Conversion ↑</td></tr>
+        <tr data-task-id="rr-008"><td class="pri">P2</td><td class="act"><b>Lift BDC Property Page Score 87 → 95+<span class="task-status">Open</span></b><span>Close the platform-enumerated gaps (photo count, room size, bathroom photos) — compset leaders sit at 100 and the platform prices this at up to 18% more bookings.</span></td><td class="owner">RV-MANAGED</td><td class="eff">Conversion ↑</td></tr>
+        <tr data-task-id="rr-009"><td class="pri">P2</td><td class="act"><b>Fix room-type mapping across OTAs<span class="task-status">Open</span></b><span>Rename or retire "Room Selected at Check In" (no photos), de-duplicate Expedia's accessible rooms, correct the twin/single photo mismatch, verify the sofa-bed attribute, confirm room sizes.</span></td><td class="owner">RV-MANAGED</td><td class="eff">Conversion ↑</td></tr>
+        <tr data-task-id="rr-010"><td class="pri">P2</td><td class="act"><b>Harmonize fees &amp; policies across platforms<span class="task-status">Open</span></b><span>Damage deposit ($25 BDC-only), pet fee ($75 Expedia-only), extra-bed $20 (missing Agoda), breakfast type (Buffet vs Continental) — one policy sheet, three consistent listings. Removes dispute fuel behind billing complaints.</span></td><td class="owner">OWNER+RV</td><td class="eff">Conversion ↑</td></tr>
+        <tr data-task-id="rr-011"><td class="pri">P2</td><td class="act"><b>Complete brand-system content to ≥85%<span class="task-status">Open</span></b><span>Marketing fields at 51%, general info 68% — the 779/800 headline is masking an under-fueled brand engine that merchandises every channel including brand.com.</span></td><td class="owner">RV-MANAGED</td><td class="eff">Conversion ↑</td></tr>
+        <tr data-task-id="rr-012"><td class="pri">P2</td><td class="act"><b>Define the Agoda comp set in YCS<span class="task-status">Open</span></b><span>Mirror the Chapter III waterfall so the highest-ADR channel finally benchmarks against something.</span></td><td class="owner">RV-MANAGED</td><td class="eff">Enabler</td></tr>
+      </table>
+    </div>
+
+    <div class="pgroup">
+      <div class="pgroup-head">Priority 3 — Operations &amp; revenue strategy <span>protect the review moat · stabilize the book · capture corporate</span></div>
+      <table class="plan">
+        <tr><th>Pri</th><th>Action</th><th>Owner</th><th>Effect</th></tr>
+        <tr data-task-id="rr-013"><td class="pri">P1</td><td class="act"><b>Root-cause the damp-room cluster<span class="task-status">Open</span></b><span>HVAC/dehumidification audit plus laundry drying-cycle review — damp bedding, musty carpet and "wet from the washer" sheets recur through 2025–26 reviews. This is the one operational item that can sink the 8.6 score funding the recovery.</span></td><td class="owner">OWNER-LED</td><td class="eff">RevPAR ↑</td></tr>
+        <tr data-task-id="rr-014"><td class="pri">P2</td><td class="act"><b>Housekeeping &amp; small-maintenance QA sweep<span class="task-status">Open</span></b><span>Checklist the review drumbeat: elevator button, room lights, remotes, mini-fridge, drain, lock batteries, tissue restock on multi-night stays.</span></td><td class="owner">OWNER-LED</td><td class="eff">Enabler</td></tr>
+        <tr data-task-id="rr-015"><td class="pri">P2</td><td class="act"><b>Restructure BDC rate-plan mix vs cancellations<span class="task-status">Open</span></b><span>24.8% cancellation vs 17.2% area, with 31–60-day bookings cancelling &gt;50% — add advance-purchase / partially-flexible structure in far-out windows and rebalance the Long Term Stay dilution ($88.66 ADR).</span></td><td class="owner">RV-MANAGED</td><td class="eff">RevPAR ↑</td></tr>
+        <tr data-task-id="rr-016"><td class="pri">P2</td><td class="act"><b>Corporate / LNR outreach program<span class="task-status">Open</span></b><span>Local corporate demand is deep and enumerated — Account A 15,400 RN, Account B 10,548, Account C 5,100, Account D 3,210 — with negotiated-rate content already 96% complete in the brand system. Weekday base to offset the −18% leisure market.</span></td><td class="owner">OWNER+RV</td><td class="eff">Occupancy ↑</td></tr>
+        <tr data-task-id="rr-017"><td class="pri">P2</td><td class="act"><b>Build the seasonal promotion calendar<span class="task-status">Open</span></b><span>Anchor to ballpark, convention-center city-wides and outlet-mall peaks; deploy promotion depth rather than BAR cuts on the Nov–Jan trough visible in the forward book.</span></td><td class="owner">RV-MANAGED</td><td class="eff">RevPAR ↑</td></tr>
+        <tr data-task-id="rr-018"><td class="pri">P3</td><td class="act"><b>Reweight the RMS to the new waterfall<span class="task-status">Open</span></b><span>Load Chapter III ranks (R1–R2 primary) into the RMS comp configuration on receipt of the current setup.</span></td><td class="owner">RV-MANAGED</td><td class="eff">Enabler</td></tr>
+        <tr data-task-id="rr-019"><td class="pri">P3</td><td class="act"><b>Close the data gaps for next pass<span class="task-status">Open</span></b><span>Pull the brand booking-source/channel-mix export, the brand loyalty progress report, the brand guest survey, and initiate the STR STAR subscription — three axes carry pending values until these land.</span></td><td class="owner">OWNER-LED</td><td class="eff">Enabler</td></tr>
+        <tr data-task-id="rr-020"><td class="pri">P3</td><td class="act"><b>Review-response &amp; billing-dispute protocol<span class="task-status">Open</span></b><span>Respond to every sub-7 review; reconcile the quoted-vs-charged discrepancies surfacing on BDC reservations before they become chargebacks.</span></td><td class="owner">OWNER+RV</td><td class="eff">Enabler</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <div>RevVitals™ · Buildd From Ideas · RV-2026-SAMPLE</div>
+    <div>Day-0 Baseline · 29 Jul 2026 · Anonymised sample</div>
+    <div><a href="/" style="color:inherit">marketing.buildfromideas.ai</a></div>
+  </footer>
+</div>
+
+<script>
+  // Tab switching
+  document.querySelectorAll('#tabnav button').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('#tabnav button').forEach(function(b){b.classList.remove('active')});
+      document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      window.scrollTo({top:document.getElementById('tabnav').offsetTop,behavior:'smooth'});
+    });
+  });
+  // Diagnosis lens toggle
+  document.querySelectorAll('.lens button').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.lens button').forEach(function(b){b.classList.remove('active')});
+      btn.classList.add('active');
+      document.getElementById('lens-channel').style.display = btn.dataset.lens==='channel' ? '' : 'none';
+      document.getElementById('lens-category').style.display = btn.dataset.lens==='category' ? '' : 'none';
+    });
+  });
+  // Live task status — reads Supabase-backed status endpoint when wired; degrades silently to static "Open"
+  (function(){
+    var ENDPOINT = ''; // left empty in the sample
+    if(!ENDPOINT) return;
+    fetch(ENDPOINT).then(function(r){return r.json()}).then(function(tasks){
+      tasks.forEach(function(t){
+        var row = document.querySelector('[data-task-id="'+t.id+'"] .task-status');
+        if(row && t.status==='done'){ row.textContent='Done'; row.classList.add('done'); }
+      });
+    }).catch(function(){});
+  })();
+</script>
+</body>
+</html>
