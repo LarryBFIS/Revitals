@@ -47,6 +47,10 @@ node video/render.js
 Point a Vercel project at this repository with **Root Directory = `website`**. No build command is needed:
 `public/` is committed and served directly. Then add the `buildfromideas.ai` domain (apex and www) to the project.
 
+Also add `buildfromideas.com` and `www.buildfromideas.com` to the same project. `vercel.json` sends them, and
+`www.buildfromideas.ai`, to `https://buildfromideas.ai` with a permanent (308) redirect that keeps the path.
+Only those exact hosts redirect: `login.buildfromideas.com` (BFIS PMS) and other subdomains are not affected.
+
 After the first deploy: submit `https://buildfromideas.ai/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
 
 ## Copy rules
