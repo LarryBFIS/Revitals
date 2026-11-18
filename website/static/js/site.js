@@ -33,6 +33,21 @@
     document.addEventListener('click', ev => { if (!dd.contains(ev.target)) set(false); });
   });
 
+  /* ---------- light / dark switch (dark by default; the choice is remembered) ---------- */
+  const root = document.documentElement;
+  const syncTheme = () => {
+    const light = root.getAttribute('data-theme') === 'light';
+    $$('[data-theme-toggle]').forEach(b => { b.setAttribute('aria-pressed', light); b.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme'); });
+    const meta = $('meta[name="theme-color"]'); if (meta) meta.content = light ? '#FFFFFF' : '#080B1F';
+  };
+  $$('[data-theme-toggle]').forEach(b => b.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    const apply = () => { root.setAttribute('data-theme', next); syncTheme(); };
+    if (document.startViewTransition && !reduce) document.startViewTransition(apply); else apply();
+    try { localStorage.setItem('byld-theme', next); } catch (e) {}
+  }));
+  syncTheme();
+
   /* ---------- reveal on scroll ---------- */
   const rv = $$('.rv');
   if ('IntersectionObserver' in window && !reduce) {

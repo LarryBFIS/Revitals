@@ -183,10 +183,11 @@ def header(active=""):
     <a href="/revvitals-sample">Sample report</a>
   </nav>
   <div class="hdr-cta">
+    <button class="theme-btn" type="button" data-theme-toggle aria-label="Switch to light theme" title="Light / dark"><svg class="i-moon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 12.3A7 7 0 017.7 3.5a7 7 0 108.8 8.8z"/></svg><svg class="i-sun" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10" cy="10" r="3.6"/><path d="M10 1.8v2M10 16.2v2M1.8 10h2M16.2 10h2M4.2 4.2l1.4 1.4M14.4 14.4l1.4 1.4M4.2 15.8l1.4-1.4M14.4 5.6l1.4-1.4"/></svg></button>
     <a class="login" href="{SITE["portal"]}" target="_blank" rel="noopener">Owner login</a>
     <a class="btn btn-primary btn-sm" href="/contact">Book a revenue review</a>
   </div>
-  <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mnav">{ICON["menu"]}</button>
+  <div class="burger-wrap"><button class="theme-btn" type="button" data-theme-toggle aria-label="Switch to light theme" title="Light / dark"><svg class="i-moon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 12.3A7 7 0 017.7 3.5a7 7 0 108.8 8.8z"/></svg><svg class="i-sun" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10" cy="10" r="3.6"/><path d="M10 1.8v2M10 16.2v2M1.8 10h2M16.2 10h2M4.2 4.2l1.4 1.4M14.4 14.4l1.4 1.4M4.2 15.8l1.4-1.4M14.4 5.6l1.4-1.4"/></svg></button><button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mnav">{ICON["menu"]}</button></div>
 </div></header>
 <div class="mnav" id="mnav">
   <a href="/platform">Platform overview</a><a href="/why-byld">Why BYLD</a><a href="/how-it-works">How it works</a><a href="/partners">Partners</a><a href="/revvitals-sample">Sample report</a>
@@ -257,6 +258,7 @@ def page(path, title, desc, body, *, active="", ld=None, og=None, priority="0.7"
 <link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500;600&display=swap">
+<script>try{{var t=localStorage.getItem('byld-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}}catch(e){{}}</script>
 <link rel="stylesheet" href="/css/site.css?v={ASSET_V}">
 <script type="application/ld+json">{json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False)}</script>
 <script>document.documentElement.classList.remove('no-js')</script>

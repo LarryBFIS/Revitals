@@ -27,7 +27,8 @@ const ff = args => execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error',
 
   // Stream frames straight into ffmpeg: no frames on disk. Motion blur = average of each pair of 60 fps frames.
   const master = path.join(work, 'master.mp4');
-  const vf = [DRAFT ? null : 'tmix=frames=2:weights=1 1', `fps=${OUT_FPS}`, 'eq=contrast=1.03:saturation=1.06', 'noise=alls=5:allf=t', 'format=yuv420p'].filter(Boolean).join(',');
+  // No film grain: random grain defeats compression (it took the MP4 from ~14 MB to 100 MB).
+  const vf = [DRAFT ? null : 'tmix=frames=2:weights=1 1', `fps=${OUT_FPS}`, 'eq=contrast=1.03:saturation=1.06', 'format=yuv420p'].filter(Boolean).join(',');
   const enc = spawn('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'image2pipe', '-framerate', String(CAP), '-c:v', 'mjpeg', '-i', '-',
     '-vf', vf, '-c:v', 'libx264', '-crf', DRAFT ? '20' : '12', '-preset', DRAFT ? 'veryfast' : 'medium', master], { stdio: ['pipe', 'inherit', 'inherit'] });
   const done = new Promise((res, rej) => enc.on('close', c => c === 0 ? res() : rej(new Error('ffmpeg exited ' + c))));
@@ -54,9 +55,9 @@ const ff = args => execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error',
 
   const inputs = ['-i', master, '-i', music];
   const audio = ['-af', `loudnorm=I=-16:TP=-1.5:LRA=11,afade=t=out:st=${(duration - 2).toFixed(2)}:d=2`, '-shortest'];
-  ff([...inputs, '-map', '0:v', '-map', '1:a', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '20', '-preset', 'slow', '-profile:v', 'high',
+  ff([...inputs, '-map', '0:v', '-map', '1:a', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '23', '-preset', 'slow', '-tune', 'animation', '-profile:v', 'high', '-maxrate', '3M', '-bufsize', '6M',
       ...audio, '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', path.join(out, 'tour.mp4')]);
-  ff([...inputs, '-map', '0:v', '-map', '1:a', '-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', '33', '-row-mt', '1', '-deadline', 'good', '-cpu-used', '2',
+  ff([...inputs, '-map', '0:v', '-map', '1:a', '-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', '37', '-row-mt', '1', '-deadline', 'good', '-cpu-used', '4',
       ...audio, '-c:a', 'libopus', '-b:a', '160k', path.join(out, 'tour.webm')]);
   fs.rmSync(work, { recursive: true, force: true });
   for (const f of fs.readdirSync(out)) console.log(f, Math.round(fs.statSync(path.join(out, f)).size / 1024) + ' KB');
