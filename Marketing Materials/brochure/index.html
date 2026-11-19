@@ -108,6 +108,12 @@ a{color:inherit}
 .legend{position:absolute;left:0;right:0;bottom:-10px;display:flex;justify-content:center;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
 .legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
 
+/* hotel-type switch */
+.seg{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:var(--s1);border:1px solid var(--border-strong);margin-top:26px}
+.seg button{border:0;background:transparent;color:var(--muted);font-family:var(--mono);font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;padding:9px 16px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.seg button.on{background:var(--white);color:#04060b;font-weight:700}
+.hero-tag{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.2vw,27px);color:var(--sky);margin-top:14px}
+.hide{display:none!important}
 /* stats */
 .stats{position:relative;z-index:1;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:linear-gradient(90deg,rgba(0,240,181,.04),rgba(167,139,250,.05),rgba(255,190,11,.04))}
 .stats-in{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
@@ -431,7 +437,7 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
 <nav class="nav">
   <a class="brand" href="#top" aria-label="BYLD, Buildd From Ideas"><img class="wm" src="assets/byld-logo.svg" alt="BYLD"><span>Buildd From Ideas</span></a>
   <div class="nav-links">
-    <a href="#what-we-do">What we do</a><a href="#pms">BFIS PMS</a><a href="#human">AI + Human</a><a href="#pricecortex">PriceCortex™</a><a href="#compmatrix">CompMatrix™</a><a href="#foliolens">FolioLens™</a>
+    <a href="#what-we-do">What we do</a><a href="#brand" class="nav-brand">Brand rep</a><a href="#pms">BFIS PMS</a><a href="#human">AI + Human</a><a href="#pricecortex">PriceCortex™</a><a href="#compmatrix">CompMatrix™</a><a href="#foliolens">FolioLens™</a>
     <a href="#revvitals">RevVitals</a><a href="#otarecon">OTARecon365™</a><a href="#goldkey">GoldKey</a><a href="#saleslock">SalesLock™</a><a href="#askrank">AskRank</a><a href="#pulsepilot">PulsePilot™</a><a href="#digital">Web &amp; Photo</a><a href="#whatsapp">WhatsApp</a><a href="#partners">Partners</a>
   </div>
   <a class="btn sec" href="https://login.buildfromideas.com/#/login" target="_blank" rel="noopener">PMS login</a>
@@ -445,6 +451,8 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
     <div class="hero-l">
       <div class="eyebrow"><i></i>AI-powered · human-guarded revenue</div>
       <h1>Every revenue task.<br><span class="em">One</span> <span class="italic">partner.</span></h1>
+      <div class="hero-tag" id="hero-tag">A brand's power. Without the brand.</div>
+      <div class="seg" role="group" aria-label="Show for"><button type="button" data-type="independent" class="on">Independent hotel</button><button type="button" data-type="franchised">Franchised hotel</button></div>
       <p class="sub">From your <strong>BFIS PMS</strong> to pricing, intelligence, reporting, OTA recovery, loyalty, group sales and reputation. <strong>Advanced AI and machine learning do the heavy lifting; a human Revenue Manager guards every decision.</strong> All in one owner portal, and on WhatsApp where your team already talks.</p>
       <div class="hero-cta">
         <a class="btn pri" href="https://portal.buildfromideas.ai/login?redirect=%2Fportal_home" target="_blank" rel="noopener">Owner portal login →</a>
@@ -565,6 +573,29 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
       <div><h4>A person you can call</h4><p>Every hotel has a named Revenue Manager who knows your property, your market and your goals. Technology scales the work; the relationship stays human.</p>
         <div class="ch-links" style="margin-top:14px"><a class="btn wa" href="#whatsapp">See the WhatsApp desk ↓</a></div></div>
     </div>
+  </div>
+</section>
+
+<!-- BRAND REPRESENTATION (franchised) -->
+<section class="band hide" id="brand">
+  <div class="inner reveal">
+    <div class="kicker" style="color:var(--sky)">For franchised hotels</div>
+    <h2>Your flag sets the standard. <span class="italic" style="color:var(--sky)">We make it pay.</span></h2>
+    <p class="lead">You already pay for a brand. We represent you with it, make every brand program earn its fees, and run the revenue work the brand leaves to you.</p>
+    <div class="next-grid">
+      <div><div class="st" style="color:var(--sky)">Brand representation</div><b>Your voice with the brand</b><p>We work with your brand team on standards, programs and requests, so decisions are made with your numbers in the room.</p></div>
+      <div><div class="st" style="color:var(--sky)">Quality &amp; PIPs</div><b>Audits and PIPs, prepared</b><p>We get you ready for brand quality inspections and help you scope, price and schedule PIP work.</p></div>
+      <div><div class="st" style="color:var(--sky)">Brand contribution</div><b>Make the fees earn their keep</b><p>We track what brand.com, the loyalty program and central reservations actually deliver against what you pay for them.</p></div>
+      <div><div class="st" style="color:var(--sky)">Revenue</div><b>The revenue work your brand leaves to you</b><p>AI pricing approved by a human revenue manager, your comp set tracked every night, and reporting your owners read.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band hide" id="also">
+  <div class="inner reveal">
+    <div class="kicker">Also available</div>
+    <h2>For hotels that want <span class="italic">even more of the stack.</span></h2>
+    <p class="lead">Most useful for independent hotels, and available to yours: our own cloud PMS and a loyalty program with your hotel's name on it.</p>
   </div>
 </section>
 
@@ -1077,6 +1108,42 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
   document.querySelectorAll('[data-zoom] img, .phone img').forEach(function(img){ img.style.cursor='zoom-in'; img.addEventListener('click',function(e){ e.stopPropagation(); lbi.src=img.src; lbi.alt=img.alt; lb.classList.add('on'); }); });
   lb.addEventListener('click',function(){ lb.classList.remove('on'); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') lb.classList.remove('on'); });
+
+  // Hotel type: change the order of the products (all products always shown).
+  var ORDER={
+    independent:['pms','human','pricecortex','compmatrix','foliolens','revvitals','otarecon','goldkey','saleslock','askrank','pulsepilot','digital','whatsapp'],
+    franchised:['brand','human','pricecortex','compmatrix','foliolens','revvitals','otarecon','saleslock','pulsepilot','askrank','digital','whatsapp','also','pms','goldkey']
+  };
+  var TAG={independent:"A brand's power. Without the brand.", franchised:"Your flag sets the standard. We make it pay."};
+  var PRODUCTS=['pms','pricecortex','compmatrix','foliolens','revvitals','otarecon','goldkey','saleslock','askrank','pulsepilot','digital'];
+  var anchor=document.getElementById('what-we-do'), nav=document.querySelector('.nav-links');
+  function setType(t, byUser){
+    if(!ORDER[t]) t='independent';
+    var after=anchor;
+    ORDER[t].forEach(function(id){ var el=document.getElementById(id); if(el){ after.after(el); after=el; } });
+    document.getElementById('brand').classList.toggle('hide', t!=='franchised');
+    var nb=document.querySelector('.nav-brand'); if(nb) nb.classList.toggle('hide', t!=='franchised');
+    document.getElementById('also').classList.toggle('hide', t!=='franchised');
+    document.getElementById('hero-tag').textContent=TAG[t];
+    // renumber the product chapters in their new order
+    var seq=ORDER[t].filter(function(id){ return PRODUCTS.indexOf(id)>-1; });
+    seq.forEach(function(id,i){
+      var n=document.querySelector('#'+id+' .ch-num'); if(!n) return;
+      var label=n.textContent.split('·').pop().trim();
+      n.innerHTML='<b'+(id==='digital'?' style="color:var(--amber)"':'')+'>'+String(i+1).padStart(2,'0')+'</b> / '+seq.length+' &nbsp;·&nbsp; '+label;
+    });
+    // menu follows the same order
+    var links={}; [].forEach.call(nav.querySelectorAll('a'),function(a){ links[a.getAttribute('href').slice(1)]=a; });
+    var lastA=links['what-we-do'];
+    ORDER[t].forEach(function(id){ var a=links[id]; if(a){ lastA.after(a); lastA=a; } });
+    if(links['partners']) nav.appendChild(links['partners']);
+    document.querySelectorAll('.seg button').forEach(function(b){ b.classList.toggle('on', b.dataset.type===t); });
+    if(byUser) document.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('in'); });
+    try{ history.replaceState(null,'',location.pathname+'?type='+t+location.hash); }catch(e){}
+  }
+  document.querySelectorAll('.seg button').forEach(function(b){ b.addEventListener('click',function(){ setType(b.dataset.type, true); }); });
+  var qt=(location.search.match(/[?&]type=(franchised|independent)/)||[])[1];
+  setType(qt||'independent');
 
   // Starfield.
   var cv=document.getElementById('stars'), cx=cv.getContext('2d'), stars=[];
