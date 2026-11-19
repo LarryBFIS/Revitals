@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BYLD · Your Market</title>
+<meta name="description" content="Pick your hotel and see your market: nearby hotels, demand drivers, local economy, and what BYLD does for a hotel like yours.">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080B1E; --night:#12163A; --panel:#161B44; --panel2:#1C2252; --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.16);
+  --sky:#5CC0FF; --mint:#00E0A8; --amber:#FFC24A; --rose:#FF7A9A;
+  --text:#E9ECF7; --muted:#9AA3C7; --dim:#6E77A0;
+  --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg)}
+body{font-family:'Sora',sans-serif;color:var(--text);font-weight:300;line-height:1.55;min-height:100vh;overflow-x:hidden}
+a{color:var(--sky)}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono)}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--sky)}
+.grid-bg{position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(92,192,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(92,192,255,.035) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse at 50% 30%,#000 10%,transparent 75%)}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;background:rgba(8,11,30,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand svg{height:22px;width:auto}
+.brand span{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);border-left:1px solid var(--line2);padding-left:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;font-weight:500;border:1px solid var(--line2);background:transparent;color:var(--text);transition:transform .2s,background .2s,border-color .2s}
+.btn:hover{transform:translateY(-1px);border-color:var(--sky)}
+.btn.pri{background:var(--sky);border-color:var(--sky);color:#06102A}
+
+/* step 1: search */
+#find{min-height:calc(100vh - 60px);display:flex;align-items:center;position:relative}
+#find .wrap{width:100%;text-align:center}
+#find h1{font-size:clamp(34px,5.4vw,62px);font-weight:700;letter-spacing:-.03em;line-height:1.08;color:#fff;margin-top:18px}
+#find h1 em{font-style:normal;color:var(--sky)}
+#find p.sub{color:var(--muted);font-size:16px;max-width:560px;margin:18px auto 0}
+.search{position:relative;max-width:620px;margin:40px auto 0;text-align:left}
+.search input{width:100%;padding:20px 22px 20px 54px;border-radius:16px;border:1px solid var(--line2);background:var(--panel);color:#fff;font:inherit;font-size:17px;font-weight:400;outline:none;transition:border-color .2s,box-shadow .2s}
+.search input:focus{border-color:var(--sky);box-shadow:0 0 0 4px rgba(92,192,255,.14)}
+.search input::placeholder{color:var(--dim)}
+.search .ico{position:absolute;left:20px;top:21px;width:20px;height:20px;color:var(--muted)}
+.results{position:absolute;left:0;right:0;top:calc(100% + 8px);background:var(--panel);border:1px solid var(--line2);border-radius:14px;overflow:hidden;box-shadow:0 30px 60px -20px rgba(0,0,0,.7);z-index:5}
+.results button{display:flex;gap:14px;align-items:center;width:100%;text-align:left;padding:13px 18px;background:transparent;border:0;border-top:1px solid var(--line)}
+.results button:first-child{border-top:0}
+.results button:hover,.results button.on{background:var(--panel2)}
+.results .pin{flex:0 0 30px;height:30px;border-radius:9px;background:var(--panel2);display:flex;align-items:center;justify-content:center;color:var(--sky)}
+.results b{display:block;font-weight:600;font-size:14.5px;color:#fff}
+.results small{display:block;font-size:12.5px;color:var(--muted)}
+.hint{margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--dim);text-align:center;letter-spacing:.06em}
+
+/* step 2: scanning */
+#scan{min-height:calc(100vh - 60px);display:none;align-items:center;justify-content:center}
+.scanbox{width:min(520px,92vw)}
+.radar{width:180px;height:180px;margin:0 auto 34px;border-radius:50%;position:relative;border:1px solid var(--line2);background:radial-gradient(circle,rgba(92,192,255,.12),transparent 65%)}
+.radar::before,.radar::after{content:"";position:absolute;inset:30px;border-radius:50%;border:1px solid var(--line)}
+.radar::after{inset:62px}
+.radar i{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(92,192,255,.45),transparent 22%);animation:spin 1.6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.steps{display:grid;gap:12px}
+.step{display:flex;align-items:center;gap:12px;font-size:15px;color:var(--dim);transition:color .3s}
+.step .dot{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line2);flex:0 0 18px;display:flex;align-items:center;justify-content:center;font-size:11px}
+.step.run{color:#fff}.step.run .dot{border-color:var(--sky);border-top-color:transparent;animation:spin .8s linear infinite}
+.step.done{color:var(--muted)}.step.done .dot{border-color:var(--mint);background:var(--mint);color:#06102A}
+
+/* step 3: snapshot */
+#snap{display:none;padding-bottom:80px}
+.sec{padding:64px 0 0;opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.sec.in{opacity:1;transform:none}
+h2{font-size:clamp(26px,3.2vw,38px);font-weight:700;letter-spacing:-.025em;line-height:1.15;color:#fff;margin-top:10px}
+h2 em{font-style:normal;color:var(--sky)}
+.lead{color:var(--muted);font-size:15.5px;max-width:720px;margin-top:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px}
+.hero-card{margin-top:28px;padding:26px 28px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+.hero-card h1{font-size:clamp(26px,3.4vw,40px);font-weight:700;letter-spacing:-.02em;color:#fff;line-height:1.15}
+.hero-card .addr{color:var(--muted);margin-top:6px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.chip{font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:6px 11px;border-radius:999px;border:1px solid var(--line2);color:var(--text)}
+.chip.sky{border-color:rgba(92,192,255,.45);color:var(--sky);background:rgba(92,192,255,.08)}
+.chip.mint{border-color:rgba(0,224,168,.45);color:var(--mint);background:rgba(0,224,168,.08)}
+.score{text-align:center;min-width:150px}
+.score b{display:block;font-size:52px;font-weight:700;letter-spacing:-.03em;color:#fff;line-height:1}
+.score span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--muted)}
+.switch{margin-top:14px;font-size:12.5px;color:var(--dim)}
+.switch button{background:none;border:0;color:var(--sky);text-decoration:underline;padding:0}
+
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:26px}
+.mapcard{padding:18px;display:flex;flex-direction:column;align-items:center}
+.mapcard svg{width:100%;max-width:460px;height:auto}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:8px}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.list{padding:8px 0;max-height:520px;overflow:auto}
+.row{display:grid;grid-template-columns:26px minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:11px 20px;border-top:1px solid var(--line);font-size:14px}
+.row:first-child{border-top:0}
+.row .n{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.row b{font-weight:600;color:#fff;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row small{display:block;color:var(--muted);font-size:12px}
+.row .r{font-family:var(--mono);font-size:13px;color:#fff;text-align:right}
+.row .r small{font-size:11px}
+.row .mi{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right;min-width:52px}
+.row.you{background:rgba(92,192,255,.08)}
+.row.you b{color:var(--sky)}
+.row.comp .n{color:var(--amber)}
+.rankline{margin-top:16px;padding:18px 22px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.rankline b{font-size:30px;font-weight:700;color:#fff;letter-spacing:-.02em}
+.rankline span{color:var(--muted)}
+
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:26px}
+.tile{padding:20px}
+.tile b{display:block;font-size:30px;font-weight:700;letter-spacing:-.02em;color:#fff;line-height:1.05}
+.tile span{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.tile em{display:block;font-style:normal;font-size:12.5px;color:var(--dim);margin-top:4px}
+.drivers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:26px}
+.drv{padding:18px 20px;display:flex;gap:14px;align-items:flex-start}
+.drv .ic{flex:0 0 38px;height:38px;border-radius:11px;background:var(--panel2);display:flex;align-items:center;justify-content:center;color:var(--sky)}
+.drv b{display:block;color:#fff;font-weight:600;font-size:14.5px;line-height:1.35}
+.drv small{display:block;color:var(--muted);font-size:12.5px;margin-top:3px}
+.drv .mi{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--sky);white-space:nowrap}
+.inds{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+
+.ai{margin-top:26px;padding:24px 26px}
+.ai .q{display:inline-block;background:var(--panel2);border-radius:14px;padding:12px 16px;color:#fff;font-size:15px}
+.ai ol{margin:16px 0 0 20px;color:var(--muted)}
+.ai li{padding:3px 0}
+.ai li.you{color:var(--sky);font-weight:600}
+.ai .verdict{margin-top:16px;font-size:14px;color:var(--text)}
+
+.pitch{margin-top:28px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.pt{padding:22px 24px}
+.pt b{display:block;color:#fff;font-weight:600;font-size:16px}
+.pt p{color:var(--muted);font-size:14px;margin-top:6px}
+.pt .k{font-family:var(--mono);font-size:11px;color:var(--sky);letter-spacing:.1em}
+.prods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:26px}
+.pd{padding:20px 22px;position:relative}
+.pd .st{position:absolute;top:18px;right:18px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mint)}
+.pd .st.soon{color:var(--amber)}
+.pd b{display:block;color:#fff;font-weight:700;font-size:17px;padding-right:70px}
+.pd .why{font-family:var(--mono);font-size:11px;color:var(--sky);margin-top:4px;letter-spacing:.04em}
+.pd p{color:var(--muted);font-size:13.5px;margin-top:8px}
+.also{margin-top:40px}
+.also .prods .pd{opacity:.85}
+.cta{margin-top:70px;padding:40px;text-align:center;background:linear-gradient(160deg,rgba(92,192,255,.12),transparent 60%),var(--panel)}
+.cta h2{margin-top:6px}
+.cta .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.src{margin-top:30px;font-family:var(--mono);font-size:10.5px;color:var(--dim);line-height:1.7}
+.foot{border-top:1px solid var(--line);margin-top:60px;padding:24px 0;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--dim)}
+.foot .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .two,.pitch{grid-template-columns:1fr}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .drivers,.prods{grid-template-columns:1fr}
+  .hero-card{grid-template-columns:1fr}
+  .score{text-align:left}
+  .brand span{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.sec{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="./" aria-label="BYLD, Buildd From Ideas">
+    <svg viewBox="0 -24 394 124" role="img" aria-label="BYLD"><g fill="#FFFFFF" fill-rule="evenodd"><path d="M0 0H48A30 30 0 0 1 72.16 47.78A30 30 0 0 1 52 100H0Z M20 20V40H48A10 10 0 0 0 48 20Z M20 60V80H52A10 10 0 0 0 52 60Z"/><path transform="translate(98 0)" d="M6.68 0H29.94L58 47.26V100H38V52.74Z"/><path transform="translate(210 0)" d="M0 0H20V80H72V100H0Z"/><path transform="translate(298 0)" d="M0 0H45A50 50 0 0 1 45 100H0Z M20 20V80H45A30 30 0 0 0 45 20Z"/></g><path fill="#5CC0FF" transform="translate(98 0)" d="M42 41.33L76 -4L66.4 -11.2L103.2 -23.6L101.6 15.2L92 8L58 53.33Z"/></svg>
+    <span>Buildd From Ideas</span>
+  </a>
+  <a class="btn" href="https://portal.buildfromideas.ai/login?redirect=%2Fportal_home" target="_blank" rel="noopener">Owner portal</a>
+</div></header>
+
+<!-- STEP 1 -->
+<section id="find"><div class="wrap">
+  <div class="label">Your market, in 10 seconds</div>
+  <h1>Let's look at <em>your hotel.</em></h1>
+  <p class="sub">Type your hotel's name or address. We'll map your competition, your demand drivers and your local economy, then show what we'd do for a hotel like yours.</p>
+  <div class="search">
+    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    <label for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Hotel name or address</label>
+    <input id="q" type="text" autocomplete="off" placeholder="Hotel name or address" role="combobox" aria-expanded="false" aria-controls="res" aria-autocomplete="list">
+    <div class="results" id="res" role="listbox" hidden></div>
+  </div>
+  <div class="hint">Live lookup · type at least 3 letters of the hotel name or street address</div>
+</div></section>
+
+<!-- STEP 2 -->
+<section id="scan"><div class="scanbox">
+  <div class="radar"><i></i></div>
+  <div class="steps" id="steps"></div>
+</div></section>
+
+<!-- STEP 3 -->
+<main id="snap"><div class="wrap">
+
+  <section class="sec" id="s-hotel">
+    <div class="label" id="h-kicker">Your hotel</div>
+    <div class="card hero-card">
+      <div>
+        <h1 id="h-name"></h1>
+        <div class="addr" id="h-addr"></div>
+        <div class="chips" id="h-chips"></div>
+        <div class="switch" id="h-switch"></div>
+      </div>
+      <div class="score"><b id="h-rating"></b><span id="h-reviews"></span></div>
+    </div>
+  </section>
+
+  <section class="sec" id="s-comp">
+    <div class="label">Within 10 miles</div>
+    <h2 id="c-title"></h2>
+    <p class="lead" id="c-lead"></p>
+    <div class="two">
+      <div class="card mapcard"><svg id="map" viewBox="0 0 440 440" role="img" aria-label="Map of hotels within 10 miles"></svg>
+        <div class="legend"><span><i style="background:var(--sky)"></i>Your hotel</span><span><i style="background:var(--amber)"></i>Likely comp set</span><span><i style="background:#8A93BD"></i>Other hotels</span><span><i style="background:transparent;border:1.5px solid #00E0A8;border-radius:2px"></i>Demand drivers</span></div>
+      </div>
+      <div class="card list" id="c-list"></div>
+    </div>
+    <div class="card rankline" id="c-rank"></div>
+  </section>
+
+  <section class="sec" id="s-demand">
+    <div class="label">What fills your rooms</div>
+    <h2>Your <em>demand drivers.</em></h2>
+    <p class="lead" id="d-lead"></p>
+    <div class="drivers" id="d-list"></div>
+  </section>
+
+  <section class="sec" id="s-econ">
+    <div class="label">Your local economy</div>
+    <h2 id="e-title"></h2>
+    <div class="tiles" id="e-tiles"></div>
+    <div class="inds" id="e-inds"></div>
+  </section>
+
+  <section class="sec" id="s-ai">
+    <div class="label">How travellers find you now</div>
+    <h2>We asked an AI assistant <em>where to stay.</em></h2>
+    <div class="card ai">
+      <div class="q" id="a-q"></div>
+      <ol id="a-list"></ol>
+      <div class="verdict" id="a-verdict"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="s-pitch">
+    <div class="label" id="p-kicker"></div>
+    <h2 id="p-title"></h2>
+    <p class="lead" id="p-lead"></p>
+    <div class="pitch" id="p-list"></div>
+  </section>
+
+  <section class="sec" id="s-prods">
+    <div class="label">Built for this hotel</div>
+    <h2 id="r-title"></h2>
+    <div class="prods" id="r-list"></div>
+    <div class="also" id="r-also-wrap">
+      <div class="label" style="color:var(--dim)">Also available</div>
+      <div class="prods" id="r-also"></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="card cta">
+      <div class="label">Next step</div>
+      <h2 id="x-title"></h2>
+      <p class="lead" style="margin:12px auto 0" id="x-lead"></p>
+      <div class="btns">
+        <a class="btn pri" href="https://marketing.buildfromideas.ai/revvitals-sample" target="_blank" rel="noopener">See a sample health check →</a>
+        <a class="btn" href="https://marketing.buildfromideas.ai/" target="_blank" rel="noopener">Everything we do</a>
+      </div>
+    </div>
+    <div class="src" id="sources"></div>
+  </section>
+
+</div></main>
+
+<footer class="foot"><div class="wrap"><span>© 2026 Buildd From Ideas · BYLD · Ideas, buildd.</span><span>Data: <span id="srcmode">OpenStreetMap</span> · <button type="button" id="gk" style="background:none;border:0;color:var(--sky);text-decoration:underline;font:inherit;letter-spacing:inherit">Google key</button></span></div></footer>
+
+<script>
+/* ====================================================================
+   LIVE market snapshot. No API keys: everything comes from free public
+   services, called from the visitor's browser.
+     Address search ......... Photon (komoot), OpenStreetMap data
+     Hotels + demand drivers  Overpass API, OpenStreetMap data
+     County lookup .......... FCC Area API
+     Population, income, age  US Census ACS 5-year
+     Local industries ....... US Census County Business Patterns
+   ==================================================================== */
+var RADIUS_M = 16093; // 10 miles
+
+/* Brands that mean a hotel is franchised: name fragment -> parent company. */
+var BRANDS = [["Holiday Inn","IHG"],["Crowne Plaza","IHG"],["avid","IHG"],["Candlewood","IHG"],["Staybridge","IHG"],["voco","IHG"],["Atwell","IHG"],["Hampton","Hilton"],["Hilton","Hilton"],["Home2","Hilton"],["Homewood","Hilton"],["DoubleTree","Hilton"],["Embassy Suites","Hilton"],["Tru by","Hilton"],["Spark by","Hilton"],["Tapestry","Hilton"],["Curio","Hilton"],["Courtyard","Marriott"],["Fairfield","Marriott"],["Residence Inn","Marriott"],["SpringHill","Marriott"],["TownePlace","Marriott"],["Marriott","Marriott"],["Aloft","Marriott"],["Four Points","Marriott"],["Sheraton","Marriott"],["Westin","Marriott"],["Element","Marriott"],["AC Hotel","Marriott"],["Moxy","Marriott"],["Comfort","Choice"],["Quality Inn","Choice"],["Sleep Inn","Choice"],["Clarion","Choice"],["Cambria","Choice"],["MainStay","Choice"],["Econo Lodge","Choice"],["Rodeway","Choice"],["Ascend","Choice"],["WoodSpring","Choice"],["Suburban Studios","Choice"],["Everhome","Choice"],["Days Inn","Wyndham"],["La Quinta","Wyndham"],["Super 8","Wyndham"],["Microtel","Wyndham"],["Wingate","Wyndham"],["Baymont","Wyndham"],["Ramada","Wyndham"],["Howard Johnson","Wyndham"],["Travelodge","Wyndham"],["Hawthorn","Wyndham"],["Wyndham","Wyndham"],["Hyatt","Hyatt"],["Best Western","Best Western"],["SureStay","Best Western"],["Red Roof","Red Roof"],["Sonesta","Sonesta"],["Motel 6","G6"],["Studio 6","G6"],["Extended Stay America","ESA"],["Drury","Drury"],["Americas Best Value","Red Lion"],["Red Lion","Red Lion"],["Knights Inn","Red Lion"],["Country Inn","Choice"],["Radisson","Choice"],["Kimpton","IHG"],["Hotel Indigo","IHG"],["Graduate","Hilton"],["Loews","Loews"],["Omni","Omni"]];
+
+var $ = function(id){ return document.getElementById(id); };
+var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function miles(a,b){
+  var R=3958.8, k=Math.PI/180, dLat=(b.lat-a.lat)*k, dLng=(b.lng-a.lng)*k;
+  var x=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(a.lat*k)*Math.cos(b.lat*k)*Math.sin(dLng/2)*Math.sin(dLng/2);
+  return 2*R*Math.asin(Math.sqrt(x));
+}
+function parentOf(h){
+  var hay=((h.brand||'')+' '+(h.name||'')).toLowerCase();
+  for (var i=0;i<BRANDS.length;i++) if (hay.indexOf(BRANDS[i][0].toLowerCase())>-1) return BRANDS[i][1];
+  return null;
+}
+function brandOf(h){
+  if (h.brand) return h.brand;
+  var n=(h.name||'').toLowerCase();
+  for (var i=0;i<BRANDS.length;i++) if (n.indexOf(BRANDS[i][0].toLowerCase())>-1) return BRANDS[i][0];
+  return null;
+}
+function fmtInt(n){ return Math.round(n).toLocaleString('en-US'); }
+function wait(ms){ return new Promise(function(r){ setTimeout(r, reduce?0:ms); }); }
+function timeout(p, ms){ return Promise.race([p, new Promise(function(_,rej){ setTimeout(function(){ rej(new Error('timeout')); }, ms); })]); }
+
+/* ---------- Google Places (optional) ----------
+   The key never ships in this file. Add it once per browser: footer -> "Google key",
+   or open the page with #gkey=YOUR_KEY. It is kept in this browser's localStorage. */
+var G={ready:false, lib:null, token:null};
+function gKey(){
+  var m=location.hash.match(/gkey=([^&]+)/);
+  try{ if(m){ localStorage.setItem('byld_gkey',decodeURIComponent(m[1])); history.replaceState(null,'',location.pathname+location.search); } return localStorage.getItem('byld_gkey'); }catch(e){ return m?decodeURIComponent(m[1]):null; }
+}
+function loadGoogle(){
+  var k=gKey(); if(!k) return Promise.resolve(false);
+  return timeout(new Promise(function(ok,bad){
+    window.__gmReady=function(){ ok(); };
+    window.gm_authFailure=function(){ G.ready=false; setSrc(); };
+    var sc=document.createElement('script');
+    sc.src='https://maps.googleapis.com/maps/api/js?key='+encodeURIComponent(k)+'&v=weekly&loading=async&callback=__gmReady';
+    sc.onerror=bad; document.head.appendChild(sc);
+  }),12000).then(function(){ return google.maps.importLibrary('places'); })
+   .then(function(lib){ G.lib=lib; G.ready=true; G.token=new lib.AutocompleteSessionToken(); setSrc(); return true; })
+   .catch(function(){ G.ready=false; setSrc(); return false; });
+}
+function setSrc(){ var el=$('srcmode'); if(el) el.textContent = G.ready ? 'Google Places on' : 'OpenStreetMap (add a Google key for ratings)'; }
+function gSearch(t){
+  return G.lib.AutocompleteSuggestion.fetchAutocompleteSuggestions({input:t, sessionToken:G.token, includedRegionCodes:['us']}).then(function(r){
+    return (r.suggestions||[]).filter(function(x){return x.placePrediction;}).slice(0,7).map(function(x){
+      var p=x.placePrediction, types=p.types||[];
+      return {gid:p.placeId, name:(p.mainText&&p.mainText.text)||p.text.text, addr:(p.secondaryText&&p.secondaryText.text)||'', isHotel: types.some(function(t){return /lodging|hotel|motel|inn/.test(t);})};
+    });
+  });
+}
+function gDetails(pl){
+  var place=new G.lib.Place({id:pl.gid});
+  return place.fetchFields({fields:['displayName','formattedAddress','location','rating','userRatingCount','types','addressComponents']}).then(function(){
+    G.token=new G.lib.AutocompleteSessionToken();
+    var comp=function(t){ var c=(place.addressComponents||[]).find(function(a){return a.types.indexOf(t)>-1;}); return c?c.shortText:''; };
+    var types=place.types||[];
+    return {gid:pl.gid, name:place.displayName||pl.name, addr:place.formattedAddress||pl.addr, lat:place.location.lat(), lng:place.location.lng(),
+      rating:place.rating||null, reviews:place.userRatingCount||null, isHotel: pl.isHotel || types.some(function(t){return /lodging|hotel|motel/.test(t);}),
+      city:comp('locality')||comp('administrative_area_level_2'), state:comp('administrative_area_level_1')};
+  });
+}
+function gNearby(pl){
+  return G.lib.Place.searchNearby({
+    fields:['id','displayName','location','rating','userRatingCount','formattedAddress'],
+    locationRestriction:{center:{lat:pl.lat,lng:pl.lng}, radius:RADIUS_M},
+    includedPrimaryTypes:['hotel','motel','extended_stay_hotel','inn','resort_hotel'],
+    maxResultCount:20, rankPreference:G.lib.SearchNearbyRankPreference.DISTANCE
+  }).then(function(r){
+    return (r.places||[]).map(function(x){ return {gid:x.id, name:x.displayName, lat:x.location.lat(), lng:x.location.lng(), rating:x.rating||null, reviews:x.userRatingCount||null}; });
+  });
+}
+
+/* ---------- data sources ---------- */
+function searchPlaces(q){
+  var u='https://photon.komoot.io/api/?limit=10&lang=en&q='+encodeURIComponent(q)+'&lat=39.5&lon=-98.35';
+  return fetch(u).then(function(r){ return r.json(); }).then(function(j){
+    return (j.features||[]).filter(function(f){ return f.properties && f.properties.countrycode==='US'; }).slice(0,7).map(function(f){
+      var p=f.properties, street=p.housenumber ? p.housenumber+' '+(p.street||'') : (p.street||'');
+      var line=[street, p.city||p.town||p.village||p.district||p.county, p.state].filter(Boolean).join(', ');
+      var isHotel = p.osm_key==='tourism' && /hotel|motel|guest_house|hostel/.test(p.osm_value||'');
+      return {name: p.name || street || line, addr: line, lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0], isHotel: isHotel, city: p.city||p.town||p.village||p.county||'', state: p.state||''};
+    });
+  });
+}
+function overpass(lat,lng){
+  var A='(around:'+RADIUS_M+','+lat+','+lng+')', A3='(around:48280,'+lat+','+lng+')';
+  var q='[out:json][timeout:25];('+
+    'nwr["tourism"~"^(hotel|motel)$"]'+A+';'+
+    'nwr["aeroway"="aerodrome"]["iata"]'+A3+';'+
+    'nwr["amenity"="university"]["name"]'+A+';'+
+    'nwr["amenity"="college"]["name"]'+A+';'+
+    'nwr["amenity"="hospital"]["name"]'+A+';'+
+    'nwr["leisure"="stadium"]["name"]'+A+';'+
+    'nwr["amenity"="conference_centre"]["name"]'+A+';'+
+    'nwr["amenity"="exhibition_centre"]["name"]'+A+';'+
+    'nwr["shop"="mall"]["name"]'+A+';'+
+    'nwr["tourism"~"^(attraction|theme_park|museum|zoo|aquarium)$"]["name"]'+A+';'+
+    'nwr["office"="company"]["name"]["wikidata"]'+A+';'+
+    ');out center tags;';
+  var eps=['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter'];
+  function tryAt(i){
+    if(i>=eps.length) return Promise.reject(new Error('overpass'));
+    return timeout(fetch(eps[i],{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'data='+encodeURIComponent(q)}),30000)
+      .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(j){ return j.elements||[]; })
+      .catch(function(){ return tryAt(i+1); });
+  }
+  return tryAt(0);
+}
+function census(lat,lng){
+  var base='https://api.census.gov/data/';
+  return fetch('https://geo.fcc.gov/api/census/area?lat='+lat+'&lon='+lng+'&censusYear=2020&format=json')
+    .then(function(r){ return r.json(); })
+    .then(function(f){
+      var c=(f.results||[])[0]; if(!c) throw new Error('no county');
+      var st=c.state_fips, co=c.county_fips.slice(2);
+      var geo='&for=county:'+co+'&in=state:'+st;
+      var now=fetch(base+'2022/acs/acs5?get=NAME,B01003_001E,B19013_001E,B01002_001E,B25001_001E'+geo).then(function(r){return r.json();});
+      var then=fetch(base+'2017/acs/acs5?get=B01003_001E'+geo).then(function(r){return r.json();}).catch(function(){return null;});
+      var secs=['11','21','22','23','31-33','42','44-45','48-49','51','52','53','54','55','56','61','62','71','72','81'];
+      var cbp=fetch(base+'2021/cbp?get=NAICS2017,NAICS2017_LABEL,ESTAB,EMP'+geo+'&LFO=001&EMPSZES=001&'+secs.map(function(x){return 'NAICS2017='+x;}).join('&'))
+        .then(function(r){return r.json();}).catch(function(){return null;});
+      return Promise.all([now,then,cbp]).then(function(v){
+        var n=v[0][1], out={county:n[0], pop:+n[1], income:+n[2], age:+n[3], housing:+n[4]};
+        if(v[1] && v[1][1]) out.pop5=+v[1][1][0];
+        if(v[2] && v[2].length>1){
+          var h=v[2][0], iL=h.indexOf('NAICS2017_LABEL'), iE=h.indexOf('EMP'), iS=h.indexOf('ESTAB');
+          var rows=v[2].slice(1).map(function(r){ return {label:r[iL], emp:+r[iE], estab:+r[iS]}; });
+          out.estab=rows.reduce(function(a,r){return a+(r.estab||0);},0);
+          out.inds=rows.sort(function(a,b){ return (b.emp-a.emp)||(b.estab-a.estab); }).slice(0,6);
+        }
+        return out;
+      });
+    });
+}
+
+$('gk').onclick=function(){ var k=prompt('Paste a Google Maps API key (Maps JavaScript API + Places API (New)). It is stored in this browser only. Leave empty to remove.'); if(k===null) return; try{ if(k.trim()) localStorage.setItem('byld_gkey',k.trim()); else localStorage.removeItem('byld_gkey'); }catch(e){} location.reload(); };
+loadGoogle();
+/* ---------- step 1: search ---------- */
+var q=$('q'), res=$('res'), sel=-1, shown=[], tmr=null, seq=0;
+function render(list, msg){
+  shown=list||[]; sel=-1;
+  if(msg){ res.innerHTML='<button type="button" disabled><span><small>'+esc(msg)+'</small></span></button>'; res.hidden=false; return; }
+  if(!shown.length){ res.hidden=true; q.setAttribute('aria-expanded','false'); return; }
+  res.innerHTML=shown.map(function(h,i){
+    return '<button type="button" role="option" data-i="'+i+'"><span class="pin">'+(h.isHotel?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-6h6v6"/></svg>':'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>')+'</span><span><b>'+esc(h.name)+'</b><small>'+esc(h.addr)+'</small></span></button>';
+  }).join('');
+  res.hidden=false; q.setAttribute('aria-expanded','true');
+}
+q.addEventListener('input',function(){
+  var t=q.value.trim(); clearTimeout(tmr);
+  if(t.length<3){ render([]); return; }
+  tmr=setTimeout(function(){
+    var my=++seq; render(null,'Searching…');
+    (G.ready ? gSearch(t).catch(function(){ return searchPlaces(t); }) : searchPlaces(t)).then(function(list){ if(my===seq) render(list.length?list:null, list.length?null:'No US matches yet. Try the street address.'); })
+      .catch(function(){ if(my===seq) render(null,'Search is offline. Check the internet connection.'); });
+  }, 280);
+});
+q.addEventListener('keydown',function(e){
+  if(res.hidden||!shown.length) return;
+  var bs=res.querySelectorAll('button[data-i]');
+  if(e.key==='ArrowDown'){ sel=Math.min(bs.length-1,sel+1); e.preventDefault(); }
+  else if(e.key==='ArrowUp'){ sel=Math.max(0,sel-1); e.preventDefault(); }
+  else if(e.key==='Enter'){ pick(shown[sel<0?0:sel]); e.preventDefault(); return; }
+  else if(e.key==='Escape'){ render([]); return; }
+  bs.forEach(function(b,i){ b.classList.toggle('on',i===sel); });
+});
+res.addEventListener('click',function(e){ var b=e.target.closest('button[data-i]'); if(b) pick(shown[+b.dataset.i]); });
+
+/* ---------- step 2: scan (real requests, real progress) ---------- */
+var M=null, mode=null;
+function pick(place){
+  if(!place) return;
+  render([]); q.blur(); mode=null;
+  $('find').style.display='none'; $('scan').style.display='flex'; window.scrollTo(0,0);
+  var labels=['Finding your hotel','Mapping every hotel within 10 miles','Reading your demand drivers','Pulling census and business data','Building your snapshot'];
+  $('steps').innerHTML=labels.map(function(s){ return '<div class="step"><span class="dot"></span><span>'+s+'</span></div>'; }).join('');
+  var els=$('steps').children;
+  function run(i){ els[i].className='step run'; }
+  function done(i,ok){ els[i].className='step done'; els[i].firstChild.textContent=ok===false?'–':'✓'; if(ok===false) els[i].firstChild.style.background='#6E77A0'; }
+
+  run(0);
+  var pOver, pCen, pG;
+  (place.gid ? timeout(gDetails(place),10000).catch(function(){ return null; }) : Promise.resolve(place))
+  .then(function(pl){
+    if(!pl || pl.lat==null){ throw new Error('no location'); }
+    place=pl;
+    pOver=overpass(place.lat,place.lng); pCen=timeout(census(place.lat,place.lng),25000);
+    pG = G.ready ? timeout(gNearby(place),12000).catch(function(){ return null; }) : Promise.resolve(null);
+    return wait(400);
+  })
+  .then(function(){ done(0); run(1); return Promise.all([pOver.then(function(v){return v;},function(){return null;}), pG]); })
+  .then(function(v){
+    var el=v[0], gh=v[1];
+    done(1, !!(el||gh)); run(2);
+    M=buildMarket(place, el||[], gh);
+    return wait(450).then(function(){ done(2, !!el); run(3); return pCen.then(function(c){return c;},function(){return null;}); });
+  })
+  .then(function(c){ M.econ=c; done(3, !!c); run(4); return wait(400); })
+  .then(function(){ done(4); return wait(250); })
+  .then(show)
+  .catch(function(){
+    $('steps').innerHTML='<div class="step done"><span class="dot" style="background:#FF7A9A;border-color:#FF7A9A">!</span><span>We couldn\'t locate that place. <button type="button" class="btn" id="back" style="margin-left:8px;padding:6px 12px">Try again</button></span></div>';
+    $('back').onclick=function(){ $('scan').style.display='none'; $('find').style.display='flex'; q.focus(); };
+  });
+}
+
+function buildMarket(place, el, gh){
+  var hotels=[], drivers=[], seen={};
+  el.forEach(function(e){
+    var t=e.tags||{}, lat=e.lat||(e.center&&e.center.lat), lng=e.lon||(e.center&&e.center.lon);
+    if(!lat||!t.name) return;
+    var o={name:t.name, lat:lat, lng:lng, tags:t};
+    o.d=miles(place,o);
+    if(t.tourism==='hotel'||t.tourism==='motel'){
+      var key=t.name.toLowerCase(); if(seen[key]) return; seen[key]=1;
+      o.brand=t.brand||null; o.stars=t.stars||null; o.rooms=t.rooms||null; hotels.push(o); return;
+    }
+    var type = t.aeroway ? 'airport' : (t.amenity==='university'||t.amenity==='college') ? 'university' : t.amenity==='hospital' ? 'hospital' :
+      t.leisure==='stadium' ? 'stadium' : (t.amenity==='conference_centre'||t.amenity==='exhibition_centre') ? 'convention' : t.shop==='mall' ? 'shopping' :
+      t.office==='company' ? 'employer' : 'attraction';
+    var dk=type+'|'+t.name.toLowerCase(); if(seen[dk]) return; seen[dk]=1;
+    o.type=type; o.note=({airport:'Airport'+(t.iata?' · '+t.iata:''),university:'University / college',hospital:'Hospital',stadium:'Stadium / arena',convention:'Convention & events',shopping:'Shopping destination',employer:'Major employer',attraction:(t.tourism==='museum'?'Museum':t.tourism==='theme_park'?'Theme park':t.tourism==='zoo'?'Zoo':'Attraction')})[type];
+    drivers.push(o);
+  });
+  // Google hotels carry ratings: merge them in, matching OSM entries by name and position
+  (gh||[]).forEach(function(g){
+    g.d=miles(place,g);
+    var m=hotels.find(function(h){ return miles(h,g)<0.12 || h.name.toLowerCase().slice(0,10)===g.name.toLowerCase().slice(0,10) && miles(h,g)<0.5; });
+    if(m){ m.rating=g.rating; m.reviews=g.reviews; m.gid=g.gid; } else hotels.push(g);
+  });
+  hotels.sort(function(a,b){ return a.d-b.d; });
+  if(place.gid && place.isHotel){
+    var hit=hotels.find(function(h){ return h.gid===place.gid; }) || hotels.find(function(h){ return miles(h,place)<0.1; });
+    var mine={name:place.name, lat:place.lat, lng:place.lng, d:0, rating:place.rating, reviews:place.reviews, gid:place.gid, brand:hit?hit.brand:null, rooms:hit?hit.rooms:null, stars:hit?hit.stars:null, addr:place.addr};
+    if(hit) hotels.splice(hotels.indexOf(hit),1);
+    hotels.unshift(mine);
+  }
+  // the subject: the picked hotel, or the nearest hotel to the picked address
+  var me=null;
+  for(var i=0;i<hotels.length;i++){
+    var h=hotels[i];
+    if(place.gid && place.isHotel && h.gid===place.gid){ me=h; break; }
+    if(h.d<0.15 && (!place.isHotel || h.name.toLowerCase().slice(0,8)===place.name.toLowerCase().slice(0,8) || h.d<0.06)){ me=h; break; }
+  }
+  if(!me) me={name:place.name, lat:place.lat, lng:place.lng, d:0, brand:null, fromAddress:!place.isHotel};
+  me.addr=place.addr;
+  var others=hotels.filter(function(h){ return h!==me && h.d<=10.05; }).map(function(h){ h.d=miles(me,h); return h; }).sort(function(a,b){return a.d-b.d;});
+  // likely comp set: same parent company first, then nearest branded hotels
+  var myParent=parentOf(me);
+  var comp=others.slice().sort(function(a,b){
+    var sa=(parentOf(a)?0:1), sb=(parentOf(b)?0:1); return (sa-sb)||(a.d-b.d);
+  }).filter(function(h){ return h.d<=5; }).slice(0,6);
+  if(comp.length<4) comp=others.slice(0,6);
+  // pick a balanced set of drivers
+  var cap={airport:2,university:2,hospital:2,stadium:2,convention:2,shopping:1,employer:3,attraction:4};
+  drivers.sort(function(a,b){ return a.d-b.d; });
+  var cnt={}, picked=drivers.filter(function(d){ cnt[d.type]=(cnt[d.type]||0)+1; return cnt[d.type]<=cap[d.type]; });
+  var order=['airport','convention','university','stadium','employer','hospital','shopping','attraction'];
+  picked.sort(function(a,b){ return (order.indexOf(a.type)-order.indexOf(b.type))||(a.d-b.d); });
+  return {place:place, me:me, others:others, comp:comp, drivers:picked.slice(0,12), town:place.city||'your area', state:place.state};
+}
+
+/* ---------- step 3: snapshot ---------- */
+function show(){
+  $('scan').style.display='none'; $('snap').style.display='block'; window.scrollTo(0,0);
+  mode = mode || (parentOf(M.me) ? 'franchised' : 'independent');
+  fill();
+  var secs=document.querySelectorAll('.sec');
+  secs.forEach(function(s){ s.classList.remove('in'); });
+  if(!('IntersectionObserver' in window)||reduce){ secs.forEach(function(s){s.classList.add('in');}); return; }
+  var io=new IntersectionObserver(function(es){ es.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('in'); io.unobserve(x.target);} }); },{threshold:.1});
+  secs.forEach(function(s){ io.observe(s); });
+}
+
+function fill(){
+  var me=M.me, par=parentOf(me), br=brandOf(me), fr=(mode==='franchised');
+  // hotel card
+  $('h-kicker').textContent = fr ? 'Franchised hotel'+(par?' · '+par:'') : 'Independent hotel';
+  $('h-name').textContent=me.name; $('h-addr').textContent=me.addr||'';
+  var chips=[]; if(br) chips.push('<span class="chip sky">'+esc(br)+'</span>'); if(par && par!==br) chips.push('<span class="chip">'+esc(par)+'</span>');
+  chips.push('<span class="chip mint">'+(fr?'Franchised':'Independent')+'</span>');
+  if(me.rooms) chips.push('<span class="chip">'+esc(me.rooms)+' rooms</span>');
+  if(me.fromAddress) chips.push('<span class="chip">Address match</span>');
+  $('h-chips').innerHTML=chips.join('');
+  var sameFam = par ? M.others.filter(function(h){ return parentOf(h)===par; }).length : 0;
+  if(me.rating){ $('h-rating').textContent=me.rating.toFixed(1)+'★'; $('h-reviews').textContent=(me.reviews?fmtInt(me.reviews)+' ':'')+'GOOGLE REVIEWS'; }
+  else { $('h-rating').textContent = M.others.length; $('h-reviews').textContent = 'HOTELS WITHIN 10 MILES'; }
+  $('h-switch').innerHTML='Not right? <button type="button" id="flip">Show the '+(fr?'independent':'franchised')+' view</button> · <button type="button" id="again">Try another hotel</button>';
+  $('flip').onclick=function(){ mode = fr?'independent':'franchised'; fill(); };
+  $('again').onclick=function(){ $('snap').style.display='none'; $('find').style.display='flex'; q.value=''; q.focus(); window.scrollTo(0,0); };
+
+  // comp
+  var ids=M.comp;
+  $('c-title').innerHTML=M.others.length ? '<em>'+M.others.length+' hotels</em> compete for your guests.' : 'We couldn\'t map nearby hotels <em>right now.</em>';
+  $('c-lead').textContent=M.others.length ? 'Every hotel within 10 miles of '+me.name+'. The amber ones are your likely comp set: the hotels whose rates you should be tracking every night.' : 'The map service didn\'t answer. Try again in a moment; everything else below still applies.';
+  var all=[me].concat(M.others);
+  $('c-list').innerHTML=all.slice(0,40).map(function(h,i){
+    var isC=ids.indexOf(h)>-1, cls = h===me ? 'row you' : (isC?'row comp':'row');
+    var sub=brandOf(h)||'Independent'; var p=parentOf(h); if(p && p!==sub) sub+=' · '+p;
+    return '<div class="'+cls+'"><span class="n">'+(h===me?'YOU':(isC?'COMP':i))+'</span><span><b>'+esc(h.name)+'</b><small>'+esc(sub)+'</small></span><span class="r">'+(h.rating?h.rating.toFixed(1)+'★<small>'+(h.reviews?fmtInt(h.reviews):'')+'</small>':'')+'</span><span class="mi">'+(h===me?'—':h.d.toFixed(1)+' mi')+'</span></div>';
+  }).join('');
+  drawMap(M.others, ids);
+  // brand mix: who you are up against
+  var mix={}; M.others.forEach(function(h){ var k=parentOf(h)||'Independent'; mix[k]=(mix[k]||0)+1; });
+  var mixTxt=Object.keys(mix).sort(function(a,b){return mix[b]-mix[a];}).map(function(k){ return '<span class="chip'+(k===par?' sky':'')+'">'+esc(k)+' '+mix[k]+'</span>'; }).join(' ');
+  var head = (fr && par) ? '<b>'+sameFam+'</b><span>other '+esc(par)+' hotels within 10 miles share your loyalty members and your brand.com searches. They are your first competitors.</span>'
+    : '<b>'+(mix.Independent||0)+' of '+M.others.length+'</b><span>nearby hotels are independent like you. The rest have a brand behind them.</span>';
+  var rated=all.filter(function(h){return h.rating;}).sort(function(a,b){ return (b.rating-a.rating)||((b.reviews||0)-(a.reviews||0)); });
+  if(me.rating && rated.length>2){
+    var pos=rated.indexOf(me)+1, cr=ids.filter(function(h){return h.rating;}), avg=cr.length?cr.reduce(function(a,h){return a+h.rating;},0)/cr.length:null;
+    head='<b>#'+pos+' of '+rated.length+'</b><span>by Google guest rating among nearby hotels'+(avg?' · your comp set averages '+avg.toFixed(2)+'★, you\'re at '+me.rating.toFixed(1)+'★':'')+'.</span>'+'<div style="flex-basis:100%;height:0"></div>'+head;
+  }
+  $('c-rank').innerHTML=M.others.length ? head+'<div class="chips" style="margin-top:0;flex-basis:100%">'+mixTxt+'</div>' : '';
+  $('c-rank').style.display=M.others.length?'':'none';
+
+  // demand
+  $('d-lead').textContent = M.drivers.length ? 'What brings travellers within reach of '+me.name+': airports, campuses, hospitals, venues, employers and attractions.' : 'We couldn\'t load demand drivers right now.';
+  $('d-list').innerHTML=M.drivers.map(function(d){
+    return '<div class="card drv"><span class="ic">'+icon(d.type)+'</span><span><b>'+esc(d.name)+'</b><small>'+esc(d.note)+'</small></span><span class="mi">'+d.d.toFixed(1)+' mi</span></div>';
+  }).join('');
+
+  // economy
+  var c=M.econ;
+  if(c){
+    var county=c.county.split(',')[0];
+    $('e-title').innerHTML=esc(county)+', <em>in numbers.</em>';
+    var g = c.pop5 ? (c.pop-c.pop5)/c.pop5*100 : null;
+    var tiles=[[fmtInt(c.pop),'Population',county],[g==null?'—':(g>=0?'+':'')+g.toFixed(1)+'%','5-year growth','2017 → 2022'],[c.income>0?'$'+fmtInt(c.income):'—','Median household income','per year'],[c.age>0?c.age.toFixed(1):'—','Median age','years']];
+    if(c.estab) tiles.push([fmtInt(c.estab),'Businesses','with employees']);
+    $('e-tiles').innerHTML=tiles.slice(0,4).map(function(t){ return '<div class="card tile"><b>'+esc(t[0])+'</b><span>'+esc(t[1])+'</span><em>'+esc(t[2])+'</em></div>'; }).join('');
+    $('e-inds').innerHTML = c.inds ? '<span class="chip sky">Largest employers by industry</span> '+c.inds.filter(function(r){return r.emp>0;}).map(function(r){ return '<span class="chip">'+esc(r.label.replace(/ \(.*\)/,''))+' · '+fmtInt(r.emp)+' jobs</span>'; }).join('') : '';
+    $('s-econ').style.display='';
+  } else { $('s-econ').style.display='none'; }
+
+  // AI test needs a server key; hidden in the live demo
+  $('s-ai').style.display='none';
+
+  // pitch
+  if(fr){
+    $('p-kicker').textContent='For '+(par?(/^[AEIOU]/i.test(par)?'an ':'a ')+par:'a franchised')+' hotel';
+    $('p-title').innerHTML='Your flag sets the standard. <em>We make it pay.</em>';
+    $('p-lead').textContent='You already pay for a brand. We represent you with it, make every brand program earn its fees, and run the revenue work the brand leaves to you.';
+    $('p-list').innerHTML=pts([
+      ['BRAND REPRESENTATION','Your voice with the brand','We work with your brand team on standards, programs and requests, so decisions are made with your numbers in the room.'],
+      ['QUALITY & PIPs','Audits and PIPs, prepared','We get you ready for brand quality inspections and help you scope, price and schedule PIP work.'],
+      ['BRAND CONTRIBUTION','Make the fees earn their keep','We track what brand.com, the loyalty program and central reservations actually deliver against what you pay for them.'],
+      ['REVENUE','Pricing your brand doesn\'t do for you', 'AI pricing approved by a human revenue manager, against the '+M.comp.length+' comp hotels mapped above.']
+    ]);
+  } else {
+    $('p-kicker').textContent='For an independent hotel';
+    $('p-title').innerHTML='A brand\'s power. <em>Without the brand.</em>';
+    $('p-lead').textContent='Everything a franchise gives a hotel (systems, loyalty, distribution and a revenue team) without the franchise fees or the rule book.';
+    $('p-list').innerHTML=pts([
+      ['SYSTEMS','Our own cloud PMS','Front desk, housekeeping, folios and reports, connected to pricing and loyalty from day one.'],
+      ['LOYALTY','Your own rewards program','GoldKey puts your hotel\'s name on the card and brings guests back through your own booking engine.'],
+      ['DISTRIBUTION','Seen everywhere guests shop','OTA marketing, search and listings run for you, with every dollar reported.'],
+      ['REVENUE','A revenue team, not a tool','AI pricing approved by a human revenue manager, with your comp set tracked every night.']
+    ]);
+  }
+
+  // products
+  var P={
+    pc:['PriceCortex™','Live','Rate for every room category, 57 nights ahead, approved by your revenue manager.','Against '+M.comp.length+' comp hotels nightly'],
+    cm:['CompMatrix™','Live','Your rate against your comp set for the next 30 days, refreshed daily.','Your comp set, mapped above'],
+    fl:['FolioLens™','Live','Actual vs plan vs last year, CoStar STR market indices and a weekly brief.','Owner reporting'],
+    rv:['RevVitals','Live','A full revenue health check, turned into a tracked action plan.','Start here'],
+    or:['OTARecon365™','Live','Every OTA payout audited across its collection window; missing money chased.','Performance-based fee'],
+    sl:['SalesLock™','Pilot 2027','Never miss an RFP deadline. One-tap approvals for your Director of Sales.','Group and corporate demand'],
+    pp:['PulsePilot™','Early access','QR guest feedback that reaches your GM before the guest checks out.','Protect your reviews'],
+    ar:['AskRank','Pilot','Search, listing and AI visibility, run for you on a plan you approve.','Be found first'],
+    wp:['Web & Photo','Service','Website, booking engine integration and professional photography.','Direct bookings'],
+    pms:['BFIS PMS','Live','Our cloud property management system, connected to pricing and loyalty.','Most useful for independents'],
+    gk:['GoldKey Rewards','Launching','A loyalty program with your hotel\'s name on it, direct bookings only.','Most useful for independents']
+  };
+  var main = fr ? ['pc','cm','fl','rv','or','sl','pp','ar','wp'] : ['pms','gk','pc','cm','rv','fl','or','ar','pp','sl','wp'];
+  var also = fr ? ['pms','gk'] : [];
+  $('r-title').innerHTML = fr ? 'What we run for <em>'+esc(me.name)+'.</em>' : 'Everything a brand would give you. <em>Yours.</em>';
+  $('r-list').innerHTML=main.map(function(k){ return pd(P[k]); }).join('');
+  $('r-also').innerHTML=also.map(function(k){ return pd(P[k]); }).join('');
+  $('r-also-wrap').style.display = also.length ? '' : 'none';
+
+  // cta
+  $('x-title').innerHTML='Get the full health check for <em>'+esc(me.name)+'.</em>';
+  $('x-lead').textContent = fr ? 'Your brand\'s reports show part of the picture. RevVitals shows all of it: every channel, every fee and every lever, with an action plan we follow through.'
+    : 'RevVitals reviews every channel, your pricing and your market position, then turns it into an action plan we follow through.';
+  $('sources').innerHTML=(G.ready?'Hotel search, ratings and reviews powered by Google. ':'')+'Sources, looked up live: hotels, venues and attractions © OpenStreetMap contributors (via Overpass API); address search by Photon / komoot; population, income and age from the US Census Bureau American Community Survey 5-year estimates (2022, 2017); industries from Census County Business Patterns (2021); county lookup by the FCC Area API. Map data can be incomplete; your RevVitals review uses STR and your own PMS data.';
+}
+
+function pts(a){ return a.map(function(p){ return '<div class="card pt"><div class="k">'+p[0]+'</div><b>'+esc(p[1])+'</b><p>'+esc(p[2])+'</p></div>'; }).join(''); }
+function pd(p){ var soon=!/^Live$/.test(p[1]); return '<div class="card pd"><span class="st'+(soon?' soon':'')+'">'+esc(p[1])+'</span><b>'+esc(p[0])+'</b><div class="why">'+esc(p[3])+'</div><p>'+esc(p[2])+'</p></div>'; }
+
+function drawMap(near, comp){
+  var c=220, R=200, svg='', me=M.me;
+  [10,5,2.5].forEach(function(m){ var r=R*m/10; svg+='<circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="none" stroke="rgba(255,255,255,.10)" stroke-dasharray="3 5"/><text x="'+(c+4)+'" y="'+(c-r+14)+'" font-family="IBM Plex Mono" font-size="10" fill="#6E77A0">'+m+' mi</text>'; });
+  svg+='<line x1="'+c+'" y1="16" x2="'+c+'" y2="424" stroke="rgba(255,255,255,.05)"/><line x1="16" y1="'+c+'" x2="424" y2="'+c+'" stroke="rgba(255,255,255,.05)"/><text x="'+c+'" y="12" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#6E77A0">N</text>';
+  var cosLat=Math.cos(me.lat*Math.PI/180);
+  M.drivers.forEach(function(d){
+    if(d.d>10.05) return;
+    var dx=(d.lng-me.lng)*cosLat, dy=(d.lat-me.lat), len=Math.sqrt(dx*dx+dy*dy)||1, r=R*d.d/10;
+    svg+='<rect x="'+(c+dx/len*r-4).toFixed(1)+'" y="'+(c-dy/len*r-4).toFixed(1)+'" width="8" height="8" rx="2" fill="none" stroke="#00E0A8" stroke-width="1.5"><title>'+esc(d.name)+' · '+d.d.toFixed(1)+' mi</title></rect>';
+  });
+  near.slice().reverse().forEach(function(h){
+    var dx=(h.lng-me.lng)*cosLat, dy=(h.lat-me.lat), len=Math.sqrt(dx*dx+dy*dy)||1;
+    var r=R*Math.min(h.d,10)/10, px=c+dx/len*r, py=c-dy/len*r, isC=comp.indexOf(h)>-1;
+    svg+='<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="'+(isC?7:4.5)+'" fill="'+(isC?'#FFC24A':'#8A93BD')+'" fill-opacity="'+(isC?1:.7)+'"><title>'+esc(h.name)+' · '+h.d.toFixed(1)+' mi</title></circle>';
+  });
+  svg+='<circle cx="'+c+'" cy="'+c+'" r="16" fill="rgba(92,192,255,.18)"><animate attributeName="r" values="10;22;10" dur="2.4s" repeatCount="indefinite"/></circle><circle cx="'+c+'" cy="'+c+'" r="8" fill="#5CC0FF"/>';
+  $('map').innerHTML=svg;
+}
+
+function icon(t){
+  var p={airport:'<path d="M2 16l20-6-20-6 4 6-4 6z"/>',university:'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/>',hospital:'<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/>',stadium:'<ellipse cx="12" cy="12" rx="9" ry="6"/><ellipse cx="12" cy="12" rx="4" ry="2.5"/>',convention:'<rect x="3" y="8" width="18" height="12" rx="1"/><path d="M3 8l9-5 9 5"/>',employer:'<rect x="4" y="3" width="10" height="18"/><path d="M14 9h6v12h-6M7 7h4M7 11h4M7 15h4"/>',shopping:'<path d="M5 8h14l-1 12H6z"/><path d="M9 8a3 3 0 0 1 6 0"/>',attraction:'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.3 6L12 16.5 6.6 19.4l1.3-6L3.4 9.3l6-.7z"/>'};
+  return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">'+(p[t]||p.attraction)+'</svg>';
+}
+</script>
+</body>
+</html>
