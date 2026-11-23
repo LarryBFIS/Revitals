@@ -1,0 +1,87 @@
+[
+ {
+  "name": "default",
+  "title": "More than a franchise. Without the franchise fees.",
+  "sub": "More than a franchise, without the fees: PMS, AI pricing approved by a human revenue manager, owner reporting, OTA recovery, loyalty and direct booking."
+ },
+ {
+  "name": "platform",
+  "title": "Hotel Revenue Platform",
+  "sub": "PMS, Pricing, Loyalty"
+ },
+ {
+  "name": "bfis-pms",
+  "title": "BFIS PMS",
+  "sub": "Cloud Hotel Property Management"
+ },
+ {
+  "name": "pricecortex",
+  "title": "PriceCortex",
+  "sub": "AI Hotel Pricing, Human-Approved"
+ },
+ {
+  "name": "compmatrix",
+  "title": "CompMatrix",
+  "sub": "Hotel Comp Set Rate Shopping"
+ },
+ {
+  "name": "foliolens",
+  "title": "FolioLens",
+  "sub": "Hotel Owner Reporting and STR"
+ },
+ {
+  "name": "revvitals",
+  "title": "RevVitals",
+  "sub": "Hotel Revenue and OTA Health Check"
+ },
+ {
+  "name": "otarecon365",
+  "title": "OTARecon365",
+  "sub": "OTA Payout Audit and Recovery"
+ },
+ {
+  "name": "goldkey-rewards",
+  "title": "GoldKey Rewards",
+  "sub": "Your Own Hotel Loyalty Program"
+ },
+ {
+  "name": "saleslock",
+  "title": "SalesLock",
+  "sub": "Hotel Group Sales and RFP Response"
+ },
+ {
+  "name": "askrank",
+  "title": "AskRank",
+  "sub": "Hotel Search and AI Visibility"
+ },
+ {
+  "name": "pulsepilot",
+  "title": "PulsePilot",
+  "sub": "In-Stay Guest Feedback and Reviews"
+ },
+ {
+  "name": "direct-booking",
+  "title": "Hotel Websites, Booking Engine and Photography",
+  "sub": "Fast, search-friendly hotel websites, a direct booking engine connected to any PMS in about a week, and professional photography for your site and OTAs."
+ },
+ {
+  "name": "why-byld",
+  "title": "Hotel Franchise Alternative",
+  "sub": "No Franchise Fees"
+ },
+ {
+  "name": "how-it-works",
+  "title": "How BYLD Works",
+  "sub": "AI Pricing, Human Revenue Managers"
+ },
+ {
+  "name": "partners",
+  "title": "Hotel Ownership Partners",
+  "sub": "Capital, Management, Tax"
+ },
+ {
+  "name": "contact",
+  "title": "Book a Hotel Revenue Review",
+  "sub": "Book a free hotel revenue review with BYLD: pricing, distribution, OTA payouts and direct booking, with a clear plan for where the money is."
+ }
+]
