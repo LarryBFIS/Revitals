@@ -13,6 +13,7 @@ const DRAFT = process.argv.includes('--draft');
 const CAP = DRAFT ? 30 : 60, OUT_FPS = 30, W = 1920, H = 1080;
 const root = path.resolve(__dirname, '..');
 const out = path.join(root, 'public/video');
+const NAME = process.env.BYLD_NAME || 'tour';
 const work = fs.mkdtempSync(path.join(os.tmpdir(), 'byld-film-'));
 const ff = args => execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', ...args], { stdio: 'inherit' });
 
@@ -22,7 +23,7 @@ const ff = args => execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error',
   const p = await b.newPage({ viewport: { width: W, height: H } });
   // Offline renders: BYLD_FONT_CSS points at a local stylesheet that stands in for Google Fonts.
   if (process.env.BYLD_FONT_CSS) await p.route(/fonts\.(googleapis|gstatic)\.com/, r => r.fulfill({ contentType: 'text/css', body: fs.readFileSync(process.env.BYLD_FONT_CSS, 'utf8') }));
-  await p.goto('file://' + path.join(__dirname, 'tour.html'), { waitUntil: 'networkidle' });
+  await p.goto('file://' + path.join(__dirname, process.env.BYLD_TOUR || 'tour.html'), { waitUntil: 'networkidle' });
   await p.evaluate(() => document.fonts.ready);
   const { duration, scenes } = await p.evaluate(() => ({ duration: window.__DURATION, scenes: window.__TIMELINE }));
   fs.writeFileSync(path.join(work, 'timeline.json'), JSON.stringify({ duration, scenes }));
@@ -45,7 +46,7 @@ const ff = args => execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error',
   // Poster: the platform grid, fully assembled.
   const plat = scenes.find(s => s.id === 'platform');
   await p.evaluate(t => window.__seek(t), plat.start + plat.dur - 0.5);
-  await p.screenshot({ path: path.join(out, 'tour-poster.jpg'), type: 'jpeg', quality: 88 });
+  await p.screenshot({ path: path.join(out, NAME + '-poster.jpg'), type: 'jpeg', quality: 88 });
   await b.close();
   await done;
 
@@ -58,9 +59,9 @@ const ff = args => execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error',
   const inputs = ['-i', master, '-i', music];
   const audio = ['-af', `loudnorm=I=-16:TP=-1.5:LRA=11,afade=t=out:st=${(duration - 2).toFixed(2)}:d=2`, '-shortest'];
   ff([...inputs, '-map', '0:v', '-map', '1:a', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '23', '-preset', 'slow', '-tune', 'animation', '-profile:v', 'high', '-maxrate', '3M', '-bufsize', '6M',
-      ...audio, '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', path.join(out, 'tour.mp4')]);
+      ...audio, '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', path.join(out, NAME + '.mp4')]);
   ff([...inputs, '-map', '0:v', '-map', '1:a', '-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', '37', '-row-mt', '1', '-deadline', 'good', '-cpu-used', '4',
-      ...audio, '-c:a', 'libopus', '-b:a', '160k', path.join(out, 'tour.webm')]);
+      ...audio, '-c:a', 'libopus', '-b:a', '160k', path.join(out, NAME + '.webm')]);
   fs.rmSync(work, { recursive: true, force: true });
   for (const f of fs.readdirSync(out)) console.log(f, Math.round(fs.statSync(path.join(out, f)).size / 1024) + ' KB');
   console.log('duration', duration.toFixed(1), 's');
