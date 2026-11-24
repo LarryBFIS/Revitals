@@ -20,6 +20,8 @@ const ff = args => execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error',
   fs.mkdirSync(out, { recursive: true });
   const b = await chromium.launch();
   const p = await b.newPage({ viewport: { width: W, height: H } });
+  // Offline renders: BYLD_FONT_CSS points at a local stylesheet that stands in for Google Fonts.
+  if (process.env.BYLD_FONT_CSS) await p.route(/fonts\.(googleapis|gstatic)\.com/, r => r.fulfill({ contentType: 'text/css', body: fs.readFileSync(process.env.BYLD_FONT_CSS, 'utf8') }));
   await p.goto('file://' + path.join(__dirname, 'tour.html'), { waitUntil: 'networkidle' });
   await p.evaluate(() => document.fonts.ready);
   const { duration, scenes } = await p.evaluate(() => ({ duration: window.__DURATION, scenes: window.__TIMELINE }));

@@ -69,7 +69,7 @@ sup{font-size:.4em;vertical-align:1.05em;margin-left:.04em;font-weight:500;lette
 #platform h2 span{color:var(--muted)}
 #platform .stage{position:absolute;left:0;right:0;top:220px;bottom:60px;perspective:1800px;display:flex;align-items:center;justify-content:center}
 #platform .gridp{display:grid;grid-template-columns:repeat(4,350px);gap:22px;transform-style:preserve-3d}
-.tile{height:170px;border-radius:24px;padding:26px 28px;background:linear-gradient(160deg,rgba(30,40,95,.92),rgba(14,18,52,.92));border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 60px -20px rgba(0,0,0,.8);display:flex;flex-direction:column;justify-content:space-between}
+.tile{height:142px;border-radius:24px;padding:26px 28px;background:linear-gradient(160deg,rgba(30,40,95,.92),rgba(14,18,52,.92));border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 60px -20px rgba(0,0,0,.8);display:flex;flex-direction:column;justify-content:space-between}
 .tile small{font:500 17px 'Geist Mono';letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .tile b{font-size:34px;font-weight:650;letter-spacing:-.025em;line-height:1.05}
 .tile.hub{background:linear-gradient(160deg,#2B66FF,#6A4BFF);border-color:rgba(255,255,255,.4);box-shadow:0 0 90px rgba(92,140,255,.6)}
@@ -249,39 +249,115 @@ sup{font-size:.4em;vertical-align:1.05em;margin-left:.04em;font-weight:500;lette
 #outro .tm{position:absolute;bottom:62px;left:0;right:0;text-align:center;font-size:17px;color:var(--muted);line-height:1.6}
 
 /* chapter rail */
-.rail{position:absolute;left:130px;right:130px;bottom:40px;display:grid;grid-template-columns:repeat(11,1fr);gap:10px;z-index:40}
+.rail{position:absolute;left:130px;right:130px;bottom:40px;display:grid;grid-template-columns:repeat(12,1fr);gap:10px;z-index:40}
 .rail div{height:4px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}
 .rail i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sky),var(--indigo))}
 .rail-l{position:absolute;right:130px;bottom:58px;font:16px 'Geist Mono';color:var(--muted);letter-spacing:.12em;z-index:40}
+
+.pcrow{display:flex;gap:34px;align-items:center;transform-style:preserve-3d}
+.pc .shot{width:440px}
+.steps{width:520px;background:rgba(14,19,52,.94);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:22px 24px;box-shadow:0 60px 120px -40px rgba(0,0,0,.95),0 0 70px -20px var(--acc);transform:translateZ(60px)}
+.steps .sh{display:flex;justify-content:space-between;font:500 15px 'Geist Mono';letter-spacing:.14em;color:var(--muted);margin-bottom:10px}.steps .sh em{font-style:normal;color:var(--acc);letter-spacing:.04em}
+.stp{display:grid;grid-template-columns:38px 1fr 28px;gap:14px;align-items:center;padding:8px 0;border-top:1px solid rgba(255,255,255,.07)}
+.stp b{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font:600 17px 'Geist Mono';color:#04122B;background:var(--acc)}
+.stp span{display:block;font-size:20px;font-weight:600;color:#fff;letter-spacing:-.01em}.stp small{display:block;font-size:15px;color:var(--muted)}
+.stp i{font-style:normal;color:var(--acc);font-size:20px;font-weight:700}
+.pc .appr{right:-40px;bottom:-110px}
+.cm .win{width:820px}.cm .win.tip{position:absolute;width:470px;right:-90px;top:120px;transform:translateZ(140px)}
+.fl .win{width:1000px}.ota .win{width:1000px}
+.rvst{position:relative;width:980px;height:760px;transform-style:preserve-3d}.rvst .win{position:absolute}
+.rvst .a{width:560px;left:0;top:0}.rvst .b{width:600px;left:330px;top:250px;transform:translateZ(60px)}.rvst .c{width:560px;left:120px;top:470px;transform:translateZ(120px)}
+.omst{position:relative;width:980px;height:820px;left:60px;transform-style:preserve-3d}
+.omst .sh{position:absolute;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 50px 100px -30px rgba(0,0,0,.95),0 0 0 1px rgba(255,255,255,.2)}
+.omst .sh img{display:block;width:100%}
+.omst .s1{width:300px;left:0;top:30px}.omst .s2{width:560px;left:330px;top:0}.omst .s3{width:440px;left:420px;top:250px;transform:translateZ(40px)}
+.omst .s4{width:360px;left:40px;top:360px;transform:translateZ(80px)}.omst .s5{width:330px;left:600px;top:470px;transform:translateZ(110px)}
+.omst .s6{width:340px;left:250px;top:560px;transform:translateZ(140px)}.omst .s7{width:640px;left:300px;top:150px;transform:translateZ(170px)}
+.lab{position:absolute;font:600 18px 'Geist Mono';letter-spacing:.06em;color:#0B1020;background:var(--acc);padding:9px 16px;border-radius:999px;transform:translateZ(200px);white-space:nowrap}
+.omst .l1{left:20px;top:-20px}.omst .l2{left:20px;top:330px}
+.ppst{position:relative;width:1000px;height:760px;top:-10px;transform-style:preserve-3d}
+.ppst .card{position:absolute;left:0;top:70px;width:310px;border-radius:10px;overflow:hidden;box-shadow:0 50px 100px -30px rgba(0,0,0,.95)}
+.ppst .card img,.ppst .ph img{display:block;width:100%}
+.ppst .ph{position:absolute;width:205px;border-radius:12.6%/6%;overflow:hidden;box-shadow:0 50px 90px -30px rgba(0,0,0,.95)}
+.ppst .p1{left:290px;top:30px;transform:translateZ(40px)}.ppst .p2{left:480px;top:0;transform:translateZ(70px)}.ppst .p3{left:690px;top:60px;transform:translateZ(100px)}
+.ppst .p4{left:400px;top:300px;transform:translateZ(130px)}.ppst .p5{left:630px;top:320px;transform:translateZ(160px)}
+.ppst .k1{left:700px;top:20px}.ppst .k2{left:330px;top:270px}
+.tile.hub small{display:block;margin-bottom:6px}.tile.hub{flex-direction:row;align-items:center;justify-content:space-between}
+.om .pname{font-size:66px}
+.wb .aichat{left:-110px;bottom:-60px}.wb .aivoice{right:-70px;top:-50px}
+.chip .av{font-size:16px}
+
+.tc .mk{width:120px;height:120px;margin-bottom:26px}.tc .mk svg{width:100%;height:100%;filter:drop-shadow(0 0 30px var(--acc))}
+.tc .tl{max-width:1400px}
+.tile .tm2{display:flex;align-items:center;gap:14px}.tile .tm2 svg{width:44px;height:44px;flex-shrink:0}
+.tile b{font-size:30px}
+#lockup p{font-size:32px;max-width:1300px;margin:0 auto}
+#outro h3{font-size:58px}
+.ptag{max-width:640px}
 </style></head><body>
 
 <div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="grid"></div><div class="dust"></div></div>
 
 <!-- ============ HOOK: kinetic type on the beat ============ -->
 <section class="scene" id="hook" data-d="4.8" data-cut="hard">
-  <div class="kin slam" style="--dl:0s;--len:1.2s">Your hotel</div>
-  <div class="kin slam sm" style="--dl:1.2s;--len:1.2s">pays a franchise</div>
-  <div class="kin slam" style="--dl:2.4s;--len:1.2s">for a flag.</div>
-  <div class="kin slam sm" style="--dl:3.6s;--len:1.2s"><em class="grad">We built the engine.</em></div>
+  <div class="kin slam sm" style="--dl:0s;--len:1.2s">Want a brand?</div>
+  <div class="kin slam" style="--dl:1.2s;--len:1.2s">First, a PIP.</div>
+  <div class="kin slam sm" style="--dl:2.4s;--len:1.2s">Then fees, every month.</div>
+  <div class="kin slam sm" style="--dl:3.6s;--len:1.2s"><em class="grad">Or build with BYLD.</em></div>
 </section>
 
 <!-- ============ LOCKUP ============ -->
 <section class="scene" id="lockup" data-d="3.6" data-cut="flash">
   <div class="logo pop" style="--dl:0s"><img src="../static/img/byld-logo.svg" alt=""></div>
   <h1><span class="rise" style="--dl:.25s">More than a franchise.</span><br><span class="rise grad" style="--dl:.6s">Without the franchise fees.</span></h1>
-  <p class="rise" style="--dl:1.2s">One platform. Eleven products. A human revenue manager on every rate.</p>
+  <p class="rise" style="--dl:1.2s">Founded by senior executives from one of the largest, longest-standing hotel franchise companies in the US.</p>
 </section>
 
 <!-- ============ PLATFORM: tiles fly in from depth ============ -->
 <section class="scene" id="platform" data-d="4.2" data-cam='{"rx":[30,4],"ry":[-8,0],"z":[-220,40],"y":[60,0]}'>
-  <h2 class="rise" style="--dl:.05s">Eleven products. <span>One owner portal.</span></h2>
+  <h2 class="rise" style="--dl:.05s">Twelve products. <span>One owner portal.</span></h2>
   <div class="stage"><div class="cam"><div class="gridp"></div></div></div>
 </section>
 
 <!-- ============ PRODUCTS ============ -->
-<section class="scene prod pms" data-d="4.2" style="--acc:#5CC0FF" data-no="01" data-verb="RUN" data-name="BFIS|PMS" data-tag="Where every revenue decision starts." data-cam='{"ry":[-18,-7],"rx":[6,2],"z":[-160,60],"x":[60,0]}'>
+<section class="scene prod wb" data-mark="wb" data-d="5.4" style="--acc:#2DD4BF" data-no="01" data-verb="BOOK" data-name="Direct Booking|Engine" data-tag="A website your hotel owns, with an AI concierge built in." data-cam='{"ry":[-13,-3],"rx":[7,2],"z":[-200,40],"x":[40,0]}'>
   <div class="demo">
-    <div class="pl"><div class="chap rise" style="--dl:0s"><b>01</b><span>/ 11</span><em>Run</em></div>
+    <div class="pl"><div class="chap rise" style="--dl:0s"><b>01</b><span>/ 12</span><em>Book direct</em></div>
+      <h2 class="pname long rise" style="--dl:.05s">Direct Booking<br>Engine</h2>
+      <p class="ptag rise" style="--dl:.15s">A website your hotel owns, with an AI concierge built in.</p>
+      <ul class="pts"><li class="rise" style="--dl:0.3s">Your own website, designed and owned by the hotel</li><li class="rise" style="--dl:0.4s">AI voice agent and chatbot that answer guests and take bookings</li><li class="rise" style="--dl:0.5s">Booking engine live on any PMS in about a week</li></ul>
+      <div class="status svc rise" style="--dl:.6s">Service</div></div>
+    <div class="pr"><div class="halo"></div><div class="cam">
+      <div class="win"><div class="bar"><i></i><i></i><i></i><span>yourhotel.com · Book direct</span><em class="ill">Illustrative</em></div>
+        <div class="panel"><div class="hero-img">Your Hotel</div>
+          <div class="dates"><div><small>Check in</small>Fri, Jun 12</div><div><small>Check out</small>Sun, Jun 14</div><div><small>Guests</small>2 adults</div></div>
+          <div class="row"><div><b>King Room</b><br><span style="font-size:17px;color:var(--muted)">Free cancellation</span></div><div class="price"><b style="color:#fff">$144</b></div></div>
+          <div class="row rise" style="--dl:.9s"><div><b>King Room · GoldKey member</b><br><span style="font-size:17px;color:var(--muted)">Member code applied · 15% off</span></div><div class="price"><s>$144</s><b>$122</b></div></div></div></div>
+      <div class="chip aichat pop" style="--dl:1.6s"><div class="av">AI</div><div><b>“Any king rooms this Friday?”</b><small>AI chat · “Yes, $122 with GoldKey. Shall I book it?”</small></div></div>
+      <div class="chip dark aivoice pop" style="--dl:2.6s"><div class="ok">✓</div><div><b>AI voice agent · booking confirmed</b><small>Answered at 2:14 am, no one on the desk</small></div></div>
+    </div></div>
+  </div>
+</section>
+
+<section class="scene prod gk" data-mark="gk" data-d="4.2" style="--acc:#E8B4A8" data-no="02" data-verb="RETAIN" data-name="GoldKey|Rewards" data-tag="An in-house loyalty program, tailored to your property." data-cam='{"ry":[-26,8],"rx":[14,4],"z":[-150,40]}'>
+  <div class="demo">
+    <div class="pl"><div class="chap rise" style="--dl:0s"><b>02</b><span>/ 12</span><em>Retain</em></div>
+      <h2 class="pname rise" style="--dl:.05s">GoldKey<sup>™</sup> Rewards</h2>
+      <p class="ptag rise" style="--dl:.15s">An in-house loyalty program, tailored to your property.</p>
+      <ul class="pts"><li class="rise" style="--dl:.3s">30-second QR sign-up at the front desk</li><li class="rise" style="--dl:.4s">Four tiers, free nights, restaurant credit</li><li class="rise" style="--dl:.5s">No per-stay brand loyalty fees</li></ul>
+      <div class="status soon rise" style="--dl:.6s">Launching</div></div>
+    <div class="pr"><div class="halo"></div><div class="cam"><div class="stack">
+      <div class="ph rise" style="--dl:.1s;left:250px"><img src="../assets/goldkey-signup.jpg" alt=""></div>
+      <div class="ph rise" style="--dl:.22s;left:480px;top:0"><img src="../assets/goldkey-welcome.jpg" alt=""></div>
+      <div class="ph rise" style="--dl:.34s;left:710px"><img src="../assets/goldkey-email.jpg" alt=""></div>
+      <div class="card pop" style="--dl:.6s"><div class="shine"></div><div class="t"><span>GOLDKEY</span><span>CORE</span></div><div class="nm">ALEX MORGAN</div><div class="ft"><span>MEMBER NO. 1001</span><span>MEMBER SINCE 2026</span></div></div>
+    </div></div></div>
+  </div>
+</section>
+
+<section class="scene prod pms" data-mark="pms" data-d="4.2" style="--acc:#4895EF" data-no="03" data-verb="RUN" data-name="BFIS|PMS" data-tag="Where every revenue decision starts." data-cam='{"ry":[-18,-7],"rx":[6,2],"z":[-160,60],"x":[60,0]}'>
+  <div class="demo">
+    <div class="pl"><div class="chap rise" style="--dl:0s"><b>03</b><span>/ 12</span><em>Run</em></div>
       <h2 class="pname rise" style="--dl:.05s">BFIS<sup>™</sup> PMS</h2>
       <p class="ptag rise" style="--dl:.15s">Where every revenue decision starts.</p>
       <ul class="pts"><li class="rise" style="--dl:.3s">Live tape chart, every room, every night</li><li class="rise" style="--dl:.4s">Room status, folios and front desk</li><li class="rise" style="--dl:.5s">Multi-property, one login</li></ul>
@@ -294,117 +370,107 @@ sup{font-size:.4em;vertical-align:1.05em;margin-left:.04em;font-weight:500;lette
   </div>
 </section>
 
-<section class="scene prod pc" data-d="4.2" style="--acc:#3DDC97" data-no="02" data-verb="PRICE" data-name="PriceCortex" data-tag="AI recommends. A person approves." data-cam='{"ry":[16,5],"rx":[5,1],"z":[-180,40],"x":[-40,0]}'>
+<section class="scene prod pc" data-mark="pc" data-d="7.2" style="--acc:#00F0B5" data-no="04" data-verb="PRICE" data-name="PriceCortex" data-tag="Pricing tuned to your hotel. AI-optimised rates pushed to your PMS twice a day, with updates on WhatsApp." data-cam='{"ry":[12,3],"rx":[5,1],"z":[-160,30],"x":[-30,0]}'>
   <div class="demo">
-    <div class="pl"><div class="chap rise" style="--dl:0s"><b>02</b><span>/ 11</span><em>Price</em></div>
+    <div class="pl"><div class="chap rise" style="--dl:0s"><b>04</b><span>/ 12</span><em>Price</em></div>
       <h2 class="pname rise" style="--dl:.05s">PriceCortex<sup>™</sup></h2>
-      <p class="ptag rise" style="--dl:.15s">AI recommends. A person approves.</p>
-      <ul class="pts"><li class="rise" style="--dl:.3s">A rate for every room, 57 nights ahead</li><li class="rise" style="--dl:.4s">Floors and ceilings no model can cross</li><li class="rise" style="--dl:.5s">Full reasoning behind every rate</li></ul>
-      <div class="status rise" style="--dl:.6s">Live · AI + human revenue manager</div></div>
-    <div class="pr"><div class="halo"></div><div class="cam">
-      <div class="win shot"><div class="bar"><i></i><i></i><i></i><span>PriceCortex · Today</span><em>Real screen</em></div><img src="../assets/pricecortex-today-card.jpg" alt=""></div>
-      <div class="chip rate pop" style="--dl:.45s"><small>Recommended · Fri · King</small><div class="big">$<span data-num data-from="129" data-to="144" data-at=".6" data-dur="1">144</span></div><span class="up">▲ $15 · comps up $12, pace ahead</span></div>
-      <div class="chip dark locks pop" style="--dl:1.2s"><span>🔒 Floor $99</span><span>🔒 Ceiling $189</span></div>
-      <div class="chip appr pop" style="--dl:1.8s"><div class="av">RM</div><div><b>Approved by your revenue manager</b><small>Live on all channels · 8:15 am</small></div><div class="ok">✓</div></div>
+      <p class="ptag rise" style="--dl:.15s">Pricing tuned to your hotel. AI-optimised rates pushed to your PMS twice a day, with updates on WhatsApp.</p>
+      <ul class="pts"><li class="rise" style="--dl:0.3s">A model configured to each hotel’s needs</li><li class="rise" style="--dl:0.4s">Rates pushed straight to your PMS, twice a day</li><li class="rise" style="--dl:0.5s">Nine transparent steps, approved by your revenue manager</li></ul>
+      <div class="status  rise" style="--dl:.6s">Live · AI + human revenue manager</div></div>
+    <div class="pr"><div class="halo"></div><div class="cam"><div class="pcrow">
+      <div class="win shot rise" style="--dl:.1s"><div class="bar"><i></i><i></i><i></i><span>PriceCortex · Today</span><em>Real screen</em></div><img src="../assets/pricecortex-today-card.jpg" alt=""></div>
+      <div class="steps"><div class="sh rise" style="--dl:.3s"><span>THE PIPELINE</span><em>Step 0 · context loaded</em></div><div class="stp rise" style="--dl:0.50s"><b>1</b><div><span>Category match</span><small>King vs King at every ranked comp</small></div><i class="pop" style="--dl:0.75s">✓</i></div><div class="stp rise" style="--dl:0.92s"><b>2</b><div><span>Base price</span><small>Rank tier + base metric</small></div><i class="pop" style="--dl:1.17s">✓</i></div><div class="stp rise" style="--dl:1.34s"><b>3</b><div><span>Target</span><small>The bar to beat</small></div><i class="pop" style="--dl:1.59s">✓</i></div><div class="stp rise" style="--dl:1.76s"><b>4</b><div><span>Pressure rank</span><small>Occupancy and RevPAR vs target</small></div><i class="pop" style="--dl:2.01s">✓</i></div><div class="stp rise" style="--dl:2.18s"><b>5</b><div><span>Pickup pace</span><small>On the books vs the booking curve</small></div><i class="pop" style="--dl:2.43s">✓</i></div><div class="stp rise" style="--dl:2.60s"><b>6</b><div><span>Adjustment</span><small>Pressure × pace sets the move</small></div><i class="pop" style="--dl:2.85s">✓</i></div><div class="stp rise" style="--dl:3.02s"><b>7</b><div><span>Weather &amp; events</span><small>Demand around the stay date</small></div><i class="pop" style="--dl:3.27s">✓</i></div><div class="stp rise" style="--dl:3.44s"><b>8</b><div><span>Constraints</span><small>Floor, ceiling and locks</small></div><i class="pop" style="--dl:3.69s">✓</i></div><div class="stp rise" style="--dl:3.86s"><b>9</b><div><span>Persist &amp; train</span><small>Every decision trains the model</small></div><i class="pop" style="--dl:4.11s">✓</i></div></div>
+    </div>
+      <div class="chip appr pop" style="--dl:4.6s"><div class="av">RM</div><div><b>Approved by your revenue manager</b><small>Live on all channels</small></div><div class="ok">✓</div></div>
     </div></div>
   </div>
 </section>
 
-<section class="scene prod cm" data-d="4.2" style="--acc:#A78BFA" data-no="03" data-verb="COMPETE" data-name="CompMatrix" data-tag="Know where you stand, every night." data-cam='{"ry":[-14,-4],"rx":[8,2],"z":[-200,30],"y":[30,0]}'>
+<section class="scene prod cm" data-mark="cm" data-d="5.4" style="--acc:#FF8A4C" data-no="05" data-verb="COMPETE" data-name="CompMatrix" data-tag="Competitor rates for every room category, so you can fine-tune yourself." data-cam='{"ry":[-12,-3],"rx":[7,2],"z":[-200,30],"y":[30,0]}'>
   <div class="demo">
-    <div class="pl"><div class="chap rise" style="--dl:0s"><b>03</b><span>/ 11</span><em>Compete</em></div>
+    <div class="pl"><div class="chap rise" style="--dl:0s"><b>05</b><span>/ 12</span><em>Compete</em></div>
       <h2 class="pname rise" style="--dl:.05s">CompMatrix<sup>™</sup></h2>
-      <p class="ptag rise" style="--dl:.15s">Know where you stand, every night.</p>
-      <ul class="pts"><li class="rise" style="--dl:.3s">Your whole comp set, next 30 days</li><li class="rise" style="--dl:.4s">Like-for-like room matching</li><li class="rise" style="--dl:.5s">Built on 1.4M+ competitor rates</li></ul>
-      <div class="status rise" style="--dl:.6s">Live · refreshed daily</div></div>
+      <p class="ptag rise" style="--dl:.15s">Competitor rates for every room category, so you can fine-tune yourself.</p>
+      <ul class="pts"><li class="rise" style="--dl:0.3s">King against King, Two Queen against Two Queen</li><li class="rise" style="--dl:0.4s">Your whole comp set, 30 days out</li><li class="rise" style="--dl:0.5s">Adjust and fine-tune the details yourself</li></ul>
+      <div class="status  rise" style="--dl:.6s">Live</div></div>
     <div class="pr"><div class="halo"></div><div class="cam">
-      <div class="win"><div class="bar"><i></i><i></i><i></i><span>CompMatrix · Best Available Rate</span><em>Real screen</em></div><img src="../assets/compmatrix-bar.jpg" alt=""><div class="scan"></div></div>
-      <div class="chip rank pop" style="--dl:1.2s"><small>Tonight · best available rate</small>
-        <div class="rb"><span>Comp hotel A</span><i class="grow" style="--dl:1.4s;width:95%"></i><b>$152</b></div>
-        <div class="rb me"><span>Your hotel · #2</span><i class="grow" style="--dl:1.5s;width:90%"></i><b>$144</b></div>
-        <div class="rb"><span>Comp hotel B</span><i class="grow" style="--dl:1.6s;width:86%"></i><b>$139</b></div></div>
+      <div class="win"><div class="bar"><i></i><i></i><i></i><span>CompMatrix · Best Available Rate · 30 days</span><em>Real screen</em></div><img src="../assets/compmatrix-bar-30d.jpg" alt=""><div class="scan"></div></div>
+      <div class="win tip pop" style="--dl:1.6s"><div class="bar"><i></i><i></i><i></i><span>CompMatrix · King · Thu</span><em>Real screen</em></div><img src="../assets/compmatrix-king-tooltip.jpg" alt=""></div>
     </div></div>
   </div>
 </section>
 
-<section class="scene prod fl" data-d="4.2" style="--acc:#7C8CFF" data-no="04" data-verb="REPORT" data-name="FolioLens" data-tag="Performance, without building a report." data-cam='{"ry":[12,4],"rx":[10,3],"z":[-200,40]}'>
+<section class="scene prod fl" data-mark="fl" data-d="5.4" style="--acc:#A78BFA" data-no="06" data-verb="REPORT" data-name="FolioLens" data-tag="Your entire portfolio on one screen, whatever the flag." data-cam='{"ry":[10,3],"rx":[8,2],"z":[-200,40]}'>
   <div class="demo">
-    <div class="pl"><div class="chap rise" style="--dl:0s"><b>04</b><span>/ 11</span><em>Report</em></div>
+    <div class="pl"><div class="chap rise" style="--dl:0s"><b>06</b><span>/ 12</span><em>Report</em></div>
       <h2 class="pname rise" style="--dl:.05s">FolioLens<sup>™</sup></h2>
-      <p class="ptag rise" style="--dl:.15s">Performance, without building a report.</p>
-      <ul class="pts"><li class="rise" style="--dl:.3s">Actual vs plan vs last year</li><li class="rise" style="--dl:.4s">You vs your CoStar STR market</li><li class="rise" style="--dl:.5s">A weekly brief that checks itself</li></ul>
-      <div class="status rise" style="--dl:.6s">Live</div></div>
+      <p class="ptag rise" style="--dl:.15s">Your entire portfolio on one screen, whatever the flag.</p>
+      <ul class="pts"><li class="rise" style="--dl:0.3s">Every hotel and every brand in one view</li><li class="rise" style="--dl:0.4s">Actual vs target vs last year</li><li class="rise" style="--dl:0.5s">AI analysis: who is ahead, who needs attention</li></ul>
+      <div class="status  rise" style="--dl:.6s">Live</div></div>
     <div class="pr"><div class="halo"></div><div class="cam">
-      <div class="win"><div class="bar"><i></i><i></i><i></i><span>FolioLens · Month to date</span><em class="ill">Illustrative</em></div>
-        <div class="panel"><div class="row" style="padding-top:0"><span class="lbl">Month to date</span><span class="tag t-ok">Ahead of plan</span></div>
-          <div class="kpis"><div><b><span data-num data-to="78" data-at=".3">78</span>%</b><small>Occupancy</small></div><div><b>$<span data-num data-to="132" data-at=".4">132</span></b><small>ADR</small></div><div><b>$<span data-num data-to="103" data-at=".5">103</span></b><small>RevPAR</small></div></div>
-          <svg viewBox="0 0 760 190" preserveAspectRatio="none"><path d="M0 160 L76 154 152 156 228 140 304 144 380 126 456 132 532 112 608 116 684 98 760 94" stroke="rgba(255,255,255,.28)" stroke-width="3"/><path d="M0 150 L760 70" stroke="#7C8CFF" stroke-width="3" stroke-dasharray="10 10"/><path class="draw" style="--dl:.5s" d="M0 152 L76 138 152 142 228 112 304 118 380 88 456 94 532 66 608 72 684 46 760 34" stroke="#5CC0FF" stroke-width="5"/></svg>
-          <div class="legend"><span><i style="background:#5CC0FF"></i>Actual</span><span><i style="background:#7C8CFF"></i>Plan</span><span><i style="background:rgba(255,255,255,.35)"></i>Last year</span></div></div></div>
-      <div class="chip pop" style="--dl:1.8s;right:-90px;bottom:-50px"><div class="ok">✓</div><div><b>Weekly Performance Brief</b><small>Quality-checked · sent Monday 7:00</small></div></div>
+      <div class="win"><div class="bar"><i></i><i></i><i></i><span>FolioLens · Portfolio</span><em>Real screen</em></div><img src="../assets/foliolens-portfolio.jpg" alt=""></div>
+      <div class="chip pop" style="--dl:1.8s;right:-60px;bottom:-60px"><div class="ok">✓</div><div><b>Targets set for the year</b><small>Tracked daily, after the night audit</small></div></div>
     </div></div>
   </div>
 </section>
 
-<section class="scene prod rv" data-d="4.2" style="--acc:#3DDC97" data-no="05" data-verb="IMPROVE" data-name="RevVitals" data-tag="A health check, then the follow-through." data-cam='{"ry":[-16,-5],"rx":[6,2],"z":[-180,40],"x":[50,0]}'>
+<section class="scene prod rv" data-mark="rv" data-d="4.8" style="--acc:#06D6A0" data-no="07" data-verb="IMPROVE" data-name="RevVitals" data-tag="142 OTA performance factors audited and fixed, every action tracked." data-cam='{"ry":[-14,-4],"rx":[6,2],"z":[-180,40],"x":[40,0]}'>
   <div class="demo">
-    <div class="pl"><div class="chap rise" style="--dl:0s"><b>05</b><span>/ 11</span><em>Improve</em></div>
+    <div class="pl"><div class="chap rise" style="--dl:0s"><b>07</b><span>/ 12</span><em>Improve</em></div>
       <h2 class="pname rise" style="--dl:.05s">RevVitals<sup>™</sup></h2>
-      <p class="ptag rise" style="--dl:.15s">A health check, then the follow-through.</p>
-      <ul class="pts"><li class="rise" style="--dl:.3s">Pricing, distribution and OTA marketing graded</li><li class="rise" style="--dl:.4s">Expedia, Booking.com and Agoda levers</li><li class="rise" style="--dl:.5s">Every action tracked to done</li></ul>
-      <div class="status rise" style="--dl:.6s">Live</div></div>
-    <div class="pr"><div class="halo"></div><div class="cam">
-      <div class="win"><div class="bar"><i></i><i></i><i></i><span>RevVitals · Health check</span><em class="ill">Illustrative</em></div>
-        <div class="panel"><span class="lbl">Health check</span>
-          <div class="grades"><div class="flip" style="--dl:.3s"><b style="color:#3DDC97">A</b><small>Pricing</small></div><div class="flip" style="--dl:.42s"><b style="color:#F5B544">B−</b><small>Distribution</small></div><div class="flip" style="--dl:.54s"><b style="color:#FF6B81">C+</b><small>OTA marketing</small></div><div class="flip" style="--dl:.66s"><b style="color:#3DDC97">B+</b><small>Market</small></div></div>
-          <div class="row"><span>Booking.com Genius</span><span class="tag t-ok">Active</span></div>
-          <div class="row"><span>Refresh OTA photos</span><span class="swap" style="--sw:1.4s"><span class="tag t-warn s1">In progress</span><span class="tag t-ok s2">Done</span></span></div>
-          <div class="row"><span>Last-minute deal on Expedia</span><span class="swap" style="--sw:2s"><span class="tag t-info s1">Awaiting approval</span><span class="tag t-ok s2">Approved</span></span></div></div></div>
-    </div></div>
-  </div>
-</section>
-
-<section class="scene prod ota" data-d="4.2" style="--acc:#F5B544" data-no="06" data-verb="RECOVER" data-name="OTARecon365" data-tag="Collect what you're owed." data-cam='{"ry":[14,4],"rx":[6,1],"z":[-200,50]}'>
-  <div class="demo">
-    <div class="pl"><div class="chap rise" style="--dl:0s"><b>06</b><span>/ 11</span><em>Recover</em></div>
-      <h2 class="pname rise" style="--dl:.05s">OTARecon365<sup>™</sup></h2>
-      <p class="ptag rise" style="--dl:.15s">Collect what you're owed.</p>
-      <ul class="pts"><li class="rise" style="--dl:.3s">Every OTA payout audited, booking by booking</li><li class="rise" style="--dl:.4s">365 days on Booking.com, 180 on Expedia</li><li class="rise" style="--dl:.5s">Paid only on what we find</li></ul>
-      <div class="status rise" style="--dl:.6s">Live · performance-based</div></div>
-    <div class="pr"><div class="halo"></div><div class="cam">
-      <div class="win"><div class="bar"><i></i><i></i><i></i><span>OTARecon365 · Recovery queue</span><em class="ill">Illustrative</em></div>
-        <div class="panel"><span class="lbl">Found this month</span>
-          <div class="total">$<span data-num data-to="821" data-at=".3" data-dur="1.8">821</span></div>
-          <div class="q right" style="--dl:.4s"><div><b>Virtual card not charged</b><span>OTA 1 · $412</span></div><span class="tag t-ok">Recovered</span></div>
-          <div class="q right" style="--dl:.6s"><div><b>Payout short vs folio</b><span>OTA 2 · $186</span></div><span class="tag t-info">Claimed</span></div>
-          <div class="q right" style="--dl:.8s"><div><b>No-show fee unpaid</b><span>OTA 1 · $129</span></div><span class="tag t-info">Claimed</span></div>
-          <div class="q right" style="--dl:1s"><div><b>Cancelled, card expiring</b><span>OTA 3 · $94</span></div><span class="tag t-bad">Expires in 2 days</span></div></div></div>
-    </div></div>
-  </div>
-</section>
-
-<section class="scene prod gk" data-d="4.2" style="--acc:#E8B4A0" data-no="07" data-verb="RETAIN" data-name="GoldKey|Rewards" data-tag="Your own loyalty program." data-cam='{"ry":[-26,8],"rx":[14,4],"z":[-150,40]}'>
-  <div class="demo">
-    <div class="pl"><div class="chap rise" style="--dl:0s"><b>07</b><span>/ 11</span><em>Retain</em></div>
-      <h2 class="pname rise" style="--dl:.05s">GoldKey<sup>™</sup> Rewards</h2>
-      <p class="ptag rise" style="--dl:.15s">Your own loyalty program. Guests come back direct.</p>
-      <ul class="pts"><li class="rise" style="--dl:.3s">30-second QR sign-up at the front desk</li><li class="rise" style="--dl:.4s">Four tiers, free nights, restaurant credit</li><li class="rise" style="--dl:.5s">No per-stay brand loyalty fees</li></ul>
-      <div class="status soon rise" style="--dl:.6s">Launching</div></div>
-    <div class="pr"><div class="halo"></div><div class="cam"><div class="stack">
-      <div class="ph rise" style="--dl:.1s;left:250px"><img src="../assets/goldkey-signup.jpg" alt=""></div>
-      <div class="ph rise" style="--dl:.22s;left:480px;top:0"><img src="../assets/goldkey-welcome.jpg" alt=""></div>
-      <div class="ph rise" style="--dl:.34s;left:710px"><img src="../assets/goldkey-email.jpg" alt=""></div>
-      <div class="card pop" style="--dl:.6s"><div class="shine"></div><div class="t"><span>GOLDKEY</span><span>CORE</span></div><div class="nm">ALEX MORGAN</div><div class="ft"><span>MEMBER NO. 1001</span><span>MEMBER SINCE 2026</span></div></div>
+      <p class="ptag rise" style="--dl:.15s">142 OTA performance factors audited and fixed, every action tracked.</p>
+      <ul class="pts"><li class="rise" style="--dl:0.3s">142 factors across Booking.com, Expedia and Agoda</li><li class="rise" style="--dl:0.4s">Each fix researched and applied for you</li><li class="rise" style="--dl:0.5s">Every action tracked to done</li></ul>
+      <div class="status  rise" style="--dl:.6s">Live</div></div>
+    <div class="pr"><div class="halo"></div><div class="cam"><div class="rvst">
+      <div class="win a rise" style="--dl:.1s"><div class="bar"><i></i><i></i><i></i><span>RevVitals · Report</span><em>Real screen</em></div><img src="../assets/revvitals-cover.jpg" alt=""></div>
+      <div class="win b rise" style="--dl:.7s"><div class="bar"><i></i><i></i><i></i><span>RevVitals · OTA audit</span><em>Real screen</em></div><img src="../assets/revvitals-ota-audit.jpg" alt=""></div>
+      <div class="win c rise" style="--dl:1.3s"><div class="bar"><i></i><i></i><i></i><span>RevVitals · Progress</span><em>Real screen</em></div><img src="../assets/revvitals-progress.jpg" alt=""></div>
     </div></div></div>
   </div>
 </section>
 
-<section class="scene prod sl" data-d="4.2" style="--acc:#38BDF8" data-no="08" data-verb="SELL" data-name="SalesLock|Concierge" data-tag="Never miss an RFP deadline." data-cam='{"ry":[15,4],"rx":[7,2],"z":[-200,40],"x":[-40,0]}'>
+<section class="scene prod ota" data-mark="ota" data-d="4.8" style="--acc:#FFBE0B" data-no="08" data-verb="RECOVER" data-name="OTARecon365" data-tag="Collect what you're owed." data-cam='{"ry":[12,3],"rx":[6,1],"z":[-200,50]}'>
   <div class="demo">
-    <div class="pl"><div class="chap rise" style="--dl:0s"><b>08</b><span>/ 11</span><em>Sell groups</em></div>
+    <div class="pl"><div class="chap rise" style="--dl:0s"><b>08</b><span>/ 12</span><em>Recover</em></div>
+      <h2 class="pname rise" style="--dl:.05s">OTARecon365<sup>™</sup></h2>
+      <p class="ptag rise" style="--dl:.15s">Collect what you're owed. See it live.</p>
+      <ul class="pts"><li class="rise" style="--dl:0.3s">Uncharged virtual cards, found and charged</li><li class="rise" style="--dl:0.4s">OTA commission and CLC reconciliations</li><li class="rise" style="--dl:0.5s">72-hour no-show and cancellation charges in your PMS</li></ul>
+      <div class="status  rise" style="--dl:.6s">Live · performance-based</div></div>
+    <div class="pr"><div class="halo"></div><div class="cam">
+      <div class="win"><div class="bar"><i></i><i></i><i></i><span>OTARecon365 · Recovery</span><em>Real screen</em></div><img src="../assets/otarecon-recovery.jpg" alt=""></div>
+      <div class="chip pop" style="--dl:1.6s;left:-70px;bottom:-60px"><div class="ok">✓</div><div><b>Card numbers never stored or shown</b><small>Charged into the hotel's own account</small></div></div>
+    </div></div>
+  </div>
+</section>
+
+<section class="scene prod om" data-mark="om" data-d="7.2" style="--acc:#A3E635" data-no="09" data-verb="MARKET" data-name="OTAMarketing365" data-tag="OTA digital marketing, run by a certified marketing specialist." data-cam='{"ry":[-10,-2],"rx":[6,2],"z":[-200,30]}'>
+  <div class="demo">
+    <div class="pl"><div class="chap rise" style="--dl:0s"><b>09</b><span>/ 12</span><em>Market</em></div>
+      <h2 class="pname rise" style="--dl:.05s">OTAMarketing365<sup>™</sup></h2>
+      <p class="ptag rise" style="--dl:.15s">OTA digital marketing, run by a certified marketing specialist.</p>
+      <ul class="pts"><li class="rise" style="--dl:0.3s">Booking.com, Expedia, Agoda/Priceline, Trip.com, Google Hotel Ads</li><li class="rise" style="--dl:0.4s">Promotions, campaigns and flash sales run for you</li><li class="rise" style="--dl:0.5s">Genius, Preferred, Accelerator and TravelAds managed</li></ul>
+      <div class="status  rise" style="--dl:.6s">Live · in your extranets today</div></div>
+    <div class="pr"><div class="halo"></div><div class="cam"><div class="omst">
+      <div class="sh s1 rise" style="--dl:.1s"><img src="../assets/booking-opp-mobile.jpg" alt=""></div>
+      <div class="sh s2 rise" style="--dl:.6s"><img src="../assets/booking-genius-valueadds.jpg" alt=""></div>
+      <div class="sh s3 rise" style="--dl:1.1s"><img src="../assets/booking-visibility-booster.jpg" alt=""></div>
+      <div class="sh s4 rise" style="--dl:1.9s"><img src="../assets/expedia-promo-types.jpg" alt=""></div>
+      <div class="sh s5 rise" style="--dl:2.5s"><img src="../assets/expedia-campaign-dec72h.jpg" alt=""></div>
+      <div class="sh s6 rise" style="--dl:3.1s"><img src="../assets/expedia-travelads.jpg" alt=""></div>
+      <div class="sh s7 rise" style="--dl:3.7s"><img src="../assets/booking-promo-blackfriday.jpg" alt=""></div>
+      <div class="lab l1 pop" style="--dl:.4s">Booking.com · real extranet</div>
+      <div class="lab l2 pop" style="--dl:2.1s">Expedia · real extranet</div>
+    </div></div></div>
+  </div>
+</section>
+
+<section class="scene prod sl" data-mark="sl" data-d="4.2" style="--acc:#38BDF8" data-no="10" data-verb="SELL" data-name="SalesLock|Concierge" data-tag="Never miss an RFP deadline." data-cam='{"ry":[15,4],"rx":[7,2],"z":[-200,40],"x":[-40,0]}'>
+  <div class="demo">
+    <div class="pl"><div class="chap rise" style="--dl:0s"><b>10</b><span>/ 12</span><em>Sell groups</em></div>
       <h2 class="pname long rise" style="--dl:.05s">SalesLock<sup>™</sup><br>Concierge</h2>
       <p class="ptag rise" style="--dl:.15s">Never miss an RFP deadline.</p>
       <ul class="pts"><li class="rise" style="--dl:.3s">Every group lead in one pipeline</li><li class="rise" style="--dl:.4s">One-tap rate approval by phone</li><li class="rise" style="--dl:.5s">Escalates until the reply is in</li></ul>
-      <div class="status pilot rise" style="--dl:.6s">Pilot · January 2027</div></div>
+      <div class="status pilot rise" style="--dl:.6s">In development</div></div>
     <div class="pr"><div class="halo"></div><div class="cam">
       <div class="win"><div class="bar"><i></i><i></i><i></i><span>SalesLock · Group pipeline</span><em class="ill">Illustrative</em></div>
         <div class="panel"><div class="row" style="padding-top:0"><span class="lbl">Group pipeline</span><span class="tag t-ok">Missed RFPs: 0</span></div>
@@ -419,9 +485,9 @@ sup{font-size:.4em;vertical-align:1.05em;margin-left:.04em;font-weight:500;lette
   </div>
 </section>
 
-<section class="scene prod ar" data-d="4.2" style="--acc:#5CC0FF" data-no="09" data-verb="BE FOUND" data-name="AskRank" data-tag="Be found first, on every screen." data-cam='{"ry":[-14,-4],"rx":[8,2],"z":[-200,40]}'>
+<section class="scene prod ar" data-mark="ar" data-d="4.2" style="--acc:#7B88FF" data-no="11" data-verb="BE FOUND" data-name="AskRank" data-tag="Be found first, on every screen." data-cam='{"ry":[-14,-4],"rx":[8,2],"z":[-200,40]}'>
   <div class="demo">
-    <div class="pl"><div class="chap rise" style="--dl:0s"><b>09</b><span>/ 11</span><em>Be found</em></div>
+    <div class="pl"><div class="chap rise" style="--dl:0s"><b>11</b><span>/ 12</span><em>Be found</em></div>
       <h2 class="pname rise" style="--dl:.05s">AskRank<sup>™</sup></h2>
       <p class="ptag rise" style="--dl:.15s">Be found first, on every screen that sells rooms.</p>
       <ul class="pts"><li class="rise" style="--dl:.3s">Google, Expedia and Tripadvisor listings run for you</li><li class="rise" style="--dl:.4s">Nothing runs until you approve the budget</li><li class="rise" style="--dl:.5s">AI-assistant visibility is next</li></ul>
@@ -437,37 +503,23 @@ sup{font-size:.4em;vertical-align:1.05em;margin-left:.04em;font-weight:500;lette
   </div>
 </section>
 
-<section class="scene prod pp" data-d="4.2" style="--acc:#EC4899" data-no="10" data-verb="LISTEN" data-name="PulsePilot" data-tag="Hear it first. Fix it before checkout." data-cam='{"ry":[18,5],"rx":[8,2],"z":[-180,40]}'>
+<section class="scene prod pp" data-mark="pp" data-d="7.2" style="--acc:#EC4899" data-no="12" data-verb="LISTEN" data-name="PulsePilot" data-tag="Hear it first. Fix it before checkout." data-cam='{"ry":[10,2],"rx":[6,2],"z":[-180,30]}'>
   <div class="demo">
-    <div class="pl"><div class="chap rise" style="--dl:0s"><b>10</b><span>/ 11</span><em>Reputation</em></div>
+    <div class="pl"><div class="chap rise" style="--dl:0s"><b>12</b><span>/ 12</span><em>Reputation</em></div>
       <h2 class="pname rise" style="--dl:.05s">PulsePilot<sup>™</sup></h2>
-      <p class="ptag rise" style="--dl:.15s">Hear it first. Fix it before checkout.</p>
-      <ul class="pts"><li class="rise" style="--dl:.3s">QR feedback during the stay</li><li class="rise" style="--dl:.4s">Your GM alerted the moment it matters</li><li class="rise" style="--dl:.5s">Happy guests invited to review on Google</li></ul>
-      <div class="status pilot rise" style="--dl:.6s">Early access</div></div>
-    <div class="pr"><div class="halo"></div><div class="cam"><div class="stack">
-      <div class="qr pop" style="--dl:.1s"><b>How's your stay?</b><div class="code"></div><small>Scan to tell us · Room 214</small></div>
-      <div class="fb rise" style="--dl:.4s;top:70px"><div class="top"><span class="lbl">Room QR · 9:41 pm</span><span class="stars">★★☆☆☆</span></div><p>AC in room 214 is noisy. Photo attached.</p><div class="tags"><span class="tag t-bad pop" style="--dl:.9s">GM alerted 9:42 pm</span><span class="tag t-ok pop" style="--dl:1.5s">Resolved before checkout</span></div></div>
-      <div class="fb rise" style="--dl:1.8s;top:360px"><div class="top"><span class="lbl">Breakfast QR · 8:05 am</span><span class="stars">★★★★★</span></div><p>Fresh waffles and a really friendly team.</p><div class="tags"><span class="tag t-info pop" style="--dl:2.2s">Invited to Google</span></div></div>
+      <p class="ptag rise" style="--dl:.15s">One QR code. Two jobs.</p>
+      <ul class="pts"><li class="rise" style="--dl:0.3s">Great goes to Google. Not great goes to your GM, privately.</li><li class="rise" style="--dl:0.4s">GM alert email within seconds: call or email the guest</li><li class="rise" style="--dl:0.5s">Guest Hub: requests tracked from Received to Done</li></ul>
+      <div class="status  rise" style="--dl:.6s">Live</div></div>
+    <div class="pr"><div class="halo"></div><div class="cam"><div class="ppst">
+      <div class="card rise" style="--dl:.1s"><img src="../assets/pulsepilot-card.jpg" alt=""></div>
+      <div class="ph p1 rise" style="--dl:.7s"><img src="../assets/pulsepilot-scan.jpg" alt=""></div>
+      <div class="ph p2 rise" style="--dl:1.4s"><img src="../assets/pulsepilot-form.jpg" alt=""></div>
+      <div class="ph p3 rise" style="--dl:2.1s"><img src="../assets/pulsepilot-alert.jpg" alt=""></div>
+      <div class="ph p4 rise" style="--dl:3.2s"><img src="../assets/pulsepilot-request.jpg" alt=""></div>
+      <div class="ph p5 rise" style="--dl:3.8s"><img src="../assets/pulsepilot-done.jpg" alt=""></div>
+      <div class="lab k1 pop" style="--dl:2.4s">GM alerted in seconds</div>
+      <div class="lab k2 pop" style="--dl:4.2s">Guest Hub · launching</div>
     </div></div></div>
-  </div>
-</section>
-
-<section class="scene prod wb" data-d="4.2" style="--acc:#F5B544" data-no="11" data-verb="BOOK" data-name="Book direct" data-tag="Website, booking engine and photography." data-cam='{"ry":[-15,-4],"rx":[7,2],"z":[-200,40],"x":[40,0]}'>
-  <div class="demo">
-    <div class="pl"><div class="chap rise" style="--dl:0s"><b>11</b><span>/ 11</span><em>Book direct</em></div>
-      <h2 class="pname long rise" style="--dl:.05s">Website, Booking<br>Engine &amp; Photography</h2>
-      <p class="ptag rise" style="--dl:.15s">Look as good online as you do in person.</p>
-      <ul class="pts"><li class="rise" style="--dl:.3s">Fast, search-ready hotel website</li><li class="rise" style="--dl:.4s">Booking engine on any PMS in about a week</li><li class="rise" style="--dl:.5s">Professional photos for every channel</li></ul>
-      <div class="status svc rise" style="--dl:.6s">Service</div></div>
-    <div class="pr"><div class="halo"></div><div class="cam">
-      <div class="win"><div class="bar"><i></i><i></i><i></i><span>yourhotel.com · Book direct</span><em class="ill">Illustrative</em></div>
-        <div class="panel"><div class="hero-img">Your Hotel</div>
-          <div class="dates"><div><small>Check in</small>Fri, Jun 12</div><div><small>Check out</small>Sun, Jun 14</div><div><small>Guests</small>2 adults</div></div>
-          <div class="row"><div><b>King Room</b><br><span style="font-size:17px;color:var(--muted)">Free cancellation</span></div><div class="price"><b style="color:#fff">$144</b></div></div>
-          <div class="row rise" style="--dl:.9s"><div><b>King Room · GoldKey member</b><br><span style="font-size:17px;color:var(--muted)">Member code applied · 15% off</span></div><div class="price"><s>$144</s><b>$122</b></div></div></div></div>
-      <div class="chip sync pop" style="--dl:1.4s"><div class="ok">✓</div><div><b>Rates and availability in sync</b><small>Connected to your PMS</small></div></div>
-      <div class="chip dark wk pop" style="--dl:1.9s"><div><b>Live in about a week</b><small>Booking engine on any PMS</small></div></div>
-    </div></div>
   </div>
 </section>
 
@@ -494,7 +546,7 @@ sup{font-size:.4em;vertical-align:1.05em;margin-left:.04em;font-weight:500;lette
 <section class="scene" id="next" data-d="3.6" data-cam='{"rx":[12,2],"z":[-160,30]}'>
   <h2 class="rise" style="--dl:.05s">Coming next to the same portal.</h2>
   <div class="cards"><div class="cam" style="display:flex;gap:40px">
-    <div class="c fly" style="--dl:.25s;--fx:-500px;--fy:200px;--fr:-30deg"><span class="status pilot" style="margin:0">In design</span><b>Halo<sup>™</sup></b><p>An AI revenue assistant in your owner portal. Ask about pricing in plain English.</p></div>
+    <div class="c fly" style="--dl:.25s;--fx:-500px;--fy:200px;--fr:-30deg"><span class="status pilot" style="margin:0">In build</span><b>Guest pulse</b><p>An AI-written summary of what guests are saying, for every hotel, in PulsePilot.</p></div>
     <div class="c fly" style="--dl:.45s;--fx:500px;--fy:200px;--fr:30deg"><span class="status pilot" style="margin:0">In development</span><b>Signal<sup>™</sup></b><p>Demand signals from the wider market, layered onto pricing decisions.</p></div>
   </div></div>
 </section>
@@ -506,11 +558,11 @@ sup{font-size:.4em;vertical-align:1.05em;margin-left:.04em;font-weight:500;lette
     <div class="rise" style="--dl:.4s"><b data-num data-to="32" data-at=".4" data-dur="1.4">32</b><span class="l">hotels live</span></div>
     <div class="rise" style="--dl:.55s"><b>$<span data-num data-to="40.6" data-dec="1" data-at=".55" data-dur="1.4">40.6</span>M</b><span class="l">revenue managed</span></div>
     <div class="rise" style="--dl:.7s"><b class="grad">+<span data-num data-to="62" data-at=".7" data-dur="1.4">62</span>%</b><span class="l">year-over-year growth</span></div>
-    <div class="rise" style="--dl:.85s"><b data-num data-to="57" data-at=".85" data-dur="1.4">57</b><span class="l">nights priced ahead</span></div>
+    <div class="rise" style="--dl:.85s"><b data-num data-to="60" data-at=".85" data-dur="1.4">60</b><span class="l">nights priced ahead</span></div>
   </div>
-  <h3 class="rise" style="--dl:1.8s">More than a franchise. <span class="grad">Without the fees.</span></h3>
+  <h3 class="rise" style="--dl:1.8s">The full stack for independent hotels. <span class="grad">Built by franchise insiders.</span></h3>
   <div class="cta pop" style="--dl:2.4s"><span>Book a revenue review</span><em>buildfromideas.ai</em></div>
-  <p class="tm fade" style="--dl:3s">BFIS™, PriceCortex™, CompMatrix™, FolioLens™, RevVitals™, OTARecon365™, GoldKey™, SalesLock™, AskRank™, PulsePilot™, Halo™ and Signal™ are trademarks of Buildd From Ideas.<br>WhatsApp is a trademark of its owner. Screens marked “Illustrative” use example data.</p>
+  <p class="tm fade" style="--dl:3s">BFIS™, PriceCortex™, CompMatrix™, FolioLens™, RevVitals™, OTARecon365™, OTAMarketing365™, GoldKey™, SalesLock™, AskRank™, PulsePilot™, Halo™ and Signal™ are trademarks of Buildd From Ideas.<br>Booking.com, Expedia, Agoda, Priceline, Trip.com, Google and WhatsApp are trademarks of their owners. Screens marked “Illustrative” use example data.</p>
 </section>
 
 <div class="rail" aria-hidden="true"></div><div class="rail-l mono"></div>
@@ -518,6 +570,7 @@ sup{font-size:.4em;vertical-align:1.05em;margin-left:.04em;font-weight:500;lette
 
 <script>
 (() => {
+  const MARKS = {"pms": "<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><rect x=\"8\" y=\"13\" width=\"30\" height=\"9\" rx=\"4.5\" fill=\"#FFF\"/><rect x=\"22\" y=\"27.5\" width=\"34\" height=\"9\" rx=\"4.5\" fill=\"#4895EF\"/><rect x=\"8\" y=\"42\" width=\"21\" height=\"9\" rx=\"4.5\" fill=\"#FFF\"/><rect x=\"35\" y=\"42\" width=\"21\" height=\"9\" rx=\"4.5\" fill=\"#FFF\"/></svg>", "pc": "<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path d=\"M8 50L22 35L32 42L47 24\" fill=\"none\" stroke=\"#FFF\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M38 13L57 9L53 28Z\" fill=\"#00F0B5\" stroke=\"#00F0B5\" stroke-width=\"2\" stroke-linejoin=\"round\"/></svg>", "cm": "<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><circle cx=\"13\" cy=\"13\" r=\"5\" fill=\"#FFF\"/><circle cx=\"32\" cy=\"13\" r=\"5\" fill=\"#FFF\"/><circle cx=\"51\" cy=\"13\" r=\"5\" fill=\"#FFF\"/><circle cx=\"13\" cy=\"32\" r=\"5\" fill=\"#FFF\"/><circle cx=\"32\" cy=\"32\" r=\"9\" fill=\"#FF8A4C\"/><circle cx=\"51\" cy=\"32\" r=\"5\" fill=\"#FFF\"/><circle cx=\"13\" cy=\"51\" r=\"5\" fill=\"#FFF\"/><circle cx=\"32\" cy=\"51\" r=\"5\" fill=\"#FFF\"/><circle cx=\"51\" cy=\"51\" r=\"5\" fill=\"#FFF\"/></svg>", "fl": "<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><circle cx=\"27\" cy=\"27\" r=\"18\" fill=\"none\" stroke=\"#FFF\" stroke-width=\"6\"/><rect x=\"18.5\" y=\"29\" width=\"5\" height=\"9\" rx=\"1.5\" fill=\"#FFF\"/><rect x=\"25\" y=\"23\" width=\"5\" height=\"15\" rx=\"1.5\" fill=\"#FFF\"/><rect x=\"31.5\" y=\"18\" width=\"5\" height=\"20\" rx=\"1.5\" fill=\"#FFF\"/><path d=\"M41 41L55 55\" stroke=\"#A78BFA\" stroke-width=\"7\" stroke-linecap=\"round\"/></svg>", "rv": "<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path d=\"M6 34H18M42 34H58\" fill=\"none\" stroke=\"#FFF\" stroke-width=\"6\" stroke-linecap=\"round\"/><path d=\"M18 34L25 16L34 50L42 34\" fill=\"none\" stroke=\"#06D6A0\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>", "ota": "<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path d=\"M32 11A21 21 0 1 1 13.8 21.5\" fill=\"none\" stroke=\"#FFF\" stroke-width=\"6\" stroke-linecap=\"round\"/><path d=\"M18.6 13.2L19.6 26.4L8 21.3Z\" fill=\"#FFF\" stroke=\"#FFF\" stroke-width=\"2\" stroke-linejoin=\"round\"/><circle cx=\"32\" cy=\"32\" r=\"7.5\" fill=\"#FFBE0B\"/></svg>", "om": "<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path d=\"M9 25H20L43 13V51L20 39H9Z\" fill=\"#FFF\" stroke=\"#FFF\" stroke-width=\"3\" stroke-linejoin=\"round\"/><path d=\"M17 39L21 53\" stroke=\"#FFF\" stroke-width=\"6\" stroke-linecap=\"round\"/><path d=\"M50 26A7 7 0 0 1 50 38\" fill=\"none\" stroke=\"#A3E635\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M54 18A16 16 0 0 1 54 46\" fill=\"none\" stroke=\"#A3E635\" stroke-width=\"5\" stroke-linecap=\"round\"/></svg>", "gk": "<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><circle cx=\"19\" cy=\"32\" r=\"11\" fill=\"none\" stroke=\"#E8B4A8\" stroke-width=\"6\"/><path d=\"M30 32H56M47 32V42M55 32V39\" fill=\"none\" stroke=\"#FFF\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>", "sl": "<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path d=\"M21 28V20A11 11 0 0 1 43 20V28\" fill=\"none\" stroke=\"#FFF\" stroke-width=\"6\" stroke-linecap=\"round\"/><rect x=\"11\" y=\"27\" width=\"42\" height=\"29\" rx=\"7\" fill=\"#FFF\"/><path d=\"M23 42L29.5 48L41 36\" fill=\"none\" stroke=\"#38BDF8\" stroke-width=\"5.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>", "ar": "<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path d=\"M16 9H48A8 8 0 0 1 56 17V38A8 8 0 0 1 48 46H27L16 55V46A8 8 0 0 1 8 38V17A8 8 0 0 1 16 9Z\" fill=\"none\" stroke=\"#FFF\" stroke-width=\"5\" stroke-linejoin=\"round\"/><rect x=\"18\" y=\"30\" width=\"6\" height=\"8\" rx=\"1.5\" fill=\"#FFF\"/><rect x=\"29\" y=\"24\" width=\"6\" height=\"14\" rx=\"1.5\" fill=\"#FFF\"/><rect x=\"40\" y=\"17\" width=\"6\" height=\"21\" rx=\"1.5\" fill=\"#7B88FF\"/></svg>", "pp": "<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><rect x=\"8.5\" y=\"8.5\" width=\"18\" height=\"18\" rx=\"4\" fill=\"none\" stroke=\"#FFF\" stroke-width=\"5\"/><rect x=\"14.5\" y=\"14.5\" width=\"6\" height=\"6\" rx=\"1.5\" fill=\"#FFF\"/><rect x=\"37.5\" y=\"8.5\" width=\"18\" height=\"18\" rx=\"4\" fill=\"none\" stroke=\"#FFF\" stroke-width=\"5\"/><rect x=\"43.5\" y=\"14.5\" width=\"6\" height=\"6\" rx=\"1.5\" fill=\"#FFF\"/><rect x=\"8.5\" y=\"37.5\" width=\"18\" height=\"18\" rx=\"4\" fill=\"none\" stroke=\"#FFF\" stroke-width=\"5\"/><rect x=\"14.5\" y=\"43.5\" width=\"6\" height=\"6\" rx=\"1.5\" fill=\"#FFF\"/><path d=\"M47 36L49.6 43.4L57.5 43.6L51.2 48.4L53.5 56L47 51.5L40.5 56L42.8 48.4L36.5 43.6L44.4 43.4Z\" fill=\"#EC4899\" stroke=\"#EC4899\" stroke-width=\"1.5\" stroke-linejoin=\"round\"/></svg>", "wb": "<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><rect x=\"8\" y=\"13\" width=\"48\" height=\"42\" rx=\"7\" fill=\"none\" stroke=\"#FFF\" stroke-width=\"5\"/><path d=\"M22 7V17M42 7V17\" stroke=\"#FFF\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M22 35L29 42L43 28\" fill=\"none\" stroke=\"#2DD4BF\" stroke-width=\"5.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>"};
   const TC = 1.2;                       // product title card length (two beats)
   const scenes = [...document.querySelectorAll('.scene')];
   let t0 = 0;
@@ -528,24 +581,24 @@ sup{font-size:.4em;vertical-align:1.05em;margin-left:.04em;font-weight:500;lette
   // Product scenes: build the title card, and give the demo its own clock that starts after it.
   S.filter(x => x.prod).forEach(x => {
     const el = x.el, [a, b] = el.dataset.name.split('|');
-    const isTm = el.id !== 'wa' && el.dataset.name !== 'Book direct';
+    const isTm = el.id !== 'wa' && !el.classList.contains('wb');
     const nm = isTm ? `${a}<sup>™</sup>${b ? ' ' + b : ''}` : `${a}${b ? ' ' + b : ''}`;
     const tc = document.createElement('div'); tc.className = 'tcwrap'; tc.style.setProperty('--dl', '0s');
-    tc.innerHTML = `<div class="tc"><div class="verb">${el.dataset.verb}</div><div class="num">${el.dataset.no === '+' ? 'EVERY DAY' : el.dataset.no + ' / 11'}</div><div class="nm${nm.length > 24 ? ' long' : ''}">${nm}</div><div class="tl">${el.dataset.tag}</div></div>`;
+    tc.innerHTML = `<div class="tc"><div class="verb">${el.dataset.verb}</div>${el.dataset.mark ? '<div class="mk">' + MARKS[el.dataset.mark] + '</div>' : ''}<div class="num">${el.dataset.no === '+' ? 'EVERY DAY' : el.dataset.no + ' / 12'}</div><div class="nm${nm.length > 24 ? ' long' : ''}">${nm}</div><div class="tl">${el.dataset.tag}</div></div>`;
     el.prepend(tc);
     el.querySelector('.demo').style.setProperty('--s', x.s + TC);
   });
 
   // Platform tiles.
-  const names = [['BFIS™ PMS','Run'],['PriceCortex™','Price'],['CompMatrix™','Compete'],['FolioLens™','Report'],['RevVitals™','Improve'],['OTARecon365™','Recover'],['GoldKey™ Rewards','Retain'],['SalesLock™ Concierge','Groups'],['AskRank™','Be found'],['PulsePilot™','Reputation'],['Web, Booking & Photo','Book direct']];
+  const names = [["wb", "Direct Booking Engine", "Book direct"], ["gk", "GoldKey™ Rewards", "Loyalty"], ["pms", "BFIS™ PMS", "Run"], ["pc", "PriceCortex™", "Price"], ["cm", "CompMatrix™", "Compete"], ["fl", "FolioLens™", "Report"], ["rv", "RevVitals™", "Improve"], ["ota", "OTARecon365™", "Recover"], ["om", "OTAMarketing365™", "Market"], ["sl", "SalesLock™ Concierge", "Groups"], ["ar", "AskRank™", "Be found"], ["pp", "PulsePilot™", "Reputation"]];
   const g = document.querySelector('#platform .gridp');
   let k = 0;
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 13; i++) {
     const d = document.createElement('div'); d.className = 'tile fly';
     const r = n => Math.sin(i * 12.9898 + n * 78.233) * 43758.5453 % 1;
     d.style.cssText = `--dl:${(0.15 + i * 0.07).toFixed(2)}s;--fx:${Math.round(r(1) * 1400)}px;--fy:${Math.round(r(2) * 800)}px;--fr:${Math.round(r(3) * 60)}deg`;
-    if (i === 5) { d.classList.add('hub'); d.innerHTML = '<img src="../static/img/byld-logo.svg" alt=""><div><small>One login</small><b>Owner portal</b></div>'; }
-    else { const [n, v] = names[k++]; d.innerHTML = `<small>${v}</small><b>${n}</b>`; }
+    if (i === 4) { d.classList.add('hub'); d.style.gridColumn = '1 / -1'; d.innerHTML = '<img src="../static/img/byld-logo.svg" alt=""><div><small>One login</small><b>Owner portal</b></div>'; }
+    else { const [m, n, v] = names[k++]; d.innerHTML = `<div class="tm2">${MARKS[m]}<small>${v}</small></div><b>${n}</b>`; }
     g.appendChild(d);
   }
 
@@ -614,7 +667,7 @@ sup{font-size:.4em;vertical-align:1.05em;margin-left:.04em;font-weight:500;lette
     prods.forEach((p, i) => { fills[i].style.width = clamp((t - p.s) / p.d) * 100 + '%'; if (t >= p.s && t < p.s + p.d) on = i; });
     const vis = t >= prods[0].s && t < prods[prods.length - 1].s + prods[prods.length - 1].d;
     rail.style.opacity = vis ? 1 : 0; railL.style.opacity = on >= 0 ? 1 : 0;
-    if (on >= 0) railL.textContent = `PRODUCT ${String(on + 1).padStart(2, '0')} OF 11`;
+    if (on >= 0) railL.textContent = `PRODUCT ${String(on + 1).padStart(2, '0')} OF 12`;
   };
 
   if (location.search.includes('play')) {
