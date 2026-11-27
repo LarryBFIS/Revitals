@@ -50,6 +50,11 @@
   "sub": "Hotel Group Sales and RFP Response"
  },
  {
+  "name": "keycircle",
+  "title": "KeyCircle",
+  "sub": "Corporate Decision-Maker Loyalty"
+ },
+ {
   "name": "askrank",
   "title": "AskRank",
   "sub": "Hotel Search and AI Visibility"

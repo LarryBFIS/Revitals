@@ -22,6 +22,7 @@ out = re.sub(r"(assets/[\w.\-]+)", inline, html)
 # The single file travels on its own (email, upload), so links to sibling pages go to the live site.
 SITE = "https://marketing.buildfromideas.ai"
 out = out.replace('href="revvitals-sample.html"', f'href="{SITE}/revvitals-sample" target="_blank" rel="noopener"')
+out = out.replace('href="keycircle/"', f'href="{SITE}/keycircle" target="_blank" rel="noopener"')
 dist = here / "dist"
 dist.mkdir(exist_ok=True)
 target = dist / "BYLD_Revenue_Operations.html"

@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KeyCircle Demo | BYLD</title>
+<link rel="canonical" href="https://buildfromideas.ai/keycircle">
+<meta property="og:title" content="KeyCircle Demo | BYLD"><meta property="og:image" content="https://buildfromideas.ai/og/keycircle.png">
+
+<meta name="description" content="KeyCircle: identify the people who choose your hotel for their company, thank them personally, link the business they bring, and keep them loyal.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#080B1E; --night:#12163A; --panel:#161B44; --panel2:#1C2252; --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.16);
+  --sky:#5CC0FF; --mint:#00E0A8; --amber:#FFC24A; --rose:#FF7A9A; --plat:#D9E2F2; --gold:#F5C76A; --silver:#AEB8CC; --emerg:#7FD1B9;
+  --text:#E9ECF7; --muted:#9AA3C7; --dim:#6E77A0;
+  --mono:'IBM Plex Mono',monospace; --serif:'Fraunces',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg)}
+body{font-family:'Sora',sans-serif;color:var(--text);font-weight:300;line-height:1.55;min-height:100vh;overflow-x:hidden}
+a{color:var(--sky)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono)}
+.num{font-variant-numeric:tabular-nums}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--sky)}
+.italic{font-family:var(--serif);font-style:italic;font-weight:400}
+.grid-bg{position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(92,192,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(92,192,255,.035) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse at 50% 30%,#000 10%,transparent 75%)}
+
+.top{position:sticky;top:0;z-index:20;background:rgba(8,11,30,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand svg{height:22px;width:auto}
+.brand span{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);border-left:1px solid var(--line2);padding-left:12px}
+.pill{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:999px;border:1px solid var(--line2);color:var(--amber)}
+
+.hero{position:relative;padding:56px 0 28px}
+.hero h1{font-size:clamp(30px,5vw,52px);line-height:1.08;font-weight:700;letter-spacing:-.02em;margin:14px 0 16px;max-width:860px}
+.hero h1 .italic{color:var(--gold)}
+.hero p.lede{color:var(--muted);font-size:17px;max-width:760px}
+.flow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:30px}
+.flow div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+.flow i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--sky)}
+.flow b{display:block;font-weight:600;font-size:14px;margin:4px 0 2px}
+.flow span{font-size:12px;color:var(--muted)}
+
+.tabs{position:sticky;top:60px;z-index:15;background:rgba(8,11,30,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin-top:20px}
+.tabs .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+.tab{white-space:nowrap;background:transparent;border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.tab b{color:var(--dim);margin-right:6px;font-weight:500}
+.tab[aria-selected="true"]{background:var(--sky);border-color:var(--sky);color:#06122A}
+.tab[aria-selected="true"] b{color:#06122A}
+.pane{display:none;padding:36px 0 70px}
+.pane.on{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.pane h2{font-size:clamp(22px,3vw,32px);font-weight:600;letter-spacing:-.01em;margin:8px 0 10px}
+.pane .sub{color:var(--muted);max-width:720px;margin-bottom:26px}
+.split{display:grid;grid-template-columns:1.25fr .9fr;gap:28px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}
+.note{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-top:12px}
+.steps{display:grid;gap:12px}
+.steps div{display:grid;grid-template-columns:28px 1fr;gap:10px;font-size:14px;color:var(--muted)}
+.steps i{font-style:normal;width:28px;height:28px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;font-family:var(--mono);font-size:12px;color:var(--sky)}
+.steps b{color:var(--text);font-weight:600}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;font-weight:500;border:1px solid var(--line2);background:transparent;color:var(--text)}
+.btn:hover{border-color:var(--sky)}
+.btn.pri{background:var(--sky);border-color:var(--sky);color:#06122A}
+
+/* email */
+.mail{background:#F6F4EF;color:#2A2A33;border-radius:16px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.mail .meta{background:#ECE9E1;padding:14px 20px;font-size:12.5px;color:#55556A;border-bottom:1px solid #DDD8CC}
+.mail .meta b{color:#2A2A33;font-weight:600}
+.mail .hd{background:linear-gradient(135deg,#1B2350,#0E1230);color:#fff;padding:28px 28px 22px}
+.mail .hd small{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.mail .hd h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:28px;margin-top:6px}
+.mail .bd{padding:24px 28px;font-size:14.5px;line-height:1.7}
+.mail .bd p{margin-bottom:12px}
+.mail .qrbox{display:grid;grid-template-columns:132px 1fr;gap:18px;align-items:center;background:#fff;border:1px solid #E4DFD3;border-radius:14px;padding:16px;margin:18px 0}
+.mail .qrbox #qr{width:132px;height:132px;display:grid;place-items:center;background:#fff}
+.mail .qrbox #qr img,.mail .qrbox #qr canvas{width:132px!important;height:132px!important}
+.mail .qrbox b{display:block;font-family:var(--serif);font-style:italic;font-weight:500;font-size:19px;color:#1B2350;line-height:1.3}
+.mail .qrbox span{font-size:12.5px;color:#6A6A7A}
+.mail .cta{display:inline-block;background:#1B2350;color:#fff;text-decoration:none;padding:11px 18px;border-radius:8px;font-size:13px;font-weight:600;margin-top:8px}
+.mail .sig{border-top:1px solid #E4DFD3;padding-top:14px;margin-top:6px;font-size:13.5px}
+.mail .ft{font-size:11px;color:#8A8A98;padding:0 28px 22px}
+.edit-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+
+/* phone + form */
+.phone{width:min(380px,100%);margin:0 auto;background:#05071A;border:1px solid var(--line2);border-radius:38px;padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.screen{background:#FBFAF7;color:#22222C;border-radius:28px;overflow:hidden;max-height:720px;overflow-y:auto}
+.screen .bar{background:linear-gradient(135deg,#1B2350,#0E1230);color:#fff;padding:26px 22px 20px;text-align:center}
+.screen .bar small{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.screen .bar h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;line-height:1.25;margin-top:8px}
+.screen form{padding:18px 20px 24px}
+.screen fieldset{border:0;margin-bottom:18px}
+.screen legend{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#6A6A7A;margin-bottom:8px}
+.screen label{display:block;font-size:12px;color:#55556A;margin:8px 0 4px}
+.screen label em{font-style:normal;color:#9A9AAA}
+.screen input,.screen select,.screen textarea{width:100%;border:1px solid #DDD8CC;background:#fff;border-radius:10px;padding:10px 12px;font-size:14px;color:#22222C}
+.screen input:focus,.screen select:focus,.screen textarea:focus{outline:2px solid #5CC0FF;border-color:transparent}
+.screen .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{border:1px solid #DDD8CC;background:#fff;border-radius:999px;padding:6px 11px;font-size:12.5px;color:#44445A}
+.chips button[aria-pressed="true"]{background:#1B2350;border-color:#1B2350;color:#fff}
+.check{display:grid!important;grid-template-columns:18px 1fr;gap:8px;align-items:start;font-size:12px!important;line-height:1.45}
+.check input{width:16px;height:16px;margin-top:2px}
+.submit{width:100%;background:#1B2350;color:#fff;border:0;border-radius:12px;padding:14px;font-weight:600;font-size:14px;margin-top:6px}
+.prog{height:4px;background:#ECE9E1}
+.prog i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s}
+.thanks{padding:40px 24px;text-align:center}
+.thanks b{display:block;font-family:var(--serif);font-style:italic;font-weight:500;font-size:24px;color:#1B2350;margin-bottom:8px}
+
+/* portal */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+.kpi small{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.kpi b{display:block;font-size:26px;font-weight:600;margin-top:4px}
+.kpi span{font-size:12px;color:var(--muted)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.filters button{background:transparent;border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.filters button[aria-pressed="true"]{border-color:var(--sky);color:var(--sky)}
+.portal{display:grid;grid-template-columns:1fr 1.05fr;gap:16px;align-items:start}
+.list{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;text-align:left;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.row:hover{border-color:var(--line2)}
+.row[aria-current="true"]{border-color:var(--sky);background:var(--panel2)}
+.av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:600;font-size:14px;color:#0B0F28}
+.row .nm b{display:block;font-weight:600;font-size:14.5px}
+.row .nm span{font-size:12px;color:var(--muted)}
+.row .rv{text-align:right}
+.row .rv b{display:block;font-size:14px;font-weight:600}
+.trend{font-family:var(--mono);font-size:11px}
+.up{color:var(--mint)} .down{color:var(--rose)}
+.tier{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid currentColor;margin-top:3px}
+.t-platinum{color:var(--plat)} .t-gold{color:var(--gold)} .t-silver{color:var(--silver)} .t-emerging{color:var(--emerg)} .t-pending{color:var(--amber)}
+.detail{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;position:sticky;top:124px}
+.dh{display:grid;grid-template-columns:56px 1fr;gap:14px;align-items:center;margin-bottom:16px}
+.dh .av{width:56px;height:56px;font-size:18px}
+.dh h3{font-size:19px;font-weight:600}
+.dh p{font-size:13px;color:var(--muted)}
+.dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.dgrid div{background:var(--night);border:1px solid var(--line);border-radius:12px;padding:10px}
+.dgrid small{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.dgrid b{display:block;font-size:16px;font-weight:600}
+.sect{margin-top:16px}
+.sect h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--sky);margin-bottom:8px;font-weight:500}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{font-size:12px;border:1px solid var(--line2);border-radius:999px;padding:4px 10px;color:var(--text)}
+.kv{display:grid;grid-template-columns:120px 1fr;gap:4px 12px;font-size:13px}
+.kv dt{color:var(--dim)}
+.bars{display:flex;align-items:flex-end;gap:4px;height:70px;padding-top:4px}
+.bars i{flex:1;background:linear-gradient(180deg,var(--sky),rgba(92,192,255,.25));border-radius:3px 3px 0 0;min-height:2px}
+.bars-l{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;color:var(--dim);margin-top:4px}
+.acct{display:grid;gap:6px}
+.acct div{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;background:var(--night);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.acct code{font-family:var(--mono);font-size:11.5px;color:var(--sky)}
+.gift{display:grid;gap:6px}
+.gift div{display:grid;grid-template-columns:70px 1fr auto;gap:10px;font-size:12.5px;padding:8px 0;border-bottom:1px dashed var(--line)}
+.gift small{color:var(--dim);font-family:var(--mono);font-size:11px}
+.ok{color:var(--mint);font-family:var(--mono);font-size:11px}
+.next{background:linear-gradient(135deg,rgba(245,199,106,.14),rgba(92,192,255,.08));border:1px solid rgba(245,199,106,.35);border-radius:14px;padding:14px;margin-top:16px;font-size:13.5px}
+.next b{color:var(--gold)}
+.next .btn{margin-top:10px;padding:8px 14px}
+
+/* tiers */
+.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:26px}
+.tierc{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;border-top:3px solid currentColor}
+.tierc h3{font-size:17px;font-weight:600;color:var(--text)}
+.tierc .th{font-family:var(--mono);font-size:12px;margin:4px 0 12px}
+.tierc ul{list-style:none;display:grid;gap:7px;font-size:13px;color:var(--muted)}
+.tierc ul li::before{content:"— ";color:var(--dim)}
+.tierc .bud{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.tierc .bud b{color:var(--text)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:500}
+td:first-child{color:var(--text);font-weight:500}
+td{color:var(--muted)}
+.guard{display:grid;gap:10px}
+.guard div{display:grid;grid-template-columns:22px 1fr;gap:10px;font-size:13.5px;color:var(--muted)}
+.guard div::before{content:"✓";color:var(--mint);font-weight:700}
+.guard b{color:var(--text);font-weight:600}
+
+footer{border-top:1px solid var(--line);padding:26px 0;color:var(--dim);font-size:12px}
+
+@media (max-width:980px){
+  .flow{grid-template-columns:repeat(3,1fr)}
+  .split,.portal,.two-col{grid-template-columns:1fr}
+  .detail{position:static}
+  .tiers,.kpis{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  .flow{grid-template-columns:1fr 1fr}
+  .tiers,.kpis{grid-template-columns:1fr 1fr}
+  .tiers{grid-template-columns:1fr}
+  .mail .qrbox{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .dgrid{grid-template-columns:1fr 1fr}
+  .edit-row{grid-template-columns:1fr}
+  .brand span{display:none}
+}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="BYLD, Buildd From Ideas">
+      <svg viewBox="0 -24 394 124" role="img" aria-label="BYLD"><g fill="#FFFFFF" fill-rule="evenodd"><path d="M0 0H48A30 30 0 0 1 72.16 47.78A30 30 0 0 1 52 100H0Z M20 20V40H48A10 10 0 0 0 48 20Z M20 60V80H52A10 10 0 0 0 52 60Z"/><path transform="translate(98 0)" d="M6.68 0H29.94L58 47.26V100H38V52.74Z"/><path transform="translate(210 0)" d="M0 0H20V80H72V100H0Z"/><path transform="translate(298 0)" d="M0 0H45A50 50 0 0 1 45 100H0Z M20 20V80H45A30 30 0 0 0 45 20Z"/></g><path fill="#5CC0FF" transform="translate(98 0)" d="M42 41.33L76 -4L66.4 -11.2L103.2 -23.6L101.6 15.2L92 8L58 53.33Z"/></svg>
+      <span>Buildd From Ideas</span>
+    </a>
+    <span class="pill">KeyCircle · Prototype</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="label">New product · Corporate decision-maker loyalty</div>
+    <h1>Know the people who choose you. <span class="italic">Thank them the way they deserve.</span></h1>
+    <p class="lede">Behind every large corporate account is one person who picked your hotel: a travel manager, an executive assistant, a procurement lead. KeyCircle finds those people, thanks them personally, links every booking they bring in, and keeps them loyal with appreciation that fits who they are.</p>
+    <div class="flow">
+      <div><i>01</i><b>Identify</b><span>Sales tags the decision maker on each corporate account.</span></div>
+      <div><i>02</i><b>Thank</b><span>A personal email from the GM with a QR code.</span></div>
+      <div><i>03</i><b>Profile</b><span>They share their interests, dates and family, with consent.</span></div>
+      <div><i>04</i><b>Attribute</b><span>Every room night from their accounts is linked from the PMS.</span></div>
+      <div><i>05</i><b>Tier</b><span>Platinum, Gold, Silver or Emerging, based on 12-month business.</span></div>
+      <div><i>06</i><b>Gratify</b><span>Timely, personal gestures, logged and kept within gift policy.</span></div>
+    </div>
+  </div>
+</section>
+
+<nav class="tabs" role="tablist" aria-label="KeyCircle prototype">
+  <div class="wrap">
+    <button class="tab" role="tab" data-tab="email" aria-selected="true"><b>1</b>Thank-you email</button>
+    <button class="tab" role="tab" data-tab="profile" aria-selected="false"><b>2</b>QR profile page</button>
+    <button class="tab" role="tab" data-tab="portal" aria-selected="false"><b>3</b>Owner portal</button>
+    <button class="tab" role="tab" data-tab="tiers" aria-selected="false"><b>4</b>Tiers &amp; gratification</button>
+    <button class="tab" role="tab" data-tab="data" aria-selected="false"><b>5</b>Linking the business</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- 1 EMAIL -->
+<section class="pane on" id="pane-email" role="tabpanel">
+  <div class="label">Step 2 · Thank</div>
+  <h2>A thank-you that opens the door</h2>
+  <p class="sub">Sent from the General Manager as soon as a corporate account is won or renewed. It thanks the decision maker by name, credits their choice, and invites them to scan the QR code so the hotel can thank them properly.</p>
+  <div class="split">
+    <div>
+      <div class="edit-row">
+        <label class="card" style="padding:12px 14px"><span class="label" style="font-size:10px">Decision maker</span>
+          <select id="eName" style="width:100%;background:transparent;border:0;margin-top:4px;font-size:14px"></select></label>
+        <label class="card" style="padding:12px 14px"><span class="label" style="font-size:10px">Occasion</span>
+          <select id="eOcc" style="width:100%;background:transparent;border:0;margin-top:4px;font-size:14px">
+            <option value="won">New account won</option><option value="renew">Contract renewed</option><option value="group">Large group booked</option>
+          </select></label>
+      </div>
+      <div class="mail">
+        <div class="meta"><b>From:</b> Sarah Mitchell, General Manager · [Your Hotel]<br><b>To:</b> <span id="eTo"></span><br><b>Subject:</b> <span id="eSubj"></span></div>
+        <div class="hd"><small>[Your Hotel] · With gratitude</small><h3 id="eHead">Thank you, Priya.</h3></div>
+        <div class="bd">
+          <p id="eP1"></p>
+          <p id="eP2"></p>
+          <div class="qrbox">
+            <div id="qr" aria-label="QR code to the appreciation profile page"></div>
+            <div><b>Please give us an opportunity to thank you the way you deserve.</b>
+              <span>Scan with your phone camera. It takes two minutes, and you choose what to share.</span><br>
+              <a class="cta" href="#profile" data-go="profile">Or tap here</a></div>
+          </div>
+          <p>If there is ever anything we can do for you or your team, my direct line is below.</p>
+          <div class="sig"><b>Sarah Mitchell</b><br>General Manager, [Your Hotel]<br><span style="color:#6A6A7A">Direct: (555) 010-2290</span></div>
+        </div>
+        <div class="ft">You are receiving this because you manage your company's account with [Your Hotel]. Anything you share is used only to personalise our thanks, and you can ask us to delete it at any time.</div>
+      </div>
+      <p class="note">Illustrative · names, companies and hotel are fictional</p>
+    </div>
+    <div class="card">
+      <div class="label">When it's sent</div>
+      <div class="steps" style="margin-top:14px">
+        <div><i>1</i><span><b>Account won or renewed.</b> The Director of Sales marks the decision maker on the company profile in BFIS PMS or SalesLock™.</span></div>
+        <div><i>2</i><span><b>GM approves in one tap.</b> The email is pre-written with the company, the occasion and the person's name. The GM can add a personal line.</span></div>
+        <div><i>3</i><span><b>Unique QR per person.</b> The code carries a private token, so the profile page already knows who they are and which account they manage.</span></div>
+        <div><i>4</i><span><b>Gentle reminder.</b> If the profile isn't completed in 10 days, one follow-up goes out, then nothing more.</span></div>
+        <div><i>5</i><span><b>A small welcome.</b> Completing the profile triggers a handwritten card and a small first gesture, picked from what they told us.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 PROFILE -->
+<section class="pane" id="pane-profile" role="tabpanel">
+  <div class="label">Step 3 · Profile</div>
+  <h2>What the QR code opens</h2>
+  <p class="sub">A short, warm, mobile page. Only the name and the consent are required. Everything else is optional, so people share what they're comfortable with. Try it: submitting creates a live profile in the owner portal (tab 3).</p>
+  <div class="split">
+    <div class="phone">
+      <div class="screen" id="screen">
+        <div class="bar"><small>[Your Hotel] · KeyCircle</small><h3>Please give us an opportunity to thank you the way you deserve.</h3></div>
+        <div class="prog"><i id="progBar"></i></div>
+        <form id="pform" novalidate>
+          <fieldset>
+            <legend>About you</legend>
+            <div class="two"><div><label for="fFirst">First name</label><input id="fFirst" required value=""></div><div><label for="fLast">Last name</label><input id="fLast"></div></div>
+            <label for="fTitle">Job title</label><input id="fTitle" placeholder="e.g. Travel Manager">
+            <label for="fCo">Company</label><input id="fCo" value="Apex Biomedical" readonly style="background:#F3F1EC">
+            <div class="two"><div><label for="fMob">Mobile <em>(optional)</em></label><input id="fMob" type="tel"></div><div><label for="fEmail">Email</label><input id="fEmail" type="email"></div></div>
+          </fieldset>
+          <fieldset>
+            <legend>Where can we send something? <em style="text-transform:none;letter-spacing:0">(optional)</em></legend>
+            <label for="fAddr">Home or office address</label><textarea id="fAddr" rows="2"></textarea>
+          </fieldset>
+          <fieldset>
+            <legend>Dates that matter (optional)</legend>
+            <div class="two"><div><label for="fBday">Birthday</label><input id="fBday" placeholder="MM / DD"></div><div><label for="fAnniv">Wedding anniversary</label><input id="fAnniv" placeholder="MM / DD"></div></div>
+          </fieldset>
+          <fieldset>
+            <legend>Family (optional)</legend>
+            <label for="fPartner">Partner's name</label><input id="fPartner">
+            <label for="fKids">Children: first names &amp; ages</label><input id="fKids" placeholder="e.g. Maya 8, Leo 5">
+          </fieldset>
+          <fieldset>
+            <legend>What do you enjoy?</legend>
+            <div class="chips" id="fInt"></div>
+            <label for="fTeam">Favourite team or club</label><input id="fTeam" placeholder="e.g. Dallas Cowboys, Arsenal">
+            <label for="fFav">Favourite movies, cuisine or anything else</label><input id="fFav">
+            <label for="fDiet">Dietary needs</label><input id="fDiet" placeholder="e.g. vegetarian, nut allergy">
+          </fieldset>
+          <fieldset>
+            <legend>How would you like to be thanked?</legend>
+            <div class="chips" id="fPref"></div>
+            <label for="fCap">Does your company have a gift policy limit?</label>
+            <select id="fCap"><option value="">Not sure</option><option value="0">No gifts allowed: experiences only</option><option value="50">Up to $50</option><option value="100">Up to $100</option><option value="250">Up to $250</option><option value="none">No limit</option></select>
+          </fieldset>
+          <fieldset>
+            <label class="check"><input type="checkbox" id="fConsent" required><span>I agree that [Your Hotel] can store these details and use them only to personalise its thanks to me. I can see, change or delete them at any time. <b>Required</b></span></label>
+            <label class="check"><input type="checkbox" id="fMkt"><span>Send me occasional invitations to hotel events.</span></label>
+          </fieldset>
+          <button class="submit" type="submit">Save my profile</button>
+          <p id="fErr" style="color:#C2334D;font-size:12px;margin-top:8px;display:none"></p>
+        </form>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label">Design choices</div>
+      <div class="guard" style="margin-top:14px">
+        <div><span><b>Optional by default.</b> Family, address and dates are clearly optional. Asking politely, not pushing, keeps the gesture feeling like thanks rather than data collection.</span></div>
+        <div><span><b>Consent is explicit and recorded.</b> It's timestamped against the profile, with a self-service link to view, edit or delete.</span></div>
+        <div><span><b>Gift policy asked up front.</b> Many companies cap what employees can accept. Knowing their limit means every gesture can be accepted without putting them in an awkward spot.</span></div>
+        <div><span><b>Their preference wins.</b> Some prefer experiences (a dinner with family, match tickets), others a quiet note. The page asks, so the hotel doesn't guess.</span></div>
+        <div><span><b>Pre-filled from the QR token.</b> Company and account are already known, so the page feels personal and takes about two minutes.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 PORTAL -->
+<section class="pane" id="pane-portal" role="tabpanel">
+  <div class="label">Steps 4–6 · Owner portal</div>
+  <h2>Every key influencer, their business, and what to do next</h2>
+  <p class="sub">The owner and GM see each decision maker as a profile: who they are, what they enjoy, how much business their accounts brought in, and the next gesture that's due. Select a person for the full profile.</p>
+  <div class="kpis" id="kpis"></div>
+  <div class="filters" id="filters"></div>
+  <div class="portal">
+    <div class="list" id="list"></div>
+    <div class="detail" id="detail"></div>
+  </div>
+  <p class="note">Illustrative data · fictional people and companies</p>
+</section>
+
+<!-- 4 TIERS -->
+<section class="pane" id="pane-tiers" role="tabpanel">
+  <div class="label">Step 5–6 · Tier &amp; gratify</div>
+  <h2>Categories based on the business they bring</h2>
+  <p class="sub">Tiers are recalculated each quarter from the last 12 months of business linked to each person. The appreciation budget scales with value, and every single gesture stays within the person's company gift limit.</p>
+  <div class="tiers">
+    <div class="tierc t-platinum"><h3>Platinum Circle</h3><div class="th">$150K+ · 12 months</div>
+      <ul><li>Personal thank-you from the owner each year</li><li>Birthday and anniversary gestures</li><li>Family dinner or weekend stay, as an experience</li><li>Tickets to their team's game or a film premiere</li><li>Quarterly check-in from the GM</li></ul>
+      <div class="bud">Suggested budget: <b>up to $1,500 / yr</b></div></div>
+    <div class="tierc t-gold"><h3>Gold</h3><div class="th">$50K–150K · 12 months</div>
+      <ul><li>Birthday gesture matched to interests</li><li>Dinner for two in the hotel restaurant</li><li>Holiday hamper sent home</li><li>Twice-yearly GM check-in</li></ul>
+      <div class="bud">Suggested budget: <b>up to $750 / yr</b></div></div>
+    <div class="tierc t-silver"><h3>Silver</h3><div class="th">$15K–50K · 12 months</div>
+      <ul><li>Birthday card and small gift</li><li>Holiday greeting with a treat</li><li>Invitation to hotel events</li></ul>
+      <div class="bud">Suggested budget: <b>up to $300 / yr</b></div></div>
+    <div class="tierc t-emerging"><h3>Emerging</h3><div class="th">Under $15K · or new</div>
+      <ul><li>Thank-you email and handwritten card</li><li>Birthday card</li><li>Watched for growth to Silver</li></ul>
+      <div class="bud">Suggested budget: <b>up to $100 / yr</b></div></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="label">Gratification triggers</div>
+      <table style="margin-top:10px">
+        <thead><tr><th>Moment</th><th>Example gesture</th><th>Tiers</th></tr></thead>
+        <tbody>
+          <tr><td>Account won / renewed</td><td>GM thank-you email + QR, handwritten card</td><td>All</td></tr>
+          <tr><td>Birthday</td><td>Cake or flowers delivered; for top tiers, a family dinner</td><td>All</td></tr>
+          <tr><td>Anniversary</td><td>Dinner for two, or a staycation night</td><td>Plat, Gold</td></tr>
+          <tr><td>Their team plays a big game</td><td>Match-day hamper or tickets</td><td>Plat, Gold</td></tr>
+          <tr><td>Favourite film released</td><td>Movie night voucher for the family</td><td>Plat, Gold</td></tr>
+          <tr><td>Business milestone</td><td>"1,000 room nights" note from the owner with a keepsake</td><td>All</td></tr>
+          <tr><td>Business dips 20%+</td><td>GM call and lunch to check in, flagged in the portal</td><td>All</td></tr>
+          <tr><td>Holidays</td><td>Hamper sent to their home or office</td><td>Plat, Gold, Silver</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="label">Guardrails built in</div>
+      <div class="guard" style="margin-top:14px">
+        <div><span><b>Company gift limit enforced.</b> The portal won't schedule a gesture above the limit they told us. "No gifts" switches them to experiences or notes only.</span></div>
+        <div><span><b>Thanks after the decision, never before.</b> Gestures reward a relationship that already exists; they are never offered to win a contract or tied to a pending RFP.</span></div>
+        <div><span><b>Every gesture logged.</b> Date, item, value and who approved it, so the hotel can show its program is above board if a client ever asks.</span></div>
+        <div><span><b>No government or public-sector buyers.</b> Accounts flagged as public sector get thank-you notes only. Stricter anti-bribery rules apply there.</span></div>
+        <div><span><b>Privacy by design.</b> Consent recorded, data visible only to the GM, owner and Director of Sales, and deleted on request or two years after the account goes inactive.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 DATA -->
+<section class="pane" id="pane-data" role="tabpanel">
+  <div class="label">Step 4 · Attribute</div>
+  <h2>Linking every booking to the person who made it happen</h2>
+  <p class="sub">The value of each influencer comes from the PMS, not from guesswork. Each person is linked to one or more corporate accounts, and every reservation on those accounts rolls up to their profile automatically.</p>
+  <div class="two-col">
+    <div class="card">
+      <div class="label">How a booking is matched</div>
+      <table style="margin-top:10px">
+        <thead><tr><th>Signal</th><th>Source</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>Company profile on the reservation</td><td>BFIS PMS</td><td>Exact</td></tr>
+          <tr><td>Negotiated rate code (LNR)</td><td>BFIS PMS / rate plans</td><td>Exact</td></tr>
+          <tr><td>Group block from that company</td><td>SalesLock™ / PMS group master</td><td>Exact</td></tr>
+          <tr><td>Booker email domain (e.g. @northwind.example)</td><td>Booking engine, OTA, email</td><td>High: auto-suggested</td></tr>
+          <tr><td>Guest's company field on folio</td><td>FolioLens™</td><td>Medium: reviewed by sales</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:13px;color:var(--muted);margin-top:12px">Exact matches are linked automatically. High and medium matches go into a weekly review queue for the Director of Sales to confirm in one tap.</p>
+    </div>
+    <div class="card">
+      <div class="label">What's counted</div>
+      <div class="guard" style="margin-top:14px">
+        <div><span><b>Room revenue and room nights</b> from transient corporate stays and group blocks, net of cancellations.</span></div>
+        <div><span><b>Meetings and F&amp;B</b> booked under the same account.</span></div>
+        <div><span><b>Rolling 12 months</b> versus the prior 12, so growth and dips show clearly.</span></div>
+        <div><span><b>Several people per account.</b> If a travel manager and an EA both influence an account, revenue can be split, for example 70/30.</span></div>
+        <div><span><b>People who move companies.</b> The profile follows the person. When they join a new company, sales is alerted to win that account too.</span></div>
+      </div>
+      <div class="next"><b>Feeds the rest of BYLD:</b> attributed revenue shows in RevVitals reports, at-risk accounts surface in PulsePilot™, and new accounts from SalesLock™ prompt the thank-you email automatically.</div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer><div class="wrap">KeyCircle · Prototype by Buildd From Ideas (BYLD) · All people, companies and figures shown are illustrative.</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+(function(){
+  var fmt=function(n){return '$'+Math.round(n).toLocaleString('en-US')};
+  var fmtK=function(n){return n>=1000?'$'+(n/1000).toFixed(n>=100000?0:1)+'K':fmt(n)};
+  var TIER_ORDER=['platinum','gold','silver','emerging','pending'];
+  var TIER_NAME={platinum:'Platinum',gold:'Gold',silver:'Silver',emerging:'Emerging',pending:'Profile new'};
+  var TIER_COL={platinum:'#D9E2F2',gold:'#F5C76A',silver:'#AEB8CC',emerging:'#7FD1B9',pending:'#FFC24A'};
+  function tierOf(rev){return rev>=150000?'platinum':rev>=50000?'gold':rev>=15000?'silver':'emerging'}
+
+  var P=[
+    {id:'pr',first:'Priya',last:'Raman',title:'Global Travel Manager',co:'Northwind Logistics',email:'priya.raman@northwind.example',
+     rev:186400,prior:158000,rn:1420,months:[11,12,14,13,16,17,15,18,17,19,16,13],
+     accts:[['NWL-LNR','Negotiated rate · transient','$141.2K'],['GRP-NWL-Q2','Group block · regional meeting','$45.2K']],
+     bday:'Dec 3',anniv:'Feb 14',family:'Husband Arjun · daughter Anya (8)',interests:['Cricket','Bollywood films','South Indian food','Yoga'],team:'Mumbai Indians',diet:'Vegetarian',pref:'Experiences with family',cap:100,since:'2024',
+     gifts:[['Nov 2026','Diwali hamper to home',85],['Aug 2026','Family dinner, hotel restaurant',95],['Feb 2026','Anniversary dinner for two',90]],
+     next:['Birthday · Dec 3 (in 8 days)','South Indian dinner for the family at the hotel, with a cake for Anya to share. Within $100 cap.']},
+    {id:'mb',first:'Marcus',last:'Bell',title:'VP Field Operations',co:'Ridgeline Construction',email:'mbell@ridgeline.example',
+     rev:112900,prior:106500,rn:1050,months:[6,7,9,11,12,13,12,11,9,8,7,6],
+     accts:[['RDG-CREW','Crew rate · long stay','$104.6K'],['RDG-LNR','Negotiated rate · managers','$8.3K']],
+     bday:'Apr 19',anniv:'—',family:'Wife Dana · sons Tyler (14), Cole (11)',interests:['NFL','BBQ','Fishing','Country music'],team:'Dallas Cowboys',diet:'—',pref:'Tickets & events',cap:'none',since:'2023',
+     gifts:[['Sep 2026','Season-opener tailgate hamper',140],['Apr 2026','Birthday steak dinner',120]],
+     next:['Cowboys vs. Eagles · Sun','Game-day BBQ hamper delivered to his home for the family.']},
+    {id:'et',first:'Elena',last:'Torres',title:'Executive Assistant to the CEO',co:'Halcyon Health',email:'etorres@halcyon.example',
+     rev:64300,prior:49100,rn:480,months:[3,4,4,5,5,6,6,5,6,7,7,6],
+     accts:[['HAL-EXEC','Executive travel · LNR','$51.0K'],['HAL-BOARD','Board meeting · F&B','$13.3K']],
+     bday:'Jan 22',anniv:'—',family:'Partner Sam',interests:['Broadway musicals','Italian food','Yoga','Reading'],team:'—',diet:'Gluten-free',pref:'Experiences',cap:50,since:'2025',
+     gifts:[['Jun 2026','Spa voucher (yoga class)',45]],
+     next:['Business up 31% · milestone','Handwritten note from the GM + two tickets to a local musical matinee, within $50 cap.']},
+    {id:'do',first:'David',last:'Okafor',title:'Procurement Lead, Travel',co:'Summit Energy',email:'d.okafor@summit.example',
+     rev:38700,prior:49600,rn:310,months:[5,5,4,4,3,3,3,2,2,3,2,2],
+     accts:[['SUM-LNR','Negotiated rate · transient','$38.7K']],
+     bday:'Jul 8',anniv:'—',family:'—',interests:['Soccer','Sci-fi films','Specialty coffee'],team:'Arsenal',diet:'—',pref:'A personal note',cap:0,since:'2024',
+     gifts:[['Jan 2026','Handwritten new-year note',0]],
+     next:['At risk · business down 22%','GM to call and offer a lunch meeting to review their travel needs. No gifts: company policy.']},
+    {id:'hw',first:'Hannah',last:'Weiss',title:'Events & Travel Coordinator',co:'Bluestone University Athletics',email:'hweiss@bluestone.example',
+     rev:27500,prior:24600,rn:260,months:[1,1,2,4,5,3,1,1,3,4,2,1],
+     accts:[['BSU-TEAMS','Team travel · group blocks','$27.5K']],
+     bday:'Sep 30',anniv:'—',family:'—',interests:['College basketball','Hiking','Coffee'],team:'Bluestone Bears',diet:'—',pref:'Small treats',cap:50,since:'2025',
+     gifts:[['Sep 2026','Birthday flowers',40]],
+     next:['Basketball season opens','Good-luck note and a treat box for the team coordinators\' office.']},
+    {id:'rp',first:'Raj',last:'Patel',title:'Office Manager',co:'Crestview Engineering',email:'raj@crestview.example',
+     rev:9800,prior:0,rn:84,months:[0,0,0,0,0,0,1,1,2,2,2,2],
+     accts:[['CRV-LNR','Negotiated rate · new 2026','$9.8K']],
+     bday:'Mar 11',anniv:'—',family:'Wife Nisha · daughter Ria (4)',interests:['Golf','Marvel films'],team:'—',diet:'—',pref:'Experiences',cap:100,since:'2026',
+     gifts:[['Jun 2026','Welcome card + golf balls',30]],
+     next:['Growing fast · 6 months in','Invite to the hotel\'s golf day. On track for Silver next quarter.']}
+  ];
+  P.forEach(function(p){p.tier=tierOf(p.rev)});
+
+  // --- Tabs ---
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  function go(name,noScroll){
+    tabs.forEach(function(t){t.setAttribute('aria-selected',t.dataset.tab===name?'true':'false')});
+    document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on',p.id==='pane-'+name)});
+    if(!noScroll){var y=document.querySelector('.tabs').getBoundingClientRect().top+window.scrollY-60;if(window.scrollY>y)window.scrollTo({top:y,behavior:'smooth'})}
+    try{history.replaceState(null,'','#'+name)}catch(e){}
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){go(t.dataset.tab)})});
+  document.querySelectorAll('[data-go]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();go(a.dataset.go)})});
+  var h=(location.hash||'').replace('#','');
+  if(['email','profile','portal','tiers','data'].indexOf(h)>=0)go(h,true);
+
+  // --- Email ---
+  var eName=document.getElementById('eName'),eOcc=document.getElementById('eOcc');
+  P.slice(0,5).forEach(function(p){var o=document.createElement('option');o.value=p.id;o.textContent=p.first+' '+p.last+' · '+p.co;eName.appendChild(o)});
+  function renderEmail(){
+    var p=P.filter(function(x){return x.id===eName.value})[0]||P[0],occ=eOcc.value;
+    document.getElementById('eTo').textContent=p.first+' '+p.last+' <'+p.email+'>';
+    document.getElementById('eHead').textContent='Thank you, '+p.first+'.';
+    var subj={won:'Thank you for choosing us for '+p.co,renew:'Thank you for another year with '+p.co,group:'Thank you for bringing your team to us'}[occ];
+    document.getElementById('eSubj').textContent=subj;
+    var p1={won:'I wanted to write personally to thank you for choosing [Your Hotel] as the hotel for '+p.co+'. We know a decision like this is yours to make, and that you had other options. We don\'t take your trust lightly.',
+      renew:'As '+p.co+' begins another year with us, I wanted to thank you personally. Your continued confidence in our team means a great deal to every one of us here.',
+      group:'Thank you for trusting us with your team\'s upcoming stay. Bringing a group together takes real effort, and we\'re honoured you chose [Your Hotel] to host them.'}[occ];
+    document.getElementById('eP1').textContent='Dear '+p.first+',';
+    document.getElementById('eP2').textContent=p1+' Every guest you send our way will be looked after as if they were our own.';
+  }
+  eName.addEventListener('change',renderEmail);eOcc.addEventListener('change',renderEmail);renderEmail();
+  try{
+    var base=location.href.split('#')[0];
+    new QRCode(document.getElementById('qr'),{text:base+'#profile',width:264,height:264,colorDark:'#1B2350',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
+  }catch(e){document.getElementById('qr').innerHTML='<span style="font-size:11px;color:#888;text-align:center">QR code<br>(loads online)</span>'}
+
+  // --- Profile form ---
+  var INT=['Movies','Cricket','Football / NFL','Soccer','Basketball','Golf','Music','Theatre','Fine dining','Wine','Coffee','Travel','Wellness & spa','Reading','Kids activities','Outdoors'];
+  var PREF=['Experiences with family','Dining','Tickets & events','Small treats','A personal note'];
+  function chips(el,arr,multi){arr.forEach(function(t){var b=document.createElement('button');b.type='button';b.textContent=t;b.setAttribute('aria-pressed','false');
+    b.addEventListener('click',function(){if(!multi)el.querySelectorAll('button').forEach(function(x){if(x!==b)x.setAttribute('aria-pressed','false')});b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true');prog()});el.appendChild(b)})}
+  var fInt=document.getElementById('fInt'),fPref=document.getElementById('fPref');
+  chips(fInt,INT,true);chips(fPref,PREF,false);
+  var form=document.getElementById('pform');
+  function prog(){var ids=['fFirst','fLast','fTitle','fMob','fEmail','fAddr','fBday','fAnniv','fPartner','fKids','fTeam','fFav','fDiet'];
+    var n=ids.filter(function(i){return document.getElementById(i).value.trim()}).length+(fInt.querySelector('[aria-pressed="true"]')?1:0)+(fPref.querySelector('[aria-pressed="true"]')?1:0)+(document.getElementById('fConsent').checked?1:0);
+    document.getElementById('progBar').style.width=Math.round(n/16*100)+'%'}
+  form.addEventListener('input',prog);form.addEventListener('change',prog);
+  form.addEventListener('submit',function(e){
+    e.preventDefault();var v=function(i){return document.getElementById(i).value.trim()};var err=document.getElementById('fErr');
+    if(!v('fFirst')){err.textContent='Please add your first name.';err.style.display='block';return}
+    if(!document.getElementById('fConsent').checked){err.textContent='Please tick the consent box so we can save your profile.';err.style.display='block';return}
+    err.style.display='none';
+    var ints=[].map.call(fInt.querySelectorAll('[aria-pressed="true"]'),function(b){return b.textContent});
+    var pref=(fPref.querySelector('[aria-pressed="true"]')||{}).textContent||'—';
+    var capv=v('fCap');
+    var np={id:'new'+Date.now(),first:v('fFirst'),last:v('fLast'),title:v('fTitle')||'—',co:v('fCo'),email:v('fEmail')||'—',
+      rev:0,prior:0,rn:0,months:[0,0,0,0,0,0,0,0,0,0,0,0],accts:[['APX-LNR','Negotiated rate · just signed','$0 so far']],
+      bday:v('fBday')||'—',anniv:v('fAnniv')||'—',family:[v('fPartner')&&('Partner '+v('fPartner')),v('fKids')&&('Children '+v('fKids'))].filter(Boolean).join(' · ')||'—',
+      interests:ints.length?ints:['—'],team:v('fTeam')||'—',diet:v('fDiet')||'—',pref:pref,cap:capv===''?'unknown':(capv==='none'?'none':+capv),since:'2026',
+      gifts:[],tier:'pending',isNew:true,
+      next:['Profile completed · just now','Send the welcome card and a first small gesture'+(ints.length?' around '+ints[0].toLowerCase():'')+'. Tier is set after the first linked stays.']};
+    P.unshift(np);
+    document.getElementById('screen').innerHTML='<div class="bar"><small>[Your Hotel] · KeyCircle</small><h3>Thank you, '+esc(np.first)+'.</h3></div><div class="thanks"><b>We\'re grateful.</b><p style="font-size:14px;color:#55556A">Your profile is saved. Expect a small hello from us soon.</p><p style="font-size:12px;color:#8A8A98;margin-top:18px">You can update or delete your details any time from the link in our email.</p><button class="submit" style="margin-top:22px" id="seeP">See it in the owner portal →</button></div>';
+    document.getElementById('seeP').addEventListener('click',function(){sel=np.id;filter='all';renderPortal();go('portal')});
+    sel=np.id;renderPortal();
+  });
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+
+  // --- Portal ---
+  var sel='pr',filter='all';
+  function initials(p){return (p.first[0]||'')+((p.last||'')[0]||'')}
+  function capTxt(c){return c==='none'?'No limit':c==='unknown'?'Not stated':c===0?'No gifts: notes & experiences only':'Up to $'+c+' per gift'}
+  function renderPortal(){
+    var tot=P.reduce(function(a,p){return a+p.rev},0),rn=P.reduce(function(a,p){return a+p.rn},0);
+    var risk=P.filter(function(p){return p.prior&&p.rev<p.prior*0.85}).length;
+    document.getElementById('kpis').innerHTML=
+      '<div class="kpi"><small>Key influencers</small><b class="num">'+P.length+'</b><span>'+P.filter(function(p){return p.tier==='platinum'||p.tier==='gold'}).length+' Platinum or Gold</span></div>'+
+      '<div class="kpi"><small>Business influenced · 12 mo</small><b class="num">'+fmtK(tot)+'</b><span>Linked from BFIS PMS</span></div>'+
+      '<div class="kpi"><small>Room nights · 12 mo</small><b class="num">'+rn.toLocaleString('en-US')+'</b><span>Transient + group</span></div>'+
+      '<div class="kpi"><small>Needs attention</small><b class="num" style="color:var(--rose)">'+risk+'</b><span>Business down 15%+</span></div>';
+    var counts={all:P.length};TIER_ORDER.forEach(function(t){counts[t]=P.filter(function(p){return p.tier===t}).length});
+    document.getElementById('filters').innerHTML=['all'].concat(TIER_ORDER).filter(function(t){return counts[t]}).map(function(t){return '<button data-f="'+t+'" aria-pressed="'+(filter===t)+'">'+(t==='all'?'All':TIER_NAME[t])+' · '+counts[t]+'</button>'}).join('');
+    document.querySelectorAll('#filters button').forEach(function(b){b.addEventListener('click',function(){filter=b.dataset.f;renderPortal()})});
+    var list=P.filter(function(p){return filter==='all'||p.tier===filter}).sort(function(a,b){return (b.isNew?1:0)-(a.isNew?1:0)||b.rev-a.rev});
+    if(!list.some(function(p){return p.id===sel})&&list[0])sel=list[0].id;
+    document.getElementById('list').innerHTML=list.map(function(p){
+      var tr=p.prior?Math.round((p.rev/p.prior-1)*100):null;
+      return '<button class="row" data-id="'+p.id+'" aria-current="'+(p.id===sel)+'"><div class="av" style="background:'+TIER_COL[p.tier]+'">'+esc(initials(p))+'</div>'+
+        '<div class="nm"><b>'+esc(p.first+' '+p.last)+'</b><span>'+esc(p.title)+' · '+esc(p.co)+'</span><br><span class="tier t-'+p.tier+'">'+TIER_NAME[p.tier]+'</span></div>'+
+        '<div class="rv"><b class="num">'+(p.rev?fmtK(p.rev):'—')+'</b><span class="trend '+(tr===null?'':tr>=0?'up':'down')+'">'+(tr===null?(p.isNew?'new':'new acct'):(tr>=0?'▲ ':'▼ ')+Math.abs(tr)+'%')+'</span></div></button>'}).join('');
+    document.querySelectorAll('#list .row').forEach(function(r){r.addEventListener('click',function(){sel=r.dataset.id;renderPortal();if(window.innerWidth<980)document.getElementById('detail').scrollIntoView({behavior:'smooth',block:'start'})})});
+    renderDetail();
+  }
+  function renderDetail(){
+    var p=P.filter(function(x){return x.id===sel})[0];if(!p)return;
+    var mx=Math.max.apply(null,p.months.concat([1]));
+    var tr=p.prior?Math.round((p.rev/p.prior-1)*100):null;
+    var spent=p.gifts.reduce(function(a,g){return a+g[2]},0);
+    document.getElementById('detail').innerHTML=
+      '<div class="dh"><div class="av" style="background:'+TIER_COL[p.tier]+'">'+esc(initials(p))+'</div><div><h3>'+esc(p.first+' '+p.last)+' <span class="tier t-'+p.tier+'" style="vertical-align:middle">'+TIER_NAME[p.tier]+'</span></h3><p>'+esc(p.title)+' · '+esc(p.co)+' · since '+p.since+'</p></div></div>'+
+      '<div class="dgrid"><div><small>Revenue · 12 mo</small><b class="num">'+(p.rev?fmt(p.rev):'$0')+'</b></div><div><small>vs prior 12</small><b class="num '+(tr===null?'':tr>=0?'up':'down')+'">'+(tr===null?'—':(tr>=0?'+':'')+tr+'%')+'</b></div><div><small>Room nights</small><b class="num">'+p.rn.toLocaleString('en-US')+'</b></div></div>'+
+      '<div class="sect"><h4>Monthly business · last 12 months</h4><div class="bars">'+p.months.map(function(m){return '<i style="height:'+(m/mx*100)+'%"></i>'}).join('')+'</div><div class="bars-l"><span>Dec 25</span><span>Nov 26</span></div></div>'+
+      '<div class="sect"><h4>Linked accounts</h4><div class="acct">'+p.accts.map(function(a){return '<div><span><code>'+esc(a[0])+'</code> '+esc(a[1])+'</span><b class="num">'+esc(a[2])+'</b></div>'}).join('')+'</div></div>'+
+      '<div class="sect"><h4>Interests</h4><div class="tags">'+p.interests.map(function(t){return '<span>'+esc(t)+'</span>'}).join('')+(p.team!=='—'?'<span>♥ '+esc(p.team)+'</span>':'')+'</div></div>'+
+      '<div class="sect"><h4>Personal</h4><dl class="kv"><dt>Birthday</dt><dd>'+esc(p.bday)+'</dd><dt>Anniversary</dt><dd>'+esc(p.anniv)+'</dd><dt>Family</dt><dd>'+esc(p.family)+'</dd><dt>Dietary</dt><dd>'+esc(p.diet)+'</dd><dt>Likes to be thanked</dt><dd>'+esc(p.pref)+'</dd><dt>Gift policy</dt><dd>'+capTxt(p.cap)+'</dd><dt>Consent</dt><dd><span class="ok">✓ recorded</span></dd></dl></div>'+
+      '<div class="sect"><h4>Gratification log · '+fmt(spent)+' this year</h4><div class="gift">'+(p.gifts.length?p.gifts.map(function(g){return '<div><small>'+g[0]+'</small><span>'+esc(g[1])+'</span><span class="ok">'+(g[2]?fmt(g[2]):'note')+' ✓</span></div>'}).join(''):'<div><small>—</small><span style="color:var(--muted)">Nothing yet</span><span></span></div>')+'</div></div>'+
+      '<div class="next"><b>Next: '+esc(p.next[0])+'</b><br>'+esc(p.next[1])+'<br><button class="btn pri" type="button" onclick="this.textContent=\'Scheduled ✓\';this.disabled=true">Approve &amp; schedule</button></div>';
+  }
+  renderPortal();
+})();
+</script>
+</body>
+</html>

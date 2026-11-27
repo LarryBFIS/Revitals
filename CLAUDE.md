@@ -1,7 +1,7 @@
 # Revitals repo: notes for Claude
 
 This repo holds Buildd From Ideas (BYLD) marketing work. BYLD runs hotel revenue operations: BFIS™ PMS,
-PriceCortex™, CompMatrix™, FolioLens™, RevVitals™, OTARecon365™, GoldKey™ Rewards, SalesLock™ Concierge,
+PriceCortex™, CompMatrix™, FolioLens™, RevVitals™, OTARecon365™, GoldKey™ Rewards, SalesLock™ Concierge, KeyCircle™,
 AskRank™, PulsePilot™, websites/booking engine/photography, a WhatsApp revenue desk and partners.
 
 ## The website (`website/`)

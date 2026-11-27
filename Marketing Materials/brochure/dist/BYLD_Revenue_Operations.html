@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BYLD · Revenue Operations</title>
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkJZTEQiPgo8dGl0bGU+QllMRDwvdGl0bGU+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiByeD0iNTYiIGZpbGw9IiMxMjE2M0EiLz4KPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDkgNTApIHNjYWxlKDAuNSkiPgo8ZyBmaWxsPSIjRkZGRkZGIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogIDxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMCkiIGQ9Ik0wIDBINDhBMzAgMzAgMCAwIDEgNzIuMTYgNDcuNzhBMzAgMzAgMCAwIDEgNTIgMTAwSDBaIE0yMCAyMFY0MEg0OEExMCAxMCAwIDAgMCA0OCAyMFogTTIwIDYwVjgwSDUyQTEwIDEwIDAgMCAwIDUyIDYwWiIvPgogIDxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEwMCAwKSIgZD0iTTYuNjggMEgyOS45NEw1OCA0Ny4yNlYxMDBIMzhWNTIuNzRaIi8+CiAgPHBhdGggdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAxMjQpIiBkPSJNMCAwSDIwVjgwSDcyVjEwMEgwWiIvPgogIDxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEwMCAxMjQpIiBkPSJNMCAwSDQ1QTUwIDUwIDAgMCAxIDQ1IDEwMEgwWiBNMjAgMjBWODBINDVBMzAgMzAgMCAwIDAgNDUgMjBaIi8+CjwvZz4KPHBhdGggZmlsbD0iIzVDQzBGRiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTAwIDApIiBkPSJNNDIgNDEuMzNMNzYgLTRMNjYuNCAtMTEuMkwxMDMuMiAtMjMuNkwxMDEuNiAxNS4yTDkyIDhMNTggNTMuMzNaIi8+CjwvZz4KPC9zdmc+Cg==" type="image/svg+xml">
-<meta name="description" content="Buildd From Ideas (BYLD) runs hotel revenue operations on one platform: BFIS PMS, PriceCortex AI pricing overseen by human revenue managers, CompMatrix, FolioLens, RevVitals, OTARecon365, GoldKey Rewards, SalesLock Concierge, AskRank and PulsePilot.">
+<meta name="description" content="Buildd From Ideas (BYLD) runs hotel revenue operations on one platform: BFIS PMS, PriceCortex AI pricing overseen by human revenue managers, CompMatrix, FolioLens, RevVitals, OTARecon365, GoldKey Rewards, SalesLock Concierge, KeyCircle, AskRank and PulsePilot.">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -108,6 +108,12 @@ a{color:inherit}
 .legend{position:absolute;left:0;right:0;bottom:-10px;display:flex;justify-content:center;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
 .legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
 
+/* hotel-type switch */
+.seg{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:var(--s1);border:1px solid var(--border-strong);margin-top:26px}
+.seg button{border:0;background:transparent;color:var(--muted);font-family:var(--mono);font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;padding:9px 16px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.seg button.on{background:var(--white);color:#04060b;font-weight:700}
+.hero-tag{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.2vw,27px);color:var(--sky);margin-top:14px}
+.hide{display:none!important}
 /* stats */
 .stats{position:relative;z-index:1;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:linear-gradient(90deg,rgba(0,240,181,.04),rgba(167,139,250,.05),rgba(255,190,11,.04))}
 .stats-in{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
@@ -250,6 +256,16 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
 .in .lead-card{animation:slideIn .5s ease forwards}
 .lead-card small{display:block;font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:2px}
 .lead-card.won{border-color:rgba(6,214,160,.5)}
+/* KeyCircle */
+.kc-row{display:grid;grid-template-columns:30px 1fr auto 62px;gap:10px;align-items:center;padding:9px 10px;border-radius:10px;background:var(--s2);border:1px solid var(--border);margin-bottom:6px}
+.kc-av{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:10px;font-weight:700;color:#0b0f1a}
+.kc-nm b{display:block;font-size:12px;font-weight:600;color:var(--white)}
+.kc-nm small,.kc-rv small{display:block;font-family:var(--mono);font-size:9px;color:var(--muted)}
+.kc-t{font-family:var(--mono);font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;border:1px solid currentColor;border-radius:20px;padding:2px 7px}
+.kc-rv{text-align:right}.kc-rv b{font-family:var(--mono);font-size:12px;color:var(--white)}
+.kc-rv .up{color:var(--green)}.kc-rv .down{color:var(--coral)}
+.kc-next{margin-top:10px;padding:11px 12px;border-radius:10px;font-size:11.5px;color:var(--text);background:linear-gradient(135deg,rgba(255,90,74,.12),rgba(255,190,11,.06));border:1px solid rgba(255,90,74,.35)}
+.kc-next b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--coral);margin-bottom:3px}
 
 /* AskRank chat */
 .ai-q{padding:10px 14px;border-radius:12px;background:var(--s3);font-size:12.5px;color:var(--white);margin-left:auto;max-width:85%;width:max-content}
@@ -431,8 +447,8 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
 <nav class="nav">
   <a class="brand" href="#top" aria-label="BYLD, Buildd From Ideas"><img class="wm" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTI0IDM5NCAxMjQiIHJvbGU9ImltZyIgYXJpYS1sYWJlbD0iQllMRCI+Cjx0aXRsZT5CWUxEPC90aXRsZT4KPGcgZmlsbD0iI0ZGRkZGRiIgZmlsbC1ydWxlPSJldmVub2RkIj4KICA8cGF0aCB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDApIiBkPSJNMCAwSDQ4QTMwIDMwIDAgMCAxIDcyLjE2IDQ3Ljc4QTMwIDMwIDAgMCAxIDUyIDEwMEgwWiBNMjAgMjBWNDBINDhBMTAgMTAgMCAwIDAgNDggMjBaIE0yMCA2MFY4MEg1MkExMCAxMCAwIDAgMCA1MiA2MFoiLz4KICA8cGF0aCB0cmFuc2Zvcm09InRyYW5zbGF0ZSg5OCAwKSIgZD0iTTYuNjggMEgyOS45NEw1OCA0Ny4yNlYxMDBIMzhWNTIuNzRaIi8+CiAgPHBhdGggdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjEwIDApIiBkPSJNMCAwSDIwVjgwSDcyVjEwMEgwWiIvPgogIDxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI5OCAwKSIgZD0iTTAgMEg0NUE1MCA1MCAwIDAgMSA0NSAxMDBIMFogTTIwIDIwVjgwSDQ1QTMwIDMwIDAgMCAwIDQ1IDIwWiIvPgo8L2c+CjxwYXRoIGZpbGw9IiM1Q0MwRkYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk4IDApIiBkPSJNNDIgNDEuMzNMNzYgLTRMNjYuNCAtMTEuMkwxMDMuMiAtMjMuNkwxMDEuNiAxNS4yTDkyIDhMNTggNTMuMzNaIi8+Cjwvc3ZnPgo=" alt="BYLD"><span>Buildd From Ideas</span></a>
   <div class="nav-links">
-    <a href="#what-we-do">What we do</a><a href="#pms">BFIS PMS</a><a href="#human">AI + Human</a><a href="#pricecortex">PriceCortex™</a><a href="#compmatrix">CompMatrix™</a><a href="#foliolens">FolioLens™</a>
-    <a href="#revvitals">RevVitals</a><a href="#otarecon">OTARecon365™</a><a href="#goldkey">GoldKey</a><a href="#saleslock">SalesLock™</a><a href="#askrank">AskRank</a><a href="#pulsepilot">PulsePilot™</a><a href="#digital">Web &amp; Photo</a><a href="#whatsapp">WhatsApp</a><a href="#partners">Partners</a>
+    <a href="#what-we-do">What we do</a><a href="#brand" class="nav-brand">Brand rep</a><a href="#pms">BFIS PMS</a><a href="#human">AI + Human</a><a href="#pricecortex">PriceCortex™</a><a href="#compmatrix">CompMatrix™</a><a href="#foliolens">FolioLens™</a>
+    <a href="#revvitals">RevVitals</a><a href="#otarecon">OTARecon365™</a><a href="#goldkey">GoldKey</a><a href="#saleslock">SalesLock™</a><a href="#keycircle">KeyCircle</a><a href="#askrank">AskRank</a><a href="#pulsepilot">PulsePilot™</a><a href="#digital">Web &amp; Photo</a><a href="#whatsapp">WhatsApp</a><a href="#partners">Partners</a>
   </div>
   <a class="btn sec" href="https://login.buildfromideas.com/#/login" target="_blank" rel="noopener">PMS login</a>
   <a class="btn pri" href="https://portal.buildfromideas.ai/login?redirect=%2Fportal_home" target="_blank" rel="noopener">Owner portal</a>
@@ -445,6 +461,8 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
     <div class="hero-l">
       <div class="eyebrow"><i></i>AI-powered · human-guarded revenue</div>
       <h1>Every revenue task.<br><span class="em">One</span> <span class="italic">partner.</span></h1>
+      <div class="hero-tag" id="hero-tag">A brand's power. Without the brand.</div>
+      <div class="seg" role="group" aria-label="Show for"><button type="button" data-type="independent" class="on">Independent hotel</button><button type="button" data-type="franchised">Franchised hotel</button></div>
       <p class="sub">From your <strong>BFIS PMS</strong> to pricing, intelligence, reporting, OTA recovery, loyalty, group sales and reputation. <strong>Advanced AI and machine learning do the heavy lifting; a human Revenue Manager guards every decision.</strong> All in one owner portal, and on WhatsApp where your team already talks.</p>
       <div class="hero-cta">
         <a class="btn pri" href="https://portal.buildfromideas.ai/login?redirect=%2Fportal_home" target="_blank" rel="noopener">Owner portal login →</a>
@@ -464,20 +482,21 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
           <div class="planet" style="--a:210deg;--r:105px"><div class="upright"><div class="counter" style="--d:40s"><a class="p" href="#whatsapp" style="--c:#25d366;--sz:34px"><div class="orb">WA</div><b>WhatsApp</b><span>Daily desk</span></a></div></div></div>
         </div>
         <div class="ring" style="--d:75s">
-          <div class="planet" style="--a:0deg;--r:195px"><div class="upright"><div class="counter" style="--d:75s"><a class="p" href="#pricecortex" style="--c:#00f0b5"><div class="orb">01</div><b>PriceCortex™</b><span>Price</span></a></div></div></div>
-          <div class="planet" style="--a:60deg;--r:195px"><div class="upright"><div class="counter" style="--d:75s"><a class="p" href="#compmatrix" style="--c:#4895ef"><div class="orb">02</div><b>CompMatrix™</b><span>Compete</span></a></div></div></div>
-          <div class="planet" style="--a:120deg;--r:195px"><div class="upright"><div class="counter" style="--d:75s"><a class="p" href="#foliolens" style="--c:#a78bfa"><div class="orb">03</div><b>FolioLens™</b><span>Report</span></a></div></div></div>
-          <div class="planet" style="--a:180deg;--r:195px"><div class="upright"><div class="counter" style="--d:75s"><a class="p" href="#revvitals" style="--c:#06d6a0"><div class="orb">04</div><b>RevVitals</b><span>Improve</span></a></div></div></div>
-          <div class="planet" style="--a:240deg;--r:195px"><div class="upright"><div class="counter" style="--d:75s"><a class="p" href="#otarecon" style="--c:#ffbe0b"><div class="orb">05</div><b>OTARecon365™</b><span>Recover</span></a></div></div></div>
-          <div class="planet" style="--a:300deg;--r:195px"><div class="upright"><div class="counter" style="--d:75s"><a class="p" href="#goldkey" style="--c:#e8b4a8"><div class="orb">06</div><b>GoldKey</b><span>Retain</span></a></div></div></div>
+          <div class="planet" style="--a:0deg;--r:195px"><div class="upright"><div class="counter" style="--d:75s"><a class="p" href="#pricecortex" style="--c:#00f0b5"><div class="orb">02</div><b>PriceCortex™</b><span>Price</span></a></div></div></div>
+          <div class="planet" style="--a:60deg;--r:195px"><div class="upright"><div class="counter" style="--d:75s"><a class="p" href="#compmatrix" style="--c:#4895ef"><div class="orb">03</div><b>CompMatrix™</b><span>Compete</span></a></div></div></div>
+          <div class="planet" style="--a:120deg;--r:195px"><div class="upright"><div class="counter" style="--d:75s"><a class="p" href="#foliolens" style="--c:#a78bfa"><div class="orb">04</div><b>FolioLens™</b><span>Report</span></a></div></div></div>
+          <div class="planet" style="--a:180deg;--r:195px"><div class="upright"><div class="counter" style="--d:75s"><a class="p" href="#revvitals" style="--c:#06d6a0"><div class="orb">05</div><b>RevVitals</b><span>Improve</span></a></div></div></div>
+          <div class="planet" style="--a:240deg;--r:195px"><div class="upright"><div class="counter" style="--d:75s"><a class="p" href="#otarecon" style="--c:#ffbe0b"><div class="orb">06</div><b>OTARecon365™</b><span>Recover</span></a></div></div></div>
+          <div class="planet" style="--a:300deg;--r:195px"><div class="upright"><div class="counter" style="--d:75s"><a class="p" href="#goldkey" style="--c:#e8b4a8"><div class="orb">07</div><b>GoldKey</b><span>Retain</span></a></div></div></div>
         </div>
         <div class="ring rev" style="--d:120s">
-          <div class="planet" style="--a:10deg;--r:290px"><div class="upright"><div class="counter" style="--d:120s"><a class="p" href="#saleslock" style="--c:#38bdf8;--sz:32px"><div class="orb">07</div><b>SalesLock™</b><span>Groups</span></a></div></div></div>
-          <div class="planet" style="--a:70deg;--r:290px"><div class="upright"><div class="counter" style="--d:120s"><a class="p" href="#askrank" style="--c:#5b6cff;--sz:32px"><div class="orb">08</div><b>AskRank</b><span>Visibility</span></a></div></div></div>
-          <div class="planet" style="--a:130deg;--r:290px"><div class="upright"><div class="counter" style="--d:120s"><a class="p" href="#pulsepilot" style="--c:#ec4899;--sz:32px"><div class="orb">09</div><b>PulsePilot™</b><span>Reputation</span></a></div></div></div>
-          <div class="planet" style="--a:250deg;--r:290px"><div class="upright"><div class="counter" style="--d:120s"><a class="p" href="#digital" style="--c:#f59e0b;--sz:32px"><div class="orb">10</div><b>Web &amp; Photo</b><span>Digital</span></a></div></div></div>
-          <div class="planet" style="--a:190deg;--r:290px"><div class="upright"><div class="counter" style="--d:120s"><a class="p soon" href="#next" style="--c:#a78bfa;--sz:28px"><div class="orb">AI</div><b>Halo™</b><span>Coming</span></a></div></div></div>
-          <div class="planet" style="--a:310deg;--r:290px"><div class="upright"><div class="counter" style="--d:120s"><a class="p soon" href="#next" style="--c:#00f0b5;--sz:28px"><div class="orb">SG</div><b>Signal™</b><span>Coming</span></a></div></div></div>
+          <div class="planet" style="--a:0deg;--r:290px"><div class="upright"><div class="counter" style="--d:120s"><a class="p" href="#saleslock" style="--c:#38bdf8;--sz:32px"><div class="orb">08</div><b>SalesLock™</b><span>Groups</span></a></div></div></div>
+          <div class="planet" style="--a:51deg;--r:290px"><div class="upright"><div class="counter" style="--d:120s"><a class="p" href="#keycircle" style="--c:#ff5a4a;--sz:32px"><div class="orb">09</div><b>KeyCircle</b><span>Corporate</span></a></div></div></div>
+          <div class="planet" style="--a:103deg;--r:290px"><div class="upright"><div class="counter" style="--d:120s"><a class="p" href="#askrank" style="--c:#5b6cff;--sz:32px"><div class="orb">10</div><b>AskRank</b><span>Visibility</span></a></div></div></div>
+          <div class="planet" style="--a:154deg;--r:290px"><div class="upright"><div class="counter" style="--d:120s"><a class="p" href="#pulsepilot" style="--c:#ec4899;--sz:32px"><div class="orb">11</div><b>PulsePilot™</b><span>Reputation</span></a></div></div></div>
+          <div class="planet" style="--a:257deg;--r:290px"><div class="upright"><div class="counter" style="--d:120s"><a class="p" href="#digital" style="--c:#f59e0b;--sz:32px"><div class="orb">12</div><b>Web &amp; Photo</b><span>Digital</span></a></div></div></div>
+          <div class="planet" style="--a:206deg;--r:290px"><div class="upright"><div class="counter" style="--d:120s"><a class="p soon" href="#next" style="--c:#a78bfa;--sz:28px"><div class="orb">AI</div><b>Halo™</b><span>Coming</span></a></div></div></div>
+          <div class="planet" style="--a:309deg;--r:290px"><div class="upright"><div class="counter" style="--d:120s"><a class="p soon" href="#next" style="--c:#00f0b5;--sz:28px"><div class="orb">SG</div><b>Signal™</b><span>Coming</span></a></div></div></div>
         </div>
       </div>
       <div class="legend"><span><i style="background:var(--cyan)"></i>Products</span><span><i style="background:var(--s2);border:1px dashed var(--ft)"></i>Coming next</span><span>Hover to pause · click to explore</span></div>
@@ -568,11 +587,34 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
   </div>
 </section>
 
+<!-- BRAND REPRESENTATION (franchised) -->
+<section class="band hide" id="brand">
+  <div class="inner reveal">
+    <div class="kicker" style="color:var(--sky)">For franchised hotels</div>
+    <h2>Your flag sets the standard. <span class="italic" style="color:var(--sky)">We make it pay.</span></h2>
+    <p class="lead">You already pay for a brand. We represent you with it, make every brand program earn its fees, and run the revenue work the brand leaves to you.</p>
+    <div class="next-grid">
+      <div><div class="st" style="color:var(--sky)">Brand representation</div><b>Your voice with the brand</b><p>We work with your brand team on standards, programs and requests, so decisions are made with your numbers in the room.</p></div>
+      <div><div class="st" style="color:var(--sky)">Quality &amp; PIPs</div><b>Audits and PIPs, prepared</b><p>We get you ready for brand quality inspections and help you scope, price and schedule PIP work.</p></div>
+      <div><div class="st" style="color:var(--sky)">Brand contribution</div><b>Make the fees earn their keep</b><p>We track what brand.com, the loyalty program and central reservations actually deliver against what you pay for them.</p></div>
+      <div><div class="st" style="color:var(--sky)">Revenue</div><b>The revenue work your brand leaves to you</b><p>AI pricing approved by a human revenue manager, your comp set tracked every night, and reporting your owners read.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band hide" id="also">
+  <div class="inner reveal">
+    <div class="kicker">Also available</div>
+    <h2>For hotels that want <span class="italic">even more of the stack.</span></h2>
+    <p class="lead">Most useful for independent hotels, and available to yours: our own cloud PMS and a loyalty program with your hotel's name on it.</p>
+  </div>
+</section>
+
 <!-- 01 PRICECORTEX -->
 <section class="chapter alt" id="pricecortex" style="--accent:var(--cyan);--glow:rgba(0,240,181,.22)">
   <div class="ch-grid">
     <div class="ch-text reveal">
-      <div class="ch-num"><b>01</b> / 10 &nbsp;·&nbsp; PRICE</div>
+      <div class="ch-num"><b>01</b> / 11 &nbsp;·&nbsp; PRICE</div>
       <div class="ch-name">PriceCortex<sup>™</sup></div>
       <div class="ch-tag">The right rate for every room, 57 nights ahead.</div>
       <div><span class="pill live"><i></i>Live</span><span class="pill ai"><i></i>AI + human RM</span></div>
@@ -600,7 +642,7 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
 <section class="chapter flip" id="compmatrix" style="--accent:var(--blue);--glow:rgba(72,149,239,.22)">
   <div class="ch-grid">
     <div class="ch-text reveal">
-      <div class="ch-num"><b>02</b> / 10 &nbsp;·&nbsp; COMPETE</div>
+      <div class="ch-num"><b>02</b> / 11 &nbsp;·&nbsp; COMPETE</div>
       <div class="ch-name">CompMatrix<sup>™</sup></div>
       <div class="ch-tag">Know where you stand, every night.</div>
       <div class="pill live"><i></i>Live</div>
@@ -624,7 +666,7 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
 <section class="chapter alt" id="foliolens" style="--accent:var(--ft);--glow:rgba(167,139,250,.22)">
   <div class="ch-grid">
     <div class="ch-text reveal">
-      <div class="ch-num"><b>03</b> / 10 &nbsp;·&nbsp; REPORT &amp; PROTECT</div>
+      <div class="ch-num"><b>03</b> / 11 &nbsp;·&nbsp; REPORT &amp; PROTECT</div>
       <div class="ch-name">FolioLens<sup>™</sup></div>
       <div class="ch-tag">Performance, without building a report.</div>
       <div class="pill live"><i></i>Live</div>
@@ -659,7 +701,7 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
 <section class="chapter flip" id="revvitals" style="--accent:var(--green);--glow:rgba(6,214,160,.2)">
   <div class="ch-grid">
     <div class="ch-text reveal">
-      <div class="ch-num"><b>04</b> / 10 &nbsp;·&nbsp; IMPROVE &amp; GROW</div>
+      <div class="ch-num"><b>04</b> / 11 &nbsp;·&nbsp; IMPROVE &amp; GROW</div>
       <div class="ch-name">RevVitals</div>
       <div class="ch-tag">A health check, then the follow-through.</div>
       <div class="pill live"><i></i>Live</div>
@@ -702,7 +744,7 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
 <section class="chapter alt" id="otarecon" style="--accent:var(--gold);--glow:rgba(255,190,11,.18)">
   <div class="ch-grid">
     <div class="ch-text reveal">
-      <div class="ch-num"><b>05</b> / 10 &nbsp;·&nbsp; RECOVER</div>
+      <div class="ch-num"><b>05</b> / 11 &nbsp;·&nbsp; RECOVER</div>
       <div class="ch-name">OTARecon365<sup>™</sup></div>
       <div class="ch-tag">Collect what you're owed.</div>
       <div class="pill live"><i></i>Live</div>
@@ -734,7 +776,7 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
 <section class="chapter flip" id="goldkey" style="--accent:var(--rose);--glow:rgba(232,180,168,.22)">
   <div class="ch-grid">
     <div class="ch-text reveal">
-      <div class="ch-num"><b>06</b> / 10 &nbsp;·&nbsp; RETAIN</div>
+      <div class="ch-num"><b>06</b> / 11 &nbsp;·&nbsp; RETAIN</div>
       <div class="ch-name">GoldKey Rewards</div>
       <div class="ch-tag">Guests who come back, and book direct.</div>
       <div class="pill launch"><i></i>Launching</div>
@@ -797,7 +839,7 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
 <section class="chapter alt" id="saleslock" style="--accent:var(--sky);--glow:rgba(56,189,248,.2)">
   <div class="ch-grid">
     <div class="ch-text reveal">
-      <div class="ch-num"><b>07</b> / 10 &nbsp;·&nbsp; GROUP SALES</div>
+      <div class="ch-num"><b>07</b> / 11 &nbsp;·&nbsp; GROUP SALES</div>
       <div class="ch-name">SalesLock<sup>™</sup> Concierge</div>
       <div class="ch-tag">Never miss an RFP deadline.</div>
       <div class="pill early"><i></i>Pilot · Jan 2027</div>
@@ -823,11 +865,43 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
   </div>
 </section>
 
-<!-- 08 ASKRANK -->
-<section class="chapter flip" id="askrank" style="--accent:var(--indigo);--glow:rgba(91,108,255,.22)">
+<!-- 08 KEYCIRCLE -->
+<section class="chapter flip" id="keycircle" style="--accent:var(--coral);--glow:rgba(255,90,74,.2)">
   <div class="ch-grid">
     <div class="ch-text reveal">
-      <div class="ch-num"><b>08</b> / 10 &nbsp;·&nbsp; SEARCH &amp; VISIBILITY</div>
+      <div class="ch-num"><b>08</b> / 11 &nbsp;·&nbsp; CORPORATE LOYALTY</div>
+      <div class="ch-name">KeyCircle</div>
+      <div class="ch-tag">Thank the people who choose you.</div>
+      <div class="pill launch"><i></i>Launching</div>
+      <a class="devby" href="#top"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkJZTEQiPgo8dGl0bGU+QllMRDwvdGl0bGU+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiByeD0iNTYiIGZpbGw9IiMxMjE2M0EiLz4KPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDkgNTApIHNjYWxlKDAuNSkiPgo8ZyBmaWxsPSIjRkZGRkZGIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogIDxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMCkiIGQ9Ik0wIDBINDhBMzAgMzAgMCAwIDEgNzIuMTYgNDcuNzhBMzAgMzAgMCAwIDEgNTIgMTAwSDBaIE0yMCAyMFY0MEg0OEExMCAxMCAwIDAgMCA0OCAyMFogTTIwIDYwVjgwSDUyQTEwIDEwIDAgMCAwIDUyIDYwWiIvPgogIDxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEwMCAwKSIgZD0iTTYuNjggMEgyOS45NEw1OCA0Ny4yNlYxMDBIMzhWNTIuNzRaIi8+CiAgPHBhdGggdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAxMjQpIiBkPSJNMCAwSDIwVjgwSDcyVjEwMEgwWiIvPgogIDxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEwMCAxMjQpIiBkPSJNMCAwSDQ1QTUwIDUwIDAgMCAxIDQ1IDEwMEgwWiBNMjAgMjBWODBINDVBMzAgMzAgMCAwIDAgNDUgMjBaIi8+CjwvZz4KPHBhdGggZmlsbD0iIzVDQzBGRiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTAwIDApIiBkPSJNNDIgNDEuMzNMNzYgLTRMNjYuNCAtMTEuMkwxMDMuMiAtMjMuNkwxMDEuNiAxNS4yTDkyIDhMNTggNTMuMzNaIi8+CjwvZz4KPC9zdmc+Cg==" alt="">Developed by BYLD</a>
+      <p class="what">Behind every corporate account is one person who chose your hotel: a travel manager, an executive assistant, a procurement lead. KeyCircle thanks them personally, learns what they enjoy, links every booking their company makes, and keeps them loyal with gestures that fit who they are.</p>
+      <div class="feats">
+        <div class="feat"><i>1</i><div><b>A personal thank-you from your GM</b> the moment an account is won or renewed, with a QR code: "Please give us an opportunity to thank you the way you deserve."</div></div>
+        <div class="feat"><i>2</i><div><b>A profile they choose to share:</b> interests, favourite team, key dates and family, stored with their consent.</div></div>
+        <div class="feat"><i>3</i><div><b>Every booking linked:</b> corporate rate codes, company profiles and group blocks from BFIS PMS roll up to the person, so you see the business each one brings.</div></div>
+        <div class="feat"><i>4</i><div><b>Tiers and timely gestures:</b> Platinum, Gold, Silver and Emerging, with birthday, anniversary and game-day gestures that always stay within their company's gift policy.</div></div>
+      </div>
+      <div class="ch-links"><a class="btn pri" href="https://marketing.buildfromideas.ai/keycircle" target="_blank" rel="noopener">See the KeyCircle demo →</a></div>
+    </div>
+    <div class="reveal">
+      <div class="mock tilt"><div class="mock-bar"><i></i><i></i><i></i><span>Key influencers</span><span class="live-dot">1 birthday</span></div>
+        <div class="mock-body">
+          <div class="kc-row"><div class="kc-av" style="background:#d9e2f2">PR</div><div class="kc-nm"><b>Priya R.</b><small>Travel Manager · Logistics</small></div><span class="kc-t" style="color:#d9e2f2">Platinum</span><div class="kc-rv"><b>$186K</b><small class="up">▲ 18%</small></div></div>
+          <div class="kc-row"><div class="kc-av" style="background:#f5c76a">MB</div><div class="kc-nm"><b>Marcus B.</b><small>VP Operations · Construction</small></div><span class="kc-t" style="color:#f5c76a">Gold</span><div class="kc-rv"><b>$113K</b><small class="up">▲ 6%</small></div></div>
+          <div class="kc-row"><div class="kc-av" style="background:#f5c76a">ET</div><div class="kc-nm"><b>Elena T.</b><small>Executive Assistant · Health</small></div><span class="kc-t" style="color:#f5c76a">Gold</span><div class="kc-rv"><b>$64K</b><small class="up">▲ 31%</small></div></div>
+          <div class="kc-row"><div class="kc-av" style="background:#aeb8cc">DO</div><div class="kc-nm"><b>David O.</b><small>Procurement · Energy</small></div><span class="kc-t" style="color:#aeb8cc">Silver</span><div class="kc-rv"><b>$39K</b><small class="down">▼ 22%</small></div></div>
+          <div class="kc-next"><b>Next · Priya's birthday in 8 days</b>South Indian dinner for the family at the hotel. Within her company's $100 gift limit.</div>
+          <p class="note">ILLUSTRATIVE</p>
+        </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 ASKRANK -->
+<section class="chapter alt" id="askrank" style="--accent:var(--indigo);--glow:rgba(91,108,255,.22)">
+  <div class="ch-grid">
+    <div class="ch-text reveal">
+      <div class="ch-num"><b>09</b> / 11 &nbsp;·&nbsp; SEARCH &amp; VISIBILITY</div>
       <div class="ch-name">AskRank</div>
       <div class="ch-tag">Be found first, on every screen that sells rooms.</div>
       <div class="pill early"><i></i>Pilot starting</div>
@@ -857,10 +931,10 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
 </section>
 
 <!-- 09 PULSEPILOT -->
-<section class="chapter alt" id="pulsepilot" style="--accent:var(--pink);--glow:rgba(236,72,153,.2)">
+<section class="chapter flip" id="pulsepilot" style="--accent:var(--pink);--glow:rgba(236,72,153,.2)">
   <div class="ch-grid">
     <div class="ch-text reveal">
-      <div class="ch-num"><b>09</b> / 10 &nbsp;·&nbsp; REPUTATION</div>
+      <div class="ch-num"><b>10</b> / 11 &nbsp;·&nbsp; REPUTATION</div>
       <div class="ch-name">PulsePilot<sup>™</sup></div>
       <div class="ch-tag">Hear it first. Fix it before checkout.</div>
       <div class="pill early"><i></i>Early access</div>
@@ -889,7 +963,7 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
 <section class="band" id="digital" style="--accent:var(--amber)">
   <div class="inner">
     <div class="reveal">
-      <div class="ch-num"><b style="color:var(--amber)">10</b> / 10 &nbsp;·&nbsp; DIGITAL PRESENCE</div>
+      <div class="ch-num"><b style="color:var(--amber)">11</b> / 11 &nbsp;·&nbsp; DIGITAL PRESENCE</div>
       <h2 style="margin-top:14px">Look as good online <span class="italic" style="color:var(--amber)">as you do in person.</span></h2>
       <p class="lead">Direct bookings start with how your hotel shows up online. We build the website, connect the booking engine and shoot the photos, so guests find you, trust you and book with you, not through an OTA.</p>
     </div>
@@ -1077,6 +1151,44 @@ table.mt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:1
   document.querySelectorAll('[data-zoom] img, .phone img').forEach(function(img){ img.style.cursor='zoom-in'; img.addEventListener('click',function(e){ e.stopPropagation(); lbi.src=img.src; lbi.alt=img.alt; lb.classList.add('on'); }); });
   lb.addEventListener('click',function(){ lb.classList.remove('on'); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') lb.classList.remove('on'); });
+
+  // Hotel type: change the order of the products (all products always shown).
+  var ORDER={
+    independent:['pms','human','pricecortex','compmatrix','foliolens','revvitals','otarecon','goldkey','saleslock','keycircle','askrank','pulsepilot','digital','whatsapp'],
+    franchised:['brand','human','pricecortex','compmatrix','foliolens','revvitals','otarecon','saleslock','keycircle','pulsepilot','askrank','digital','whatsapp','also','pms','goldkey']
+  };
+  var TAG={independent:"A brand's power. Without the brand.", franchised:"Your flag sets the standard. We make it pay."};
+  var PRODUCTS=['pms','pricecortex','compmatrix','foliolens','revvitals','otarecon','goldkey','saleslock','keycircle','askrank','pulsepilot','digital'];
+  var anchor=document.getElementById('what-we-do'), nav=document.querySelector('.nav-links');
+  function setType(t, byUser){
+    if(!ORDER[t]) t='independent';
+    var after=anchor;
+    ORDER[t].forEach(function(id){ var el=document.getElementById(id); if(el){ after.after(el); after=el; } });
+    document.getElementById('brand').classList.toggle('hide', t!=='franchised');
+    var nb=document.querySelector('.nav-brand'); if(nb) nb.classList.toggle('hide', t!=='franchised');
+    document.getElementById('also').classList.toggle('hide', t!=='franchised');
+    document.getElementById('hero-tag').textContent=TAG[t];
+    // renumber the product chapters in their new order
+    var seq=ORDER[t].filter(function(id){ return PRODUCTS.indexOf(id)>-1; });
+    seq.forEach(function(id,i){
+      var n=document.querySelector('#'+id+' .ch-num'); if(!n) return;
+      var label=n.textContent.split('·').pop().trim();
+      n.innerHTML='<b'+(id==='digital'?' style="color:var(--amber)"':'')+'>'+String(i+1).padStart(2,'0')+'</b> / '+seq.length+' &nbsp;·&nbsp; '+label;
+      // orbit planets show the same number as their chapter (PMS keeps its label)
+      var orb=document.querySelector('.p[href="#'+id+'"] .orb'); if(orb && id!=='pms') orb.textContent=String(i+1).padStart(2,'0');
+    });
+    // menu follows the same order
+    var links={}; [].forEach.call(nav.querySelectorAll('a'),function(a){ links[a.getAttribute('href').slice(1)]=a; });
+    var lastA=links['what-we-do'];
+    ORDER[t].forEach(function(id){ var a=links[id]; if(a){ lastA.after(a); lastA=a; } });
+    if(links['partners']) nav.appendChild(links['partners']);
+    document.querySelectorAll('.seg button').forEach(function(b){ b.classList.toggle('on', b.dataset.type===t); });
+    if(byUser) document.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('in'); });
+    try{ history.replaceState(null,'',location.pathname+'?type='+t+location.hash); }catch(e){}
+  }
+  document.querySelectorAll('.seg button').forEach(function(b){ b.addEventListener('click',function(){ setType(b.dataset.type, true); }); });
+  var qt=(location.search.match(/[?&]type=(franchised|independent)/)||[])[1];
+  setType(qt||'independent');
 
   // Starfield.
   var cv=document.getElementById('stars'), cx=cv.getContext('2d'), stars=[];

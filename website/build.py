@@ -40,6 +40,7 @@ PICONS = {  # one glyph per product, 20x20, stroke
     "otarecon365": '<path d="M16 7a7 7 0 10.8 5"/><path d="M17 3v4h-4"/><path d="M10 7v3l2 1.5"/>',
     "goldkey-rewards": '<circle cx="6.5" cy="13.5" r="3.5"/><path d="M9 11l7-7M14 6l2 2M12 8l1.5 1.5"/>',
     "saleslock": '<rect x="4" y="9" width="12" height="8" rx="2"/><path d="M7 9V6.5a3 3 0 016 0V9"/>',
+    "keycircle": '<circle cx="10" cy="10" r="7.5"/><circle cx="10" cy="8.3" r="2.4"/><path d="M5.9 15.2c1-1.9 2.4-2.9 4.1-2.9s3.1 1 4.1 2.9"/>',
     "askrank": '<circle cx="9" cy="9" r="5.5"/><path d="M13 13l4 4"/>',
     "pulsepilot": '<path d="M10 16.5s-6-3.6-6-8.2A3.3 3.3 0 0110 6a3.3 3.3 0 016 2.3c0 4.6-6 8.2-6 8.2z"/>',
     "direct-booking": '<circle cx="10" cy="10" r="7"/><path d="M3 10h14M10 3c2 2.2 2.8 4.5 2.8 7s-.8 4.8-2.8 7c-2-2.2-2.8-4.5-2.8-7S8 5.2 10 3z"/>',
@@ -128,6 +129,14 @@ MOCKS = {
 <div><span class="lbl">Negotiating</span><div class="lead">Corporate training<small>10 rooms · 3 nts</small></div></div>
 <div><span class="lbl">Won</span><div class="lead">Church retreat<small>18 rooms · $6.8K</small></div></div>
 </div><div class="note">ILLUSTRATIVE</div></div>'''),
+"keycircle": ("KeyCircle · Key influencers", '''<div class="mock">
+<div class="row"><span class="lbl">Key influencers · last 12 months</span><span class="tag info">1 birthday this week</span></div>
+<div class="row"><span><b>Priya R.</b> · Platinum<br><small style="color:#8A92A6">Travel Manager · Logistics</small></span><span><b>$186K</b> <small style="color:#0E8F63">▲ 18%</small></span></div>
+<div class="row"><span><b>Marcus B.</b> · Gold<br><small style="color:#8A92A6">VP Operations · Construction</small></span><span><b>$113K</b> <small style="color:#0E8F63">▲ 6%</small></span></div>
+<div class="row"><span><b>Elena T.</b> · Gold<br><small style="color:#8A92A6">Executive Assistant · Health</small></span><span><b>$64K</b> <small style="color:#0E8F63">▲ 31%</small></span></div>
+<div class="row"><span><b>David O.</b> · Silver<br><small style="color:#8A92A6">Procurement · Energy</small></span><span><b>$39K</b> <small style="color:#C2334A">▼ 22%</small></span></div>
+<div class="row"><span>Next: Priya's birthday · family dinner</span><span class="tag ok">Within $100 gift limit</span></div>
+<div class="note">ILLUSTRATIVE</div></div>'''),
 "askrank": ("AskRank · Visibility", '''<div class="mock">
 <span class="lbl">Ask an AI assistant</span>
 <div class="chat" style="margin:10px 0 14px">“Best place to stay near downtown for a work trip?”</div>
@@ -344,8 +353,9 @@ def bento():
         card(P["pricecortex"], "span3 wide-m", feature=True),
         card(P["bfis-pms"], "span3"),
         card(P["compmatrix"]), card(P["foliolens"]), card(P["revvitals"]),
-        card(P["otarecon365"]), card(P["goldkey-rewards"]), card(P["saleslock"]),
-        card(P["askrank"]), card(P["pulsepilot"]), card(P["direct-booking"]),
+        card(P["otarecon365"]), card(P["goldkey-rewards"]), card(P["pulsepilot"]),
+        card(P["saleslock"], "span3"), card(P["keycircle"], "span3 wide-m"),
+        card(P["askrank"], "span3"), card(P["direct-booking"], "span3"),
     ]) + '</div>'
 
 def spotlight(p, flip=False, lead=None, extra=""):
@@ -425,7 +435,7 @@ def build_home():
 <div class="head-row"><div class="head"><div class="kicker">The platform</div>
 <h2 class="h2">Every revenue task. <span class="muted">One partner, one portal.</span></h2>
 <p class="sub">Most hotels piece revenue together from a PMS, a pricing tool, a rate shopper, a BI dashboard, an OTA agency, a reputation tool and spreadsheets. We run the whole cycle on one data foundation, so every decision uses the same numbers.</p></div>
-<a class="btn btn-line" href="/platform">All 11 products{ICON["arrow"]}</a></div>
+<a class="btn btn-line" href="/platform">All {len(PRODUCTS)} products{ICON["arrow"]}</a></div>
 {ix.story(tour, product_visual, pname)}
 </div></section>'''
 
@@ -440,7 +450,7 @@ def build_home():
     more = f'''<section class="sec"><div class="wrap">
 <div class="head-row"><div class="head"><div class="kicker">And more</div><h2 class="h2">Built in-house. <span class="muted">Growing every quarter.</span></h2></div>
 <a class="link" href="/platform">See the whole platform {ICON["arrow"]}</a></div>
-<div class="bento">{"".join(card(BY_SLUG[k], "span2") for k in ["revvitals", "saleslock", "askrank", "pulsepilot", "direct-booking"])}
+<div class="bento">{"".join(card(BY_SLUG[k], "span2") for k in ["revvitals", "saleslock", "keycircle", "askrank", "pulsepilot"])}
 <a class="card span2 feature rv" href="/platform#next"><div class="top"><div class="ico">{picon("revvitals")}</div><span class="badge pilot">Coming</span></div><span class="verb">Next</span><h3>Halo™ and Signal™</h3><p>An AI revenue assistant in your owner portal, and market demand signals layered onto pricing.</p><span class="more">What's next {ICON["arrow"]}</span></a>
 </div></div></section>'''
 
@@ -639,6 +649,19 @@ def build_sample():
     (OUT / "revvitals-sample.html").write_text(t, encoding="utf-8")
     PAGES.append(("/revvitals-sample", "0.6"))
 
+def build_keycircle_demo():
+    """Carry over the interactive KeyCircle demo from the brochure, with site-relative links and SEO head."""
+    src = ROOT.parent / "Marketing Materials" / "brochure" / "keycircle" / "index.html"
+    if not src.exists():
+        return
+    t = src.read_text(encoding="utf-8")
+    t = t.replace('href="../assets/byld-icon.svg"', 'href="/favicon.svg"').replace('href="../"', 'href="/"')
+    extra = (f'<link rel="canonical" href="{SITE["url"]}/keycircle">\n'
+             f'<meta property="og:title" content="KeyCircle Demo | BYLD"><meta property="og:image" content="{SITE["url"]}/og/keycircle.png">\n')
+    t = t.replace("<title>BYLD · KeyCircle</title>", "<title>KeyCircle Demo | BYLD</title>\n" + extra, 1)
+    (OUT / "keycircle.html").write_text(t, encoding="utf-8")
+    PAGES.append(("/keycircle", "0.6"))
+
 # ----------------------------------------------------------------------------- assets & SEO files
 def copy_static():
     global ASSET_V
@@ -672,7 +695,7 @@ def seo_files():
              "## Portfolio", *[f"- {s['label']}: {s['value']} ({s['note']})" for s in STATS], "",
              "## Products", *[f"- [{pname(p, True)}]({SITE['url']}/products/{p['slug']}): {p['short']} Status: {p['status']}." for p in PRODUCTS], "",
              "## Pages", f"- [Why BYLD vs a franchise]({SITE['url']}/why-byld)", f"- [How it works]({SITE['url']}/how-it-works)",
-             f"- [Partners]({SITE['url']}/partners)", f"- [RevVitals sample report]({SITE['url']}/revvitals-sample)", f"- [Contact]({SITE['url']}/contact)", ""]
+             f"- [Partners]({SITE['url']}/partners)", f"- [RevVitals sample report]({SITE['url']}/revvitals-sample)", f"- [KeyCircle demo]({SITE['url']}/keycircle)", f"- [Contact]({SITE['url']}/contact)", ""]
     (OUT / "llms.txt").write_text("\n".join(lines), encoding="utf-8")
     (ROOT / "og-jobs.json").write_text(json.dumps(OG_JOBS, indent=1), encoding="utf-8")
 
@@ -683,7 +706,7 @@ def main():
     build_home(); build_platform()
     for p in PRODUCTS:
         build_product(p)
-    build_why(); build_how(); build_partners(); build_contact(); build_404(); build_sample()
+    build_why(); build_how(); build_partners(); build_contact(); build_404(); build_sample(); build_keycircle_demo()
     seo_files()
     print(f"Built {len(PAGES)} indexable pages into {OUT.relative_to(ROOT.parent)}/")
 
